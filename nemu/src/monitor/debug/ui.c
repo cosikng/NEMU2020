@@ -62,7 +62,20 @@ static int cmd_info(char *args) {
 	return 0;
 }
 static int cmd_x(char *args) {
-	printf("%s\n",args);
+	int n = 0;
+	int addr = 0;
+	int i;
+	for(i = 0;args[i] != ' ';i++) {
+		n = n * 10 + args[i] -'0';
+	}
+	for(i += 3;args[i] != 0;i++) {
+		if(args[i] >= 'a' && args[i] <= 'f') {
+			addr = addr * 16 + 10 + args[i] - 'a';
+		} else {
+			addr = addr * 16 + args[i] - '0';
+		}
+	}
+	printf("%d%d\n",n,addr);
 	return 0;
 }
 
