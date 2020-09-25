@@ -75,7 +75,10 @@ static int cmd_x(char *args) {
 			addr = addr * 16 + args[i] - '0';
 		}
 	}
-	printf("%d%d\n",n,addr);
+	printf("Addr\t\tData\n");
+	for(i = 0;i < n;i++) {
+		printf("0x%X\t\t0x%x\n",addr + i * 4, *((unsigned int *) (addr + i * 4 + hw_mem)));
+	}
 	return 0;
 }
 
