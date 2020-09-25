@@ -9,6 +9,8 @@
 
 void cpu_exec(uint32_t);
 
+extern CPU_state cpu;
+
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -47,6 +49,16 @@ static int cmd_si(char *args) {
 	cpu_exec(n);
 	return 0;
 }
+static int cmd_info(char *args) {
+	char s[]="eaxecxedxebxespebpesiedi";
+	if(*args == 'r') {
+		for(int i = 0; i < 8; i++) {
+			printf("%c%c%c\t0x%x\n",s[i*3],s[i*3+1],s[i*2+1],cpu.gpr[i]._32);
+		}
+		printf("eip\t0x%x\n",cpu.eip);
+	}
+	return 0;
+}
 
 static int cmd_help(char *args);
 
@@ -58,7 +70,8 @@ static struct {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
-	{ "si", "Single step", cmd_si }
+	{ "si", "Single step", cmd_si },
+	{ "info", "Info", cmd_info }
 
 	/* TODO: Add more commands */
 
