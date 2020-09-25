@@ -37,10 +37,13 @@ static int cmd_q(char *args) {
 }
 static int cmd_si(char *args) {
 	int n = 0;
-	for(int i = 0; args[i] != 0; i++) {
-		n = n * 10 + args[i] - '0';
+	if(args == NULL) {
+		n = 1;
+	} else {
+		for(int i = 0; args[i] != 0; i++) {
+			n = n * 10 + args[i] - '0';
+		}
 	}
-	if(n == 0) n = 1;
 	cpu_exec(n);
 	return 0;
 }
