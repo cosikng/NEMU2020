@@ -35,6 +35,15 @@ static int cmd_c(char *args) {
 static int cmd_q(char *args) {
 	return -1;
 }
+static int cmd_si(char *args) {
+	int n = 0;
+	for(int i = 0; args[i] != 0; i++) {
+		n = n * 10 + args[i] - '0';
+	}
+	if(n == 0) n = 1;
+	cpu_exec(n);
+	return 0;
+}
 
 static int cmd_help(char *args);
 
@@ -46,6 +55,7 @@ static struct {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
+	{ "si", "Single step", cmd_si }
 
 	/* TODO: Add more commands */
 
