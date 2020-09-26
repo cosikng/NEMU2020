@@ -199,9 +199,17 @@ static int cmd_p(char *args)
 						po--;
 						goto con;
 					}
-					int n2 = num[--pn];
-					int n1 = num[--pn];
-					num[pn++] = cac(n1, n2, opt[po - 1]);
+					if (opt[po - 1] == '!')
+					{
+						int n = num[--pn];
+						num[pn++] = cac(0, n, opt[po - 1]);
+					}
+					else
+					{
+						int n2 = num[--pn];
+						int n1 = num[--pn];
+						num[pn++] = cac(n1, n2, opt[po - 1]);
+					}
 				}
 				opt[po++] = tokens[i].str[0];
 			}
@@ -354,6 +362,10 @@ int cac(int n1, int n2, char opt)
 	else if (opt == 'd')
 	{
 		return n1 == n2 ? 1 : 0;
+	}
+	else if (opt == '!')
+	{
+		return !n2;
 	}
 	else
 	{
