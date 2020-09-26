@@ -101,7 +101,34 @@ static bool make_token(char *e)
 				{
 				case OPT:
 					tokens[nr_token].type = OPT;
-					strncpy(tokens[nr_token].str, substr_start, substr_len);
+					/*	||	->	a
+					&&	->	b
+					!=	->	c
+					==	->	d
+					*/
+					if (substr_len > 1)
+					{
+						if (strncmp(substr_start, "||", 2) == 0)
+						{
+							strncpy(tokens[nr_token].str, "a", 1);
+						}
+						else if (strncmp(substr_start, "&&", 2) == 0)
+						{
+							strncpy(tokens[nr_token].str, "b", 1);
+						}
+						else if (strncmp(substr_start, "!=", 2) == 0)
+						{
+							strncpy(tokens[nr_token].str, "c", 1);
+						}
+						else if (strncmp(substr_start, "==", 2) == 0)
+						{
+							strncpy(tokens[nr_token].str, "d", 1);
+						}
+					}
+					else
+					{
+						strncpy(tokens[nr_token].str, substr_start, substr_len);
+					}
 					nr_token++;
 					break;
 				case NUM:

@@ -292,15 +292,24 @@ int class(char c)
 {
 	if (c == '+' || c == '-')
 	{
-		return 1;
+		return 4;
 	}
 	else if (c == '*' || c == '/')
 	{
-		return 2;
+		return 5;
 	}
 	else if (c == '(' || c == ')')
 	{
 		return 0;
+	}
+	else if(c=='!'||c=='*'){
+		return 6;
+	}
+	else if(c=='!'||c=='*'){
+		return 6;
+	}
+	else if(c=='!'||c=='*'){
+		return 6;
 	}
 	return -1;
 }
