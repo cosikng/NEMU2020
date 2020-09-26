@@ -148,6 +148,7 @@ static int cmd_p(char *args)
 				{
 					if (opt[po - 1] == '(')
 					{
+						po--;
 						goto con;
 					}
 					int n2 = num[--pn];
