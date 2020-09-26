@@ -157,7 +157,7 @@ static int cmd_p(char *args)
 						{
 							kh++;
 						}
-						else if (tokens[j].str[0] == ')')
+						else if (tokens[j].str[0] == ')' && kh != 0)
 						{
 							kh--;
 						}
@@ -302,13 +302,16 @@ int class(char c)
 	{
 		return 0;
 	}
-	else if(c=='!'||c=='*'){
+	else if (c == '!' || c == '*')
+	{
 		return 6;
 	}
-	else if(c=='!'||c=='*'){
+	else if (c == '!' || c == '*')
+	{
 		return 6;
 	}
-	else if(c=='!'||c=='*'){
+	else if (c == '!' || c == '*')
+	{
 		return 6;
 	}
 	return -1;
