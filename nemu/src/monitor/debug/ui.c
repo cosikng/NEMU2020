@@ -174,6 +174,8 @@ static int cmd_p(char *args)
 		}
 		/*负号预处理结束*/
 
+		for(i=0;i<nr_token;i++) printf("%c\t",tokens[i].str[0]);
+
 		for (i = 0; i < nr_token;)
 		{
 			if (tokens[i].type == 0)
