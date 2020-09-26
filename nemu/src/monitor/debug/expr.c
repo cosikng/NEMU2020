@@ -89,7 +89,7 @@ static bool make_token(char *e)
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
-				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+				//Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -100,7 +100,7 @@ static bool make_token(char *e)
 				switch (rules[i].token_type)
 				{
 				case OPT:
-					tokens[nr_token].type=OPT;
+					tokens[nr_token].type = OPT;
 					strncpy(tokens[nr_token].str, substr_start, substr_len);
 					nr_token++;
 					break;
@@ -137,8 +137,6 @@ uint32_t expr(char *e, bool *success)
 		*success = false;
 		return 0;
 	}
-
-	
 
 	/* TODO: Insert codes to evaluate the expression. */
 	//panic("please implement me");
