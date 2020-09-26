@@ -149,6 +149,8 @@ static int cmd_p(char *args)
 				opt[po++] = tokens[i].str[0];
 			}
 		}
+		for(i=0;i<pn;i++)printf("%d\n",num[i]);
+		for(i=0;i<po;i++)printf("%c\n",opt[i]);
 		if (pn != 2 || po != 1)
 		{
 			printf("Error\n");
