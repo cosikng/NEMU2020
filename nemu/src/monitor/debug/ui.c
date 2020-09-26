@@ -161,7 +161,7 @@ static int cmd_p(char *args)
 		con:
 			i++;
 		}
-		for (; po > 0; po--)
+		for (; pn > 1;)
 		{
 			printf("a\n");
 			int n2 = num[--pn];
