@@ -139,7 +139,7 @@ static int cmd_p(char *args)
 			}
 			else if (tokens[i].type == 1)
 			{
-
+				printf("!!!\n");
 				for (; po > 0 && class(opt[po - 1]) >= class(tokens[i].str[0]); po--)
 				{
 					int n2 = num[--pn];
