@@ -149,22 +149,13 @@ static int cmd_p(char *args)
 				opt[po++] = tokens[i].str[0];
 			}
 		}
-		if (i == nr_token)
-		{
-			for (; po > 0 && class(opt[po - 1]) >= class(tokens[i].str[0]); po--)
-			{
-				int n2 = num[--pn];
-				int n1 = num[--pn];
-				num[pn++] = cac(n1, n2, opt[po - 1]);
-			}
-		}
-		if (pn != 1 || po != 0)
+		if (pn != 2 || po != 1)
 		{
 			printf("Error\n");
 		}
 		else
 		{
-			printf("%d\n", num[0]);
+			printf("%d\n", cac(num[0], num[1], opt[0]));
 		}
 	}
 	return 0;
