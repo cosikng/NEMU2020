@@ -150,7 +150,7 @@ static int cmd_p(char *args)
 					tokens[i - 1].type = 0;
 					strcpy(tokens[i - 1].str, "0");
 					int kh = 0;
-					printf("a\n");
+					//printf("a\n");
 					for (j = i + 1; j < nr_token && (kh == 1 || (tokens[j].str[0] != '+' && tokens[j].str[0] != '-')); j++)
 					{
 						if (tokens[j].str[0] == '(')
