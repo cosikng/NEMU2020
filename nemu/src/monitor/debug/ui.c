@@ -218,9 +218,17 @@ static int cmd_p(char *args)
 		}
 		for (; pn > 1;)
 		{
-			int n2 = num[--pn];
-			int n1 = num[--pn];
-			num[pn++] = cac(n1, n2, opt[--po]);
+			if (opt[po - 1] == '!')
+			{
+				int n = num[--pn];
+				num[pn++] = cac(0, n, opt[--po]);
+			}
+			else
+			{
+				int n2 = num[--pn];
+				int n1 = num[--pn];
+				num[pn++] = cac(n1, n2, opt[--po]);
+			}
 		}
 		if (pn != 1 || po != 0)
 		{
