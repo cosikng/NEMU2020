@@ -33,8 +33,7 @@ static struct rule
 	{"-", '-'},
 	{"\\(", '('},
 	{"\\)", ')'},
-	{"[0-9]+",0}
-	};
+	{"[0-9]+", 0}};
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]))
 
@@ -98,7 +97,37 @@ static bool make_token(char *e)
 				switch (rules[i].token_type)
 				{
 				case '+':
+					tokens[nr_token].type = '+';
+					nr_token++;
 					break;
+				case '-':
+					tokens[nr_token].type = '-';
+					nr_token++;
+					break;
+				case '*':
+					tokens[nr_token].type = '*';
+					nr_token++;
+					break;
+				case '/':
+					tokens[nr_token].type = '/';
+					nr_token++;
+					break;
+				case '(':
+					tokens[nr_token].type = '(';
+					nr_token++;
+					break;
+				case ')':
+					tokens[nr_token].type = ')';
+					nr_token++;
+					break;
+				case 0:
+					tokens[nr_token].type = 0;
+					strcpy(tokens[nr_token].str, substr_start);
+				case NOTYPE:
+					break;
+					nr_token++;
+					break;
+
 				default:
 					break;
 				}
