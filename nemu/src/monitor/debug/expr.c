@@ -123,6 +123,7 @@ static bool make_token(char *e)
 				case 0:
 					tokens[nr_token].type = 0;
 					strcpy(tokens[nr_token].str, substr_start);
+					printf("0\n");
 				case NOTYPE:
 					break;
 					nr_token++;
