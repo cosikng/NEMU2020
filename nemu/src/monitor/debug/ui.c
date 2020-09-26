@@ -143,6 +143,7 @@ static int cmd_p(char *args)
 				if (tokens[i].str[0] == '(')
 				{
 					opt[po++] = tokens[i].str[0];
+					i++;
 					continue;
 				}
 				for (; po > 0 && class(opt[po - 1]) >= class(tokens[i].str[0]); po--)
