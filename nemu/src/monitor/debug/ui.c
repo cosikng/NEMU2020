@@ -133,13 +133,13 @@ static int cmd_p(char *args)
 		int i;
 		for (i = 0; i < nr_token; i++)
 		{
+			printf("type:%d\n",tokens[i].type);
 			if (tokens[i].type == 0)
 			{
 				num[pn++] = aton(tokens[i].str);
 			}
 			else if (tokens[i].type == 1)
 			{
-				printf("!!!\n");
 				for (; po > 0 && class(opt[po - 1]) >= class(tokens[i].str[0]); po--)
 				{
 					int n2 = num[--pn];
