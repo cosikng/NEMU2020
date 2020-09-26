@@ -139,6 +139,7 @@ static int cmd_p(char *args)
 			}
 			else if (tokens[i].type == 1)
 			{
+				printf("a\n");
 				if (tokens[i].str[0] == '(')
 				{
 					opt[po++] = tokens[i].str[0];
