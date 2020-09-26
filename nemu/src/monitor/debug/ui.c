@@ -17,6 +17,14 @@ extern bool make_token(char *e);
 
 extern int nr_token;
 
+typedef struct token
+{
+	int type;
+	char str[32];
+} Token;
+
+extern Token tokens[32];
+
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char *rl_gets()
 {
@@ -111,7 +119,7 @@ static int cmd_p(char *args)
 {
 	bool a;
 	expr(args, &a);
-	printf("%d\n",nr_token);
+	printf("%s\n",tokens[0].str);
 	return 0;
 }
 
