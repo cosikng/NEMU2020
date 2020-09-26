@@ -306,13 +306,17 @@ int class(char c)
 	{
 		return 6;
 	}
-	else if (c == '!' || c == '*')
+	else if (c == 'c' || c == 'd')
 	{
-		return 6;
+		return 3;
 	}
-	else if (c == '!' || c == '*')
+	else if (c == 'a')
 	{
-		return 6;
+		return 1;
+	}
+	else if (c == 'b')
+	{
+		return 2;
 	}
 	return -1;
 }
@@ -334,6 +338,14 @@ int cac(int n1, int n2, char opt)
 	else if (opt == '/')
 	{
 		return n1 / n2;
+	}
+	else if (opt == 'a')
+	{
+		return n1 != 0 || n2 != 0 ? 1 : 0;
+	}
+	else if (opt == 'b')
+	{
+		return n1 == 1 && n2 == 1 ? 1 : 0;
 	}
 	else
 	{
