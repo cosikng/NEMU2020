@@ -151,7 +151,7 @@ static int cmd_p(char *args)
 					strcpy(tokens[i - 1].str, "0");
 					int kh = 0;
 					//printf("a\n");
-					for (j = i + 1; j < nr_token && (kh == 1 || (tokens[j].str[0] != '+' && tokens[j].str[0] != '-')); j++)
+					for (j = i + 1; j < nr_token && (kh == 1 || (tokens[j].str[0] != '+' && tokens[j].str[0] != '-') || ((tokens[j].str[0] != '+' && tokens[j].str[0] != '-') && (tokens[j - 1].type == 1 && (tokens[j - 1].str[0] != '(' && tokens[j - 1].str[0] != ')')))); j++)
 					{
 						if (tokens[j].str[0] == '(')
 						{
@@ -170,7 +170,8 @@ static int cmd_p(char *args)
 					tokens[j].type = 1;
 					strcpy(tokens[j].str, ")");
 					int m;
-					for(m=0;m<nr_token;m++) printf("%c\t",tokens[m].str[0]);
+					for (m = 0; m < nr_token; m++)
+						printf("%c\t", tokens[m].str[0]);
 					printf("\n");
 				}
 			}
