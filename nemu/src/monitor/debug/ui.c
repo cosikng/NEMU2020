@@ -131,6 +131,48 @@ static int cmd_p(char *args)
 	if (a)
 	{
 		int i;
+		/*负号预处理*/
+		for (i = 0; i < nr_token; i++)
+		{
+			if (tokens[i].str[0] == '-')
+			{
+				if (i == 0 || (tokens[i - 1].type == 1 && tokens[i - 1].str[0] != ')'))
+				{
+					int j;
+					nr_token += 2;
+					for (j = nr_token - 1; j > i + 1; j--)
+					{
+						tokens[j] = tokens[j - 2];
+					}
+					i += 2;
+					tokens[i - 2].type = 1;
+					strcpy(tokens[i - 2].str, "(");
+					tokens[i - 1].type = 0;
+					strcpy(tokens[i - 1].str, "0");
+					int kh = 0;
+					for (j = i + 1; (j < nr_token && kh == 1) || (tokens[j].str[0] != '+' && tokens[j].str[0] != '-'); j++)
+					{
+						if (tokens[j].str[0] == '(')
+						{
+							kh++;
+						}
+						else if (tokens[j].str[0] == ')')
+						{
+							kh--;
+						}
+					}
+					nr_token++;
+					for (kh = nr_token - 1; kh > j; kh--)
+					{
+						tokens[kh] = tokens[kh - 1];
+					}
+					tokens[j].type = 1;
+					strcpy(tokens[j].str, ")");
+				}
+			}
+		}
+		/*负号预处理结束*/
+
 		for (i = 0; i < nr_token;)
 		{
 			if (tokens[i].type == 0)
