@@ -6,6 +6,9 @@
 #include <sys/types.h>
 #include <regex.h>
 
+#define NUM 0
+#define OPT 1
+
 enum
 {
 	NOTYPE = 256,
@@ -26,14 +29,14 @@ static struct rule
 	 */
 
 	{" +", NOTYPE}, // spaces
-	{"\\+", '+'},	// plus
+	{"\\+", OPT},	// plus
 	{"==", EQ},		// equal
-	{"\\*", '*'},	//mul
-	{"/", '/'},
-	{"-", '-'},
-	{"\\(", '('},
-	{"\\)", ')'},
-	{"[0-9]+", 0}};
+	{"\\*", OPT},	//mul
+	{"/", OPT},
+	{"-", OPT},
+	{"\\(", OPT},
+	{"\\)", OPT},
+	{"[0-9]+", NUM}};
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]))
 
@@ -98,26 +101,32 @@ static bool make_token(char *e)
 				{
 				case '+':
 					tokens[nr_token].type = '+';
+					strncpy(tokens[nr_token].str, substr_start, substr_len);
 					nr_token++;
 					break;
 				case '-':
 					tokens[nr_token].type = '-';
+					strncpy(tokens[nr_token].str, substr_start, substr_len);
 					nr_token++;
 					break;
 				case '*':
 					tokens[nr_token].type = '*';
+					strncpy(tokens[nr_token].str, substr_start, substr_len);
 					nr_token++;
 					break;
 				case '/':
 					tokens[nr_token].type = '/';
+					strncpy(tokens[nr_token].str, substr_start, substr_len);
 					nr_token++;
 					break;
 				case '(':
 					tokens[nr_token].type = '(';
+					strncpy(tokens[nr_token].str, substr_start, substr_len);
 					nr_token++;
 					break;
 				case ')':
 					tokens[nr_token].type = ')';
+					strncpy(tokens[nr_token].str, substr_start, substr_len);
 					nr_token++;
 					break;
 				case 0:

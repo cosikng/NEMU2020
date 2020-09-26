@@ -17,6 +17,12 @@ extern bool make_token(char *e);
 
 extern int nr_token;
 
+int aton(char *s);
+
+int class(char c);
+
+int cac(int n1, int n2, char opt);
+
 typedef struct token
 {
 	int type;
@@ -117,9 +123,50 @@ static int cmd_x(char *args)
 }
 static int cmd_p(char *args)
 {
-	bool a;
+	bool a = true;
 	expr(args, &a);
-	printf("%s\n",tokens[0].str);
+	int num[20];
+	char opt[20];
+	int pn = 0, po = 0;
+	if (a)
+	{
+		int i;
+		for (i = 0; i < nr_token; i++)
+		{
+			if (tokens[i].type == 0)
+			{
+				num[pn++] = aton(tokens[i].str);
+			}
+			else if (tokens[i].type == 1)
+			{
+
+				for (; po > 0 && class(opt[po - 1]) >= class(tokens[i].str[0]); po--)
+				{
+					int n2 = num[--pn];
+					int n1 = num[--pn];
+					num[pn++] = cac(n1, n2, opt[po - 1]);
+				}
+				opt[po++] = tokens[i].str[0];
+			}
+		}
+		if (i == nr_token)
+		{
+			for (; po > 0 && class(opt[po - 1]) >= class(tokens[i].str[0]); po--)
+			{
+				int n2 = num[--pn];
+				int n1 = num[--pn];
+				num[pn++] = cac(n1, n2, opt[po - 1]);
+			}
+		}
+		if (pn != 1 || po != 0)
+		{
+			printf("Error\n");
+		}
+		else
+		{
+			printf("%d\n", num[0]);
+		}
+	}
 	return 0;
 }
 
@@ -172,6 +219,54 @@ static int cmd_help(char *args)
 		printf("Unknown command '%s'\n", arg);
 	}
 	return 0;
+}
+
+int aton(char *s)
+{
+	int n = 0;
+	int i;
+	for (i = 0; s[i] != 0; i++)
+	{
+		n = n * 10 + s[i] - '0';
+	}
+	return n;
+}
+
+int class(char c)
+{
+	if (c == '+' || c == '-')
+	{
+		return 0;
+	}
+	else if (c == '*' || c == '/')
+	{
+		return 1;
+	}
+	return -1;
+}
+
+int cac(int n1, int n2, char opt)
+{
+	if (opt == '+')
+	{
+		return n1 + n2;
+	}
+	else if (opt == '-')
+	{
+		return n1 - n2;
+	}
+	else if (opt == '*')
+	{
+		return n1 * n2;
+	}
+	else if (opt == '/')
+	{
+		return n1 / n2;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 void ui_mainloop()
