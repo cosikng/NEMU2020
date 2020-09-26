@@ -347,6 +347,14 @@ int cac(int n1, int n2, char opt)
 	{
 		return n1 == 1 && n2 == 1 ? 1 : 0;
 	}
+	else if (opt == 'c')
+	{
+		return n1 != n2 ? 1 : 0;
+	}
+	else if (opt == 'd')
+	{
+		return n1 == n2 ? 1 : 0;
+	}
 	else
 	{
 		return 0;

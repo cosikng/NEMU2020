@@ -30,7 +30,7 @@ static struct rule
 
 	{" +", NOTYPE}, // spaces
 	{"\\+", OPT},	// plus
-	{"==", EQ},		// equal
+	{"==", OPT},		// equal
 	{"\\*", OPT},	//mul
 	{"/", OPT},
 	{"-", OPT},
@@ -38,6 +38,7 @@ static struct rule
 	{"\\)", OPT},
 	{"\\&\\&",OPT},
 	{"\\|\\|",OPT},
+	{"!=",OPT},
 	{"[0-9]+", NUM}};
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]))
