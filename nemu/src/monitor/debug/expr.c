@@ -95,7 +95,7 @@ static bool make_token(char *e)
 				case '+':
 					break;
 				default:
-					panic("please implement me");
+					break;
 				}
 
 				break;
