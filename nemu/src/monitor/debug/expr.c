@@ -110,30 +110,32 @@ static bool make_token(char *e)
 					{
 						if (strncmp(substr_start, "||", 2) == 0)
 						{
-							strncpy(tokens[nr_token].str, "a", 1);
+							strncpy(tokens[nr_token].str, "a", 2);
 						}
 						else if (strncmp(substr_start, "&&", 2) == 0)
 						{
-							strncpy(tokens[nr_token].str, "b", 1);
+							strncpy(tokens[nr_token].str, "b", 2);
 						}
 						else if (strncmp(substr_start, "!=", 2) == 0)
 						{
-							strncpy(tokens[nr_token].str, "c", 1);
+							strncpy(tokens[nr_token].str, "c", 2);
 						}
 						else if (strncmp(substr_start, "==", 2) == 0)
 						{
-							strncpy(tokens[nr_token].str, "d", 1);
+							strncpy(tokens[nr_token].str, "d", 2);
 						}
 					}
 					else
 					{
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
+						tokens[nr_token].str[substr_len] = 0;
 					}
 					nr_token++;
 					break;
 				case NUM:
 					tokens[nr_token].type = NUM;
 					strncpy(tokens[nr_token].str, substr_start, substr_len);
+					tokens[nr_token].str[substr_len] = 0;
 					nr_token++;
 					break;
 				case NOTYPE:
