@@ -122,8 +122,8 @@ static bool make_token(char *e)
 					break;
 				case 0:
 					tokens[nr_token].type = 0;
-					strcpy(tokens[nr_token].str, substr_start);
-					printf("%s\n",tokens[nr_token].str);
+					strncpy(tokens[nr_token].str, substr_start, substr_len);
+					printf("%s\n", tokens[nr_token].str);
 					nr_token++;
 					break;
 				case NOTYPE:
@@ -156,8 +156,10 @@ uint32_t expr(char *e, bool *success)
 	}
 
 	int i;
-	for(i=0;i<nr_token;i++){
-		if(tokens[i].type==0) printf("%d\t%s\n",tokens[i].type,tokens[i].str);
+	for (i = 0; i < nr_token; i++)
+	{
+		if (tokens[i].type == 0)
+			printf("%d\t%s\n", tokens[i].type, tokens[i].str);
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
