@@ -13,6 +13,8 @@ extern CPU_state cpu;
 
 extern uint8_t *hw_mem;
 
+extern bool make_token(char *e);
+
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -83,6 +85,11 @@ static int cmd_x(char *args) {
 	}
 	return 0;
 }
+static int cmd_t(char *args) {
+	bool a;
+	expr(args,&a);
+	return 0;
+}
 
 static int cmd_help(char *args);
 
@@ -97,6 +104,7 @@ static struct {
 	{ "si", "Single step", cmd_si },
 	{ "info", "Info", cmd_info },
 	{ "x" , "Scan RAM", cmd_x },
+	{ "t" , "Test", cmd_t }
 
 	/* TODO: Add more commands */
 
