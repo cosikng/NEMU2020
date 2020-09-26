@@ -169,10 +169,10 @@ static int cmd_p(char *args)
 					}
 					tokens[j].type = 1;
 					strcpy(tokens[j].str, ")");
-					int m;
+					/*int m;
 					for (m = 0; m < nr_token; m++)
 						printf("%c\t", tokens[m].str[0]);
-					printf("\n");
+					printf("\n");*/
 				}
 			}
 		}
@@ -212,7 +212,6 @@ static int cmd_p(char *args)
 		{
 			int n2 = num[--pn];
 			int n1 = num[--pn];
-			printf("%d\t%d\n",n1,n2);
 			num[pn++] = cac(n1, n2, opt[--po]);
 		}
 		if (pn != 1 || po != 0)
