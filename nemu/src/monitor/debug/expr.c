@@ -156,7 +156,7 @@ uint32_t expr(char *e, bool *success)
 
 	int i;
 	for(i=0;i<nr_token;i++){
-		if(tokens[nr_token].type==0) printf("%d\t%s\n",tokens[i].type,tokens[i].str);
+		if(tokens[i].type==0) printf("%d\t%s\n",tokens[i].type,tokens[i].str);
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
