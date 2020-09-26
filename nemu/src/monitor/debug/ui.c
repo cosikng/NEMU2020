@@ -163,7 +163,6 @@ static int cmd_p(char *args)
 		}
 		for (; pn > 1;)
 		{
-			printf("a\n");
 			int n2 = num[--pn];
 			int n1 = num[--pn];
 			num[pn++] = cac(n1, n2, opt[po - 1]);
