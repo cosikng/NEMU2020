@@ -15,6 +15,8 @@ extern uint8_t *hw_mem;
 
 extern bool make_token(char *e);
 
+extern int nr_token;
+
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char *rl_gets()
 {
@@ -109,6 +111,7 @@ static int cmd_p(char *args)
 {
 	bool a;
 	expr(args, &a);
+	printf("%d\n",nr_token);
 	return 0;
 }
 
