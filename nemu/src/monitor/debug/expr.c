@@ -154,6 +154,11 @@ uint32_t expr(char *e, bool *success)
 		return 0;
 	}
 
+	int i;
+	for(i=0;i<nr_token;i++){
+		printf("%d\t%s\n",tokens[i].type,tokens[i].str);
+	}
+
 	/* TODO: Insert codes to evaluate the expression. */
 	//panic("please implement me");
 	return 0;
