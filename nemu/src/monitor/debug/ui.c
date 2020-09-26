@@ -131,7 +131,7 @@ static int cmd_p(char *args)
 	if (a)
 	{
 		int i;
-		for (i = 0; i < nr_token; i++)
+		for (i = 0; i < nr_token;)
 		{
 			if (tokens[i].type == 0)
 			{
@@ -139,14 +139,25 @@ static int cmd_p(char *args)
 			}
 			else if (tokens[i].type == 1)
 			{
+				if (tokens[i].str[0] == '(')
+				{
+					opt[po++] = tokens[i].str[0];
+					continue;
+				}
 				for (; po > 0 && class(opt[po - 1]) >= class(tokens[i].str[0]); po--)
 				{
+					if (opt[po - 1] == '(')
+					{
+						goto con;
+					}
 					int n2 = num[--pn];
 					int n1 = num[--pn];
 					num[pn++] = cac(n1, n2, opt[po - 1]);
 				}
 				opt[po++] = tokens[i].str[0];
 			}
+		con:
+			i++;
 		}
 		for (; po > 0; po--)
 		{
@@ -232,11 +243,15 @@ int class(char c)
 {
 	if (c == '+' || c == '-')
 	{
-		return 0;
+		return 1;
 	}
 	else if (c == '*' || c == '/')
 	{
-		return 1;
+		return 2;
+	}
+	else if (c == '(' || c == ')')
+	{
+		return 0;
 	}
 	return -1;
 }
