@@ -44,7 +44,8 @@ static int cmd_si(char *args) {
 	if(args == NULL) {
 		n = 1;
 	} else {
-		for(int i = 0; args[i] != 0; i++) {
+		int i;
+		for(i = 0; args[i] != 0; i++) {
 			n = n * 10 + args[i] - '0';
 		}
 	}
@@ -54,7 +55,8 @@ static int cmd_si(char *args) {
 static int cmd_info(char *args) {
 	char s[]="eaxecxedxebxespebpesiedi";
 	if(*args == 'r') {
-		for(int i = 0; i < 8; i++) {
+		int i;
+		for(i = 0; i < 8; i++) {
 			printf("%c%c%c\t0x%x\n",s[i*3],s[i*3+1],s[i*2+1],cpu.gpr[i]._32);
 		}
 		printf("eip\t0x%x\n",cpu.eip);
