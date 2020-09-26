@@ -105,7 +105,7 @@ static int cmd_x(char *args)
 	}
 	return 0;
 }
-static int cmd_t(char *args)
+static int cmd_p(char *args)
 {
 	bool a;
 	expr(args, &a);
@@ -126,7 +126,7 @@ static struct
 	{"si", "Single step", cmd_si},
 	{"info", "Info", cmd_info},
 	{"x", "Scan RAM", cmd_x},
-	{"t", "Test", cmd_t}
+	{"p", "Test", cmd_p}
 
 	/* TODO: Add more commands */
 
