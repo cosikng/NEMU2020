@@ -165,7 +165,7 @@ static int cmd_p(char *args)
 		{
 			int n2 = num[--pn];
 			int n1 = num[--pn];
-			num[pn++] = cac(n1, n2, opt[po - 1]);
+			num[pn++] = cac(n1, n2, opt[po--]);
 		}
 		if (pn != 1 || po != 0)
 		{
