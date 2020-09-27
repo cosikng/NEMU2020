@@ -104,6 +104,7 @@ void cpu_exec(volatile uint32_t n)
 				p->sum = now;
 				nemu_state = STOP;
 			}
+			p = p->next;
 		}
 
 #ifdef HAS_DEVICE
