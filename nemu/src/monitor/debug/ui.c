@@ -131,7 +131,7 @@ static int cmd_p(char *args)
 	if (a)
 	{
 		int i;
-		/*负号预处理*/
+		/*负号、指针解引用预处理*/
 		for (i = 0; i < nr_token; i++)
 		{
 			if (tokens[i].str[0] == '-')
@@ -175,8 +175,15 @@ static int cmd_p(char *args)
 					printf("\n");*/
 				}
 			}
+			else if (tokens[i].str[0] == '*')
+			{
+				if (i == 0 || (tokens[i - 1].type == 1 && tokens[i - 1].str[0] != ')'))
+				{
+					tokens[i].str[0] = 'p';
+				}
+			}
 		}
-		/*负号预处理结束*/
+		/*负号、指针解引用预处理结束*/
 
 		for (i = 0; i < nr_token;)
 		{
@@ -199,7 +206,7 @@ static int cmd_p(char *args)
 						po--;
 						goto con;
 					}
-					if (opt[po - 1] == '!')
+					if (opt[po - 1] == '!' || opt[po - 1] == 'p') //单目运算符特殊处理
 					{
 						int n = num[--pn];
 						num[pn++] = cac(0, n, opt[po - 1]);
@@ -218,7 +225,7 @@ static int cmd_p(char *args)
 		}
 		for (; pn > 1;)
 		{
-			if (opt[po - 1] == '!')
+			if (opt[po - 1] == '!' || opt[po - 1] == 'p') //单目运算符特殊处理
 			{
 				int n = num[--pn];
 				num[pn++] = cac(0, n, opt[--po]);
@@ -318,7 +325,7 @@ int class(char c)
 	{
 		return 0;
 	}
-	else if (c == '!' || c == '*')
+	else if (c == '!' || c == 'p') /*	*ptr	->	pptr	*/
 	{
 		return 6;
 	}
@@ -374,6 +381,10 @@ int cac(int n1, int n2, char opt)
 	else if (opt == '!')
 	{
 		return !n2;
+	}
+	else if (opt == 'p')
+	{
+		return *(hw_mem + n2);
 	}
 	else
 	{
