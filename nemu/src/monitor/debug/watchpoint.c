@@ -47,7 +47,14 @@ void free_wp(int wp)
 	}
 	if (now == NULL)
 		return;
-	pre->next = now->next;
+	if (pre == NULL)
+	{
+		head = NULL;
+	}
+	else
+	{
+		pre->next = now->next;
+	}
 	now->next = free_;
 	free_ = now;
 	return;
@@ -63,7 +70,8 @@ void print_p()
 	}
 	return;
 }
-WP *gethead(void){
+WP *gethead(void)
+{
 	return head;
 }
 /* TODO: Implement the functionality of watchpoint */
