@@ -249,6 +249,13 @@ static int cmd_p(char *args)
 	return 0;
 }
 
+extern WP *new_wp();
+static int cmd_w(char *args)
+{
+	printf("%d\n", new_wp() == NULL);
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct
@@ -263,7 +270,8 @@ static struct
 	{"si", "Single step", cmd_si},
 	{"info", "Info", cmd_info},
 	{"x", "Scan RAM", cmd_x},
-	{"p", "Test", cmd_p}
+	{"p", "Test", cmd_p},
+	{"w", "Points", cmd_w}
 
 	/* TODO: Add more commands */
 
