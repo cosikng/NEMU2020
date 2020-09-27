@@ -25,7 +25,7 @@ int class(char c);
 
 int cac(int n1, int n2, char opt);
 
-int p(char *args);
+int pp(char *args);
 
 typedef struct token
 {
@@ -131,7 +131,7 @@ static int cmd_x(char *args)
 }
 static int cmd_p(char *args)
 {
-	printf("%d\n", p(args));
+	printf("%d\n", pp(args));
 	return 0;
 }
 
@@ -140,7 +140,8 @@ static int cmd_w(char *args)
 {
 	WP *p = new_wp();
 	strcpy(p->s, args);
-	printf("Watchpoint %d\t%s\n", p->NO, p->s);
+	p->sum = pp(p->s);
+	printf("Watchpoint %d\t%s = %d\n", p->NO, p->s, p->sum);
 	return 0;
 }
 
@@ -295,7 +296,7 @@ int cac(int n1, int n2, char opt)
 	}
 }
 
-int p(char *args)
+int pp(char *args)
 {
 	bool a = true;
 	expr(args, &a);
