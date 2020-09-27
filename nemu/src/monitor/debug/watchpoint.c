@@ -63,4 +63,7 @@ void print_p()
 	}
 	return;
 }
+WP *gethead(void){
+	return head;
+}
 /* TODO: Implement the functionality of watchpoint */

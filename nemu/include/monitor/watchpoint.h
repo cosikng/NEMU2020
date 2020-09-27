@@ -19,4 +19,6 @@ WP *new_wp();
 void free_wp(int wp);
 void print_p(void);
 
+WP *gethead(void);
+
 #endif
