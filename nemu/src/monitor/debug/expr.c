@@ -185,7 +185,7 @@ void tod(char *s, int len)
 			}
 			else
 			{
-				num = num * 10 + s[i] - '0';
+				num = num * 16 + s[i] - '0';
 			}
 		}
 		for (i = 0; num != 0; i++)
