@@ -252,7 +252,9 @@ static int cmd_p(char *args)
 extern WP *new_wp();
 static int cmd_w(char *args)
 {
-	printf("%d\n", new_wp() == NULL);
+	WP *p = new_wp();
+	strcpy(p->s, args);
+	printf("Watchpoint %d\t%s\n", p->NO, p->s);
 	return 0;
 }
 
