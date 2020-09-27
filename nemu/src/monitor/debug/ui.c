@@ -113,7 +113,9 @@ static int cmd_x(char *args)
 	}
 	for (; args[i] == ' '; i++)
 		;
-	for (i += 2; args[i] != 0; i++)
+	addr = pp(args + i);
+	printf("%x\n", addr);
+	/*for (i += 2; args[i] != 0; i++)
 	{
 		if (args[i] >= 'a' && args[i] <= 'f')
 		{
@@ -123,7 +125,7 @@ static int cmd_x(char *args)
 		{
 			addr = addr * 16 + args[i] - '0';
 		}
-	}
+	}*/
 	printf("Addr\t\tData\n");
 	for (i = 0; i < n; i++)
 	{
