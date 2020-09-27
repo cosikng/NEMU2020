@@ -88,7 +88,7 @@ static int cmd_info(char *args)
 		int i;
 		for (i = 0; i < 8; i++)
 		{
-			printf("%c%c%c\t0x%x\n", s[i * 3], s[i * 3 + 1], s[i * 2 + 1], cpu.gpr[i]._32);
+			printf("%c%c%c\t0x%x\n", s[i * 3], s[i * 3 + 1], s[i * 3 + 2], cpu.gpr[i]._32);
 		}
 		printf("eip\t0x%x\n", cpu.eip);
 	}
