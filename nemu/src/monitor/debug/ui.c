@@ -384,7 +384,7 @@ int cac(int n1, int n2, char opt)
 	}
 	else if (opt == 'p')
 	{
-		return *(hw_mem + n2);
+		return *((unsigned int *)(hw_mem + n2));
 	}
 	else
 	{
