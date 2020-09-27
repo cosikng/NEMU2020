@@ -9,6 +9,12 @@
 #define NUM 0
 #define OPT 1
 
+void tod(char *s, int len); /*十六进制和寄存器转换为十进制*/
+
+char dnum[50]; /*保存十进制数的字符串*/
+
+extern CPU_state cpu;
+
 enum
 {
 	NOTYPE = 256,
@@ -40,6 +46,8 @@ static struct rule
 	{"\\|\\|", OPT},
 	{"!=", OPT},
 	{"!", OPT},
+	{"0x[0123456789abcdef]+", NUM},
+	{"\\$[a-z]{3}", NUM},
 	{"[0-9]+", NUM}};
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]))
@@ -138,8 +146,9 @@ static bool make_token(char *e)
 					break;
 				case NUM:
 					tokens[nr_token].type = NUM;
-					strncpy(tokens[nr_token].str, substr_start, substr_len);
-					tokens[nr_token].str[substr_len] = 0;
+					tod(substr_start, substr_len);
+					strncpy(tokens[nr_token].str, dnum, strlen(dnum));
+					tokens[nr_token].str[strlen(dnum)] = 0;
 					nr_token++;
 					break;
 				case NOTYPE:
@@ -161,6 +170,89 @@ static bool make_token(char *e)
 	}
 
 	return true;
+}
+
+void tod(char *s, int len)
+{
+	if (strncmp(s, "0x", 2) == 0)
+	{
+		int i, num = 0;
+		for (i = 2; i < len; i++)
+		{
+			if (s[i] >= 'a' && s[i] <= 'f')
+			{
+				num = num * 16 + s[i] - 'a' + 10;
+			}
+			else
+			{
+				num = num * 10 + s[i] - '0';
+			}
+		}
+		for (i = 0; num != 0; i++)
+		{
+			int j;
+			for (j = i; j > 0; j--)
+			{
+				dnum[j] = dnum[j - 1];
+			}
+			dnum[0] = num % 10 + '0';
+			num /= 10;
+		}
+		dnum[i] = 0;
+	}
+	else if (s[0] == '$')
+	{
+		int n = 0;
+		if (strncmp(s, "$eax", 4) == 0)
+		{
+			n = cpu.eax;
+		}
+		else if (strncmp(s, "$ecx", 4) == 0)
+		{
+			n = cpu.ecx;
+		}
+		else if (strncmp(s, "$edx", 4) == 0)
+		{
+			n = cpu.edx;
+		}
+		else if (strncmp(s, "$ebx", 4) == 0)
+		{
+			n = cpu.ebx;
+		}
+		else if (strncmp(s, "$esp", 4) == 0)
+		{
+			n = cpu.esp;
+		}
+		else if (strncmp(s, "$ebp", 4) == 0)
+		{
+			n = cpu.ebp;
+		}
+		else if (strncmp(s, "$esi", 4) == 0)
+		{
+			n = cpu.esi;
+		}
+		else if (strncmp(s, "$edi", 4) == 0)
+		{
+			n = cpu.edi;
+		}
+		else if (strncmp(s, "$eip", 4) == 0)
+		{
+			n = cpu.eip;
+		}
+		int i;
+		for (i = 0; n != 0; i++)
+		{
+			int j;
+			for (j = i; j > 0; j--)
+			{
+				dnum[j] = dnum[j - 1];
+			}
+			dnum[0] = n % 10 + '0';
+			n /= 10;
+		}
+		dnum[i] = 0;
+	}
+	return;
 }
 
 uint32_t expr(char *e, bool *success)
