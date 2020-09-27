@@ -384,6 +384,8 @@ int cac(int n1, int n2, char opt)
 	}
 	else if (opt == 'p')
 	{
+		int n = *((unsigned int *)(hw_mem + n2));
+		printf("%d\n", n);
 		return *((unsigned int *)(hw_mem + n2));
 	}
 	else
