@@ -252,6 +252,11 @@ void tod(char *s, int len)
 		}
 		dnum[i] = 0;
 	}
+	else
+	{
+		strncpy(dnum, s, len);
+		dnum[len] = 0;
+	}
 	return;
 }
 
