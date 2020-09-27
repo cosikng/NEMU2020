@@ -17,6 +17,8 @@ extern bool make_token(char *e);
 
 extern int nr_token;
 
+extern void print_p(void);
+
 int aton(char *s);
 
 int class(char c);
@@ -91,6 +93,10 @@ static int cmd_info(char *args)
 			printf("%c%c%c\t0x%x\n", s[i * 3], s[i * 3 + 1], s[i * 3 + 2], cpu.gpr[i]._32);
 		}
 		printf("eip\t0x%x\n", cpu.eip);
+	}
+	else if (*args == 'w')
+	{
+		print_p();
 	}
 	return 0;
 }
@@ -258,6 +264,12 @@ static int cmd_w(char *args)
 	return 0;
 }
 
+static int cmd_d(char *args)
+{
+	free_wp(atoi(args));
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct
@@ -273,7 +285,8 @@ static struct
 	{"info", "Info", cmd_info},
 	{"x", "Scan RAM", cmd_x},
 	{"p", "Test", cmd_p},
-	{"w", "Points", cmd_w}
+	{"w", "Points", cmd_w},
+	{"d", "Delete points", cmd_d}
 
 	/* TODO: Add more commands */
 

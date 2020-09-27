@@ -33,14 +33,14 @@ WP *new_wp()
 	assert(0);
 }
 
-void free_wp(WP *wp)
+void free_wp(int wp)
 {
-	if (wp == NULL)
+	if (wp < 0 || wp >= NR_WP)
 		return;
 	WP *now, *pre;
 	now = head;
 	pre = NULL;
-	while (now != NULL && now != wp)
+	while (now != NULL && now->NO != wp)
 	{
 		pre = now;
 		now = now->next;
@@ -53,4 +53,14 @@ void free_wp(WP *wp)
 	return;
 }
 
+void print_p()
+{
+	WP *p = head;
+	while (p != NULL)
+	{
+		printf("Watchpoint %d\t%s\n", p->NO, p->s);
+		p = p->next;
+	}
+	return;
+}
 /* TODO: Implement the functionality of watchpoint */
