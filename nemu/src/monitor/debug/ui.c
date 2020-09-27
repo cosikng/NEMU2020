@@ -25,6 +25,8 @@ int class(char c);
 
 int cac(int n1, int n2, char opt);
 
+int p(char *args);
+
 typedef struct token
 {
 	int type;
@@ -129,129 +131,7 @@ static int cmd_x(char *args)
 }
 static int cmd_p(char *args)
 {
-	bool a = true;
-	expr(args, &a);
-	int num[20];
-	char opt[20];
-	int pn = 0, po = 0;
-	if (a)
-	{
-		int i;
-		/*负号、指针解引用预处理*/
-		for (i = 0; i < nr_token; i++)
-		{
-			if (tokens[i].str[0] == '-')
-			{
-				if (i == 0 || (tokens[i - 1].type == 1 && tokens[i - 1].str[0] != ')'))
-				{
-					int j;
-					nr_token += 2;
-					for (j = nr_token - 1; j > i + 1; j--)
-					{
-						tokens[j] = tokens[j - 2];
-					}
-					i += 2;
-					tokens[i - 2].type = 1;
-					strcpy(tokens[i - 2].str, "(");
-					tokens[i - 1].type = 0;
-					strcpy(tokens[i - 1].str, "0");
-					int kh = 0;
-					//printf("a\n");
-					for (j = i + 1; j < nr_token && (kh == 1 || (tokens[j].str[0] != '+' && tokens[j].str[0] != '-') || ((tokens[j].str[0] == '+' || tokens[j].str[0] == '-') && (tokens[j - 1].type == 1 && (tokens[j - 1].str[0] != '(' && tokens[j - 1].str[0] != ')')))); j++)
-					{
-						if (tokens[j].str[0] == '(')
-						{
-							kh++;
-						}
-						else if (tokens[j].str[0] == ')' && kh != 0)
-						{
-							kh--;
-						}
-					}
-					nr_token++;
-					for (kh = nr_token - 1; kh > j; kh--)
-					{
-						tokens[kh] = tokens[kh - 1];
-					}
-					tokens[j].type = 1;
-					strcpy(tokens[j].str, ")");
-					/*int m;
-					for (m = 0; m < nr_token; m++)
-						printf("%c\t", tokens[m].str[0]);
-					printf("\n");*/
-				}
-			}
-			else if (tokens[i].str[0] == '*')
-			{
-				if (i == 0 || (tokens[i - 1].type == 1 && tokens[i - 1].str[0] != ')'))
-				{
-					tokens[i].str[0] = 'p';
-				}
-			}
-		}
-		/*负号、指针解引用预处理结束*/
-
-		for (i = 0; i < nr_token;)
-		{
-			if (tokens[i].type == 0)
-			{
-				num[pn++] = aton(tokens[i].str);
-			}
-			else if (tokens[i].type == 1)
-			{
-				if (tokens[i].str[0] == '(')
-				{
-					opt[po++] = tokens[i].str[0];
-					i++;
-					continue;
-				}
-				for (; po > 0 && class(opt[po - 1]) >= class(tokens[i].str[0]); po--)
-				{
-					if (opt[po - 1] == '(')
-					{
-						po--;
-						goto con;
-					}
-					if (opt[po - 1] == '!' || opt[po - 1] == 'p') //单目运算符特殊处理
-					{
-						int n = num[--pn];
-						num[pn++] = cac(0, n, opt[po - 1]);
-					}
-					else
-					{
-						int n2 = num[--pn];
-						int n1 = num[--pn];
-						num[pn++] = cac(n1, n2, opt[po - 1]);
-					}
-				}
-				opt[po++] = tokens[i].str[0];
-			}
-		con:
-			i++;
-		}
-		for (; pn > 1 || po > 0;)
-		{
-			if (opt[po - 1] == '!' || opt[po - 1] == 'p') //单目运算符特殊处理
-			{
-				int n = num[--pn];
-				num[pn++] = cac(0, n, opt[--po]);
-			}
-			else
-			{
-				int n2 = num[--pn];
-				int n1 = num[--pn];
-				num[pn++] = cac(n1, n2, opt[--po]);
-			}
-		}
-		if (pn != 1 || po != 0)
-		{
-			printf("Error\n");
-		}
-		else
-		{
-			printf("%d\n", num[0]);
-		}
-	}
+	printf("%d\n", p(args));
 	return 0;
 }
 
@@ -413,6 +293,130 @@ int cac(int n1, int n2, char opt)
 	{
 		return 0;
 	}
+}
+
+int p(char *args)
+{
+	bool a = true;
+	expr(args, &a);
+	int num[20];
+	char opt[20];
+	int pn = 0, po = 0;
+	if (a)
+	{
+		int i;
+		/*负号、指针解引用预处理*/
+		for (i = 0; i < nr_token; i++)
+		{
+			if (tokens[i].str[0] == '-')
+			{
+				if (i == 0 || (tokens[i - 1].type == 1 && tokens[i - 1].str[0] != ')'))
+				{
+					int j;
+					nr_token += 2;
+					for (j = nr_token - 1; j > i + 1; j--)
+					{
+						tokens[j] = tokens[j - 2];
+					}
+					i += 2;
+					tokens[i - 2].type = 1;
+					strcpy(tokens[i - 2].str, "(");
+					tokens[i - 1].type = 0;
+					strcpy(tokens[i - 1].str, "0");
+					int kh = 0;
+					//printf("a\n");
+					for (j = i + 1; j < nr_token && (kh == 1 || (tokens[j].str[0] != '+' && tokens[j].str[0] != '-') || ((tokens[j].str[0] == '+' || tokens[j].str[0] == '-') && (tokens[j - 1].type == 1 && (tokens[j - 1].str[0] != '(' && tokens[j - 1].str[0] != ')')))); j++)
+					{
+						if (tokens[j].str[0] == '(')
+						{
+							kh++;
+						}
+						else if (tokens[j].str[0] == ')' && kh != 0)
+						{
+							kh--;
+						}
+					}
+					nr_token++;
+					for (kh = nr_token - 1; kh > j; kh--)
+					{
+						tokens[kh] = tokens[kh - 1];
+					}
+					tokens[j].type = 1;
+					strcpy(tokens[j].str, ")");
+					/*int m;
+					for (m = 0; m < nr_token; m++)
+						printf("%c\t", tokens[m].str[0]);
+					printf("\n");*/
+				}
+			}
+			else if (tokens[i].str[0] == '*')
+			{
+				if (i == 0 || (tokens[i - 1].type == 1 && tokens[i - 1].str[0] != ')'))
+				{
+					tokens[i].str[0] = 'p';
+				}
+			}
+		}
+		/*负号、指针解引用预处理结束*/
+
+		for (i = 0; i < nr_token;)
+		{
+			if (tokens[i].type == 0)
+			{
+				num[pn++] = aton(tokens[i].str);
+			}
+			else if (tokens[i].type == 1)
+			{
+				if (tokens[i].str[0] == '(')
+				{
+					opt[po++] = tokens[i].str[0];
+					i++;
+					continue;
+				}
+				for (; po > 0 && class(opt[po - 1]) >= class(tokens[i].str[0]); po--)
+				{
+					if (opt[po - 1] == '(')
+					{
+						po--;
+						goto con;
+					}
+					if (opt[po - 1] == '!' || opt[po - 1] == 'p') //单目运算符特殊处理
+					{
+						int n = num[--pn];
+						num[pn++] = cac(0, n, opt[po - 1]);
+					}
+					else
+					{
+						int n2 = num[--pn];
+						int n1 = num[--pn];
+						num[pn++] = cac(n1, n2, opt[po - 1]);
+					}
+				}
+				opt[po++] = tokens[i].str[0];
+			}
+		con:
+			i++;
+		}
+		for (; pn > 1 || po > 0;)
+		{
+			if (opt[po - 1] == '!' || opt[po - 1] == 'p') //单目运算符特殊处理
+			{
+				int n = num[--pn];
+				num[pn++] = cac(0, n, opt[--po]);
+			}
+			else
+			{
+				int n2 = num[--pn];
+				int n1 = num[--pn];
+				num[pn++] = cac(n1, n2, opt[--po]);
+			}
+		}
+		if (pn != 1 || po != 0)
+		{
+			printf("Error\n");
+		}
+	}
+	return num[0];
 }
 
 void ui_mainloop()
