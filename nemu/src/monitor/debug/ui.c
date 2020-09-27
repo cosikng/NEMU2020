@@ -223,7 +223,7 @@ static int cmd_p(char *args)
 		con:
 			i++;
 		}
-		for (; pn > 1;)
+		for (; pn > 1 || po > 0;)
 		{
 			if (opt[po - 1] == '!' || opt[po - 1] == 'p') //单目运算符特殊处理
 			{
