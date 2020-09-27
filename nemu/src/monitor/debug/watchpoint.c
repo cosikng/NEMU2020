@@ -49,7 +49,7 @@ void free_wp(int wp)
 		return;
 	if (pre == NULL)
 	{
-		head = NULL;
+		head = now->next;
 	}
 	else
 	{
