@@ -114,7 +114,6 @@ static int cmd_x(char *args)
 	for (; args[i] == ' '; i++)
 		;
 	addr = pp(args + i);
-	printf("%x\n", addr);
 	/*for (i += 2; args[i] != 0; i++)
 	{
 		if (args[i] >= 'a' && args[i] <= 'f')
