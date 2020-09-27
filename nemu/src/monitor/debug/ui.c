@@ -111,7 +111,9 @@ static int cmd_x(char *args)
 	{
 		n = n * 10 + args[i] - '0';
 	}
-	for (i += 3; args[i] != 0; i++)
+	for (; args[i] == ' '; i++)
+		;
+	for (i += 2; args[i] != 0; i++)
 	{
 		if (args[i] >= 'a' && args[i] <= 'f')
 		{
