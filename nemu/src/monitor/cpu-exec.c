@@ -100,6 +100,7 @@ void cpu_exec(volatile uint32_t n)
 			int now = pp(p->s);
 			if (p->sum != now)
 			{
+				do_int3();
 				printf("Watchpoint %d (%s) changed from %d to %d\n", p->NO, p->s, p->sum, now);
 				p->sum = now;
 				nemu_state = STOP;
