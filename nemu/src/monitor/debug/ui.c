@@ -157,7 +157,7 @@ static struct
 	{"si", "Single step", cmd_si},
 	{"info", "Info", cmd_info},
 	{"x", "Scan RAM", cmd_x},
-	{"p", "Test", cmd_p},
+	{"p", "Expression evaluation", cmd_p},
 	{"w", "Points", cmd_w},
 	{"d", "Delete points", cmd_d}
 

@@ -1,6 +1,6 @@
 ##### global settings #####
 
-.PHONY: nemu entry testcase kernel run gdb test submit clean
+.PHONY: nemu entry testcase kernel run gdb test submit clean count
 
 CC := gcc
 LD := ld
@@ -30,6 +30,7 @@ nemu: $(nemu_BIN)
 testcase: $(testcase_BIN)
 kernel: $(kernel_BIN)
 game: $(game_BIN)
+space: $(space)
 
 
 ##### rules for cleaning the project #####
@@ -71,5 +72,12 @@ test: $(nemu_BIN) $(testcase_BIN) entry
 	$(call git_commit, "test")
 	bash test.sh $(testcase_BIN)
 
+count: $(nemu_BIN) entry
+	$(call git_commit, "count")
+	bash count.sh $(space)
+# count: $(call "count")
+# 	bash count.sh
+
 submit: clean
 	cd .. && zip -r $(STU_ID).zip $(shell pwd | grep -o '[^/]*$$')
+
