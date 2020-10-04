@@ -318,7 +318,7 @@ int pp(char *args)
 					strcpy(tokens[i - 1].str, "0");
 					int kh = 0;
 					//printf("a\n");
-					for (j = i + 1; j < nr_token && (kh == 1 || (tokens[j].str[0] != '+' && tokens[j].str[0] != '-') || ((tokens[j].str[0] == '+' || tokens[j].str[0] == '-') && (tokens[j - 1].type == 1 && (tokens[j - 1].str[0] != '(' && tokens[j - 1].str[0] != ')')))); j++)
+					for (j = i + 1; j < nr_token && (kh == 1 || tokens[j].type == 0 || tokens[j].str[0] == '(') /*(kh == 1 || (tokens[j].str[0] != '+' && tokens[j].str[0] != '-') || ((tokens[j].str[0] == '+' || tokens[j].str[0] == '-') && (tokens[j - 1].type == 1 && (tokens[j - 1].str[0] != '(' && tokens[j - 1].str[0] != ')'))))*/; j++)
 					{
 						if (tokens[j].str[0] == '(')
 						{
