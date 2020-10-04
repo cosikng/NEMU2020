@@ -336,10 +336,10 @@ int pp(char *args)
 					}
 					tokens[j].type = 1;
 					strcpy(tokens[j].str, ")");
-					/*int m;
+					int m;
 					for (m = 0; m < nr_token; m++)
 						printf("%c\t", tokens[m].str[0]);
-					printf("\n");*/
+					printf("\n");
 				}
 			}
 			else if (tokens[i].str[0] == '*')
