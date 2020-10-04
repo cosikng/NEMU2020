@@ -375,6 +375,8 @@ int pp(char *args)
 					}
 					if (opt[po - 1] == '!' || opt[po - 1] == 'p') //单目运算符特殊处理
 					{
+						if (pn == 0)
+							break;
 						int n = num[--pn];
 						num[pn++] = cac(0, n, opt[po - 1]);
 					}
