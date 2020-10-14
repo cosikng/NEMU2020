@@ -2,9 +2,15 @@
 
 #define instr call
 
-static void do_execute() {
-	OPERAND_W(op_dest, op_src->val);
-	print_asm_template2();
+extern CPU_state cpu;
+
+static void do_execute()
+{
+	cpu.esp -= 4;
+	swaddr_write(cpu.esp, 4, cpu.eip);
+	int off = op_src->val;
+	cpu.eip += off;
+	return;
 }
 
 make_instr_helper(i)
