@@ -7,7 +7,7 @@ extern CPU_state cpu;
 static void do_execute()
 {
 	cpu.esp -= 4;
-	swaddr_write(cpu.esp, 4, cpu.eip);
+	swaddr_write(cpu.esp, 4, cpu.eip + 5);
 	int off = op_src->val;
 	cpu.eip += off;
 	return;
