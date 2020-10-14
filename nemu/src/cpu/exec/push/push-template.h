@@ -6,13 +6,12 @@ extern CPU_state cpu;
 
 static void do_execute()
 {
+	int index = swaddr_read(cpu.eip, 1) - 0x50;
 	cpu.esp -= 4;
-	swaddr_write(cpu.esp, 4, cpu.eip + 5);
-	int off = op_src->val;
-	cpu.eip += off;
+	swaddr_write(cpu.esp, 4, cpu.gpr[index]._32);
 	return;
 }
 
-make_instr_helper(i)
+make_instr_helper(v)
 
 #include "cpu/exec/template-end.h"

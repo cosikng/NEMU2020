@@ -185,4 +185,8 @@ void concat(write_operand_, SUFFIX) (Operand *op, DATA_TYPE src) {
 	else { assert(0); }
 }
 
+make_helper(concat(decode_v_, SUFFIX)) {
+	return 0;
+}
+
 #include "cpu/exec/template-end.h"
