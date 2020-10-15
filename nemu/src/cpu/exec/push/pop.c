@@ -12,6 +12,8 @@
 
 make_helper_v(pop_rm)
 
+
+
 make_helper(pop_r16)
 {
     int index = swaddr_read(cpu.eip, 1) & 7;
@@ -25,4 +27,13 @@ make_helper(pop_r32)
     cpu.gpr[index]._32 = swaddr_read(cpu.esp, 4);
     cpu.esp += 4;
     return 1;
+}
+
+make_helper(pop_r)
+{
+    if(ops_decoded.is_operand_size_16)
+    {
+        return pop_r16(eip);
+    }
+    else return pop_r32(eip);
 }
