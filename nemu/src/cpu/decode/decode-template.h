@@ -32,8 +32,14 @@ make_helper(concat(decode_si_, SUFFIX)) {
 	 *
 	op_src->simm = ???
 	 */
-	panic("please implement me");
-
+	op_src->imm = instr_fetch(eip, DATA_BYTE);
+	if(DATA_BYTE == 1)
+	{
+		if((op_src->imm & 0x80) != 0)
+		{
+			op_src->imm |= 0xffffff00;
+		}
+	}
 	op_src->val = op_src->simm;
 
 #ifdef DEBUG
