@@ -31,5 +31,6 @@
 
 #include "call/call.h"
 #include "call/ret.h"
+#include "call/je.h"
 
 #include "push/push.h"
