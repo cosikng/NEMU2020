@@ -27,5 +27,6 @@
 #include "special/special.h"
 
 #include "call/call.h"
+#include "call/ret.h"
 
 #include "push/push.h"
