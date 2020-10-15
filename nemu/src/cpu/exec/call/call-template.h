@@ -2,8 +2,6 @@
 
 #define instr call
 
-extern CPU_state cpu;
-
 static void do_execute()
 {
 	cpu.esp -= 4;
