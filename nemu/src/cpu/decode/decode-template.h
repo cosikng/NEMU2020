@@ -21,7 +21,7 @@ make_helper(concat(decode_i_, SUFFIX)) {
 	return DATA_BYTE;
 }
 
-#if DATA_BYTE == 1 || DATA_BYTE == 4
+//#if DATA_BYTE == 1 || DATA_BYTE == 4
 /* sign immediate */
 make_helper(concat(decode_si_, SUFFIX)) {
 	op_src->type = OP_TYPE_IMM;
@@ -40,6 +40,13 @@ make_helper(concat(decode_si_, SUFFIX)) {
 			op_src->imm |= 0xffffff00;
 		}
 	}
+	else if(DATA_BYTE == 2)
+	{
+		if((op_src->imm & 0x8000) != 0)
+		{
+			op_src->imm |= 0xffff0000;
+		}
+	}
 	op_src->val = op_src->simm;
 
 #ifdef DEBUG
@@ -47,7 +54,7 @@ make_helper(concat(decode_si_, SUFFIX)) {
 #endif
 	return DATA_BYTE;
 }
-#endif
+//#endif
 
 /* eAX */
 static int concat(decode_a_, SUFFIX) (swaddr_t eip, Operand *op) {
