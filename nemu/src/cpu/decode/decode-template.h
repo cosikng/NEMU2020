@@ -192,6 +192,9 @@ void concat(write_operand_, SUFFIX) (Operand *op, DATA_TYPE src) {
 }
 
 make_helper(concat(decode_v_, SUFFIX)) {
+	op_src->type = OP_TYPE_IMM;
+	op_src->imm = 0;
+	op_src->val = op_src->imm;
 	return 0;
 }
 

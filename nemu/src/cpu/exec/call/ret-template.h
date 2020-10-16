@@ -8,10 +8,12 @@ static void do_execute()
 {
     cpu.eip = swaddr_read(cpu.esp, 4);
     cpu.esp += 4;
+    cpu.esp += op_src->val;
     cpu.eip--;
     return;
 }
 
 make_instr_helper(v)
+make_instr_helper(i)
 
 #include "cpu/exec/template-end.h"
