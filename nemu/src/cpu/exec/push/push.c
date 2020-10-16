@@ -13,7 +13,7 @@
 #undef DATA_BYTE
 
 /* for instruction encoding overloading */
-make_helper(push_v_l)
+make_helper(push_r)
 {
     int byte;
     if(ops_decoded.is_operand_size_16) byte = 2;

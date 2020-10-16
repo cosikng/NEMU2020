@@ -2,7 +2,7 @@
 #ifndef __PUSH_H__
 #define __PUSH_H__
 
-make_helper(push_v_l);
+make_helper(push_r);
 
 make_helper(push_rm_w);
 make_helper(push_rm_l);
