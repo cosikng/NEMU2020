@@ -15,7 +15,6 @@
 /* for instruction encoding overloading */
 make_helper(push_r)
 {
-    return 1;
     int byte;
     if(ops_decoded.is_operand_size_16) byte = 2;
     else byte = 4;
