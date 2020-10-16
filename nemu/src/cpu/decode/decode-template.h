@@ -195,6 +195,7 @@ make_helper(concat(decode_v_, SUFFIX)) {
 	op_src->type = OP_TYPE_IMM;
 	op_src->imm = 0;
 	op_src->val = op_src->imm;
+	op_src->str[0] = 0;
 	return 0;
 }
 
