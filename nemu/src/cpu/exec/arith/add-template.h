@@ -19,7 +19,7 @@ static void do_execute()
     result ^= result >> 2;
     result ^= result >> 1;
     cpu.eflags.PF = !(result & 1);
-    print_asm_template2();
+    print_asm_template2_n();
 }
 
 make_instr_helper(i2a)

@@ -10,7 +10,7 @@ static void do_execute()
     cpu.esp += 4;
     cpu.esp += op_src->val;
     cpu.eip--;
-    print_asm_template1();
+    print_asm_template1_n();
     return;
 }
 

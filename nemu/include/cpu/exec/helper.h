@@ -23,11 +23,17 @@ extern char assembly[];
 #define print_asm(...)
 #endif
 
+#define print_asm_template1_n() \
+	print_asm(str(instr) "" " %s", op_src->str)
+
 #define print_asm_template1() \
 	print_asm(str(instr) str(SUFFIX) " %s", op_src->str)
 
-#define print_asm_template2() \
+#define print_asm_template2_n() \
 	print_asm(str(instr) str(SUFFIX) " %s,%s", op_src->str, op_dest->str)
+
+#define print_asm_template2() \
+	print_asm(str(instr) "" " %s,%s", op_src->str, op_dest->str)
 
 #define print_asm_template3() \
 	print_asm(str(instr) str(SUFFIX) " %s,%s,%s", op_src->str, op_src2->str, op_dest->str)

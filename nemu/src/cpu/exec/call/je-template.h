@@ -8,7 +8,7 @@ static void do_execute()
 {
     int off = op_src->val;
     if(cpu.eflags.ZF == 1) cpu.eip += off;
-    print_asm_template1();
+    print_asm_template1_n();
     return;
 }
 
