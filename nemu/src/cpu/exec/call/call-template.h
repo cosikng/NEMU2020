@@ -8,6 +8,7 @@ static void do_execute()
 	swaddr_write(cpu.esp, 4, cpu.eip + 5);
 	int off = op_src->val;
 	cpu.eip += off;
+	print_asm_template1();
 	return;
 }
 

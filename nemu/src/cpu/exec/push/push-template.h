@@ -9,6 +9,7 @@ static void do_execute()
 	int index = swaddr_read(cpu.eip, 1) - 0x50;
 	cpu.esp -= 4;
 	swaddr_write(cpu.esp, 4, cpu.gpr[index]._32);
+	print_asm_template1();
 	return;
 }
 

@@ -6,6 +6,7 @@ static void do_execute()
 {
     swaddr_write(op_src->val, DATA_BYTE, swaddr_read(cpu.esp, DATA_BYTE));
     cpu.esp += DATA_BYTE;
+    print_asm_template1();
     return;
 }
 
