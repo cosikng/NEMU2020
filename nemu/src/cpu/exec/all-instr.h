@@ -47,6 +47,13 @@
 #include "call/jle.h"
 #include "call/jnc.h"
 #include "call/jne.h"
+#include "call/jno.h"
+#include "call/jnp.h"
+#include "call/jns.h"
+#include "call/jnz.h"
+#include "call/jo.h"
+#include "call/jp.h"
+#include "call/js.h"
 
 #include "push/push.h"
 #include "push/pop.h"
