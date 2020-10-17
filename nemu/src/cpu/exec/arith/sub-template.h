@@ -15,6 +15,7 @@ static void do_execute()
     s2 = op_src->val >> l;
     cpu.eflags.OF = (s1 != s2 && s2 == cpu.eflags.SF);
     cpu.eflags.ZF = !result;
+    OPERAND_W(op_dest, result);
     result ^= result >> 4;
     result ^= result >> 2;
     result ^= result >> 1;
