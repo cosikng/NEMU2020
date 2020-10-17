@@ -1,5 +1,7 @@
 #include "cpu/exec/helper.h"
 
+#define instr leave
+
 make_helper(leave)
 {
     if (ops_decoded.is_operand_size_16)
