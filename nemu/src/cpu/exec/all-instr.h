@@ -45,6 +45,8 @@
 #include "call/jge.h"
 #include "call/jl.h"
 #include "call/jle.h"
+#include "call/jnc.h"
+#include "call/jne.h"
 
 #include "push/push.h"
 #include "push/pop.h"
