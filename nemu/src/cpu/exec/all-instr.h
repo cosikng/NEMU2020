@@ -40,6 +40,8 @@
 #include "call/jb.h"
 #include "call/jbe.h"
 #include "call/jc.h"
+#include "call/jz.h"
+#include "call/jg.h"
 
 #include "push/push.h"
 #include "push/pop.h"
