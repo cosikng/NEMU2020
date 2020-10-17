@@ -37,6 +37,9 @@
 #include "call/jmp.h"
 #include "call/ja.h"
 #include "call/jae.h"
+#include "call/jb.h"
+#include "call/jbe.h"
+#include "call/jc.h"
 
 #include "push/push.h"
 #include "push/pop.h"
