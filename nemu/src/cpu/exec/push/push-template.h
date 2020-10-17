@@ -2,8 +2,6 @@
 
 #define instr push
 
-extern CPU_state cpu;
-
 static void do_execute()
 {
 	cpu.esp -= DATA_BYTE;
