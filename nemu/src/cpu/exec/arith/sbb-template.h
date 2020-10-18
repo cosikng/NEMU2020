@@ -33,7 +33,7 @@ make_instr_helper(r2rm)
 make_instr_helper(rm2r)
 
 #if DATA_BYTE == 2 || DATA_BYTE == 4
-                make_instr_helper(si2rm)
+make_instr_helper(si2rm)
 #endif
 
 #include "cpu/exec/template-end.h"
