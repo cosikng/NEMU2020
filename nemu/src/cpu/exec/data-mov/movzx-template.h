@@ -5,9 +5,9 @@
 static void do_execute()
 {
 	if (ops_decoded.is_operand_size_16)
-		op_dest->size = 2;
+		cpu.gpr[op_dest->reg]._16 = op_src->val;
 	else
-		op_dest->size = 4;
+		cpu.gpr[op_dest->reg]._32 = op_src->val;
 	OPERAND_W(op_dest, op_src->val);
 	print_asm_template2_n();
 }
