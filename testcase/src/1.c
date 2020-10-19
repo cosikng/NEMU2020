@@ -1,7 +1,7 @@
 #include "trap.h"
 
 int main() {
-	char c=-1;
+	short c=-1;
 	int a=c;
 
 	nemu_assert(a == -1);
