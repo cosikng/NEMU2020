@@ -20,17 +20,17 @@ static make_helper(_2byte_esc);
 /* 0x80 */
 make_group(group1_b,
 	add_i2rm_b, inv, inv, sbb_i2rm_b, 
-	inv, sub_i2rm_b, inv, cmp_i2rm_b)
+	and_i2rm_b, sub_i2rm_b, inv, cmp_i2rm_b)
 
 /* 0x81 */
 make_group(group1_v,
 	add_i2rm_v, inv, inv, sbb_i2rm_v, 
-	inv, sub_i2rm_v, inv, cmp_i2rm_v)
+	and_i2rm_v, sub_i2rm_v, inv, cmp_i2rm_v)
 
 /* 0x83 */
 make_group(group1_sx_v,
 	add_si2rm_v, inv, inv, sbb_si2rm_v, 
-	inv, sub_si2rm_v, inv, cmp_si2rm_v)
+	and_si2rm_v, sub_si2rm_v, inv, cmp_si2rm_v)
 
 /* 0xc0 */
 make_group(group2_i_b,
@@ -64,12 +64,12 @@ make_group(group2_cl_v,
 
 /* 0xf6 */
 make_group(group3_b,
-	test_i2rm_b, inv, inv, neg_rm_b, 
+	test_i2rm_b, inv, not_rm_b, neg_rm_b, 
 	mul_rm_b, imul_rm2a_b, div_rm_b, idiv_rm_b)
 
 /* 0xf7 */
 make_group(group3_v,
-	test_i2rm_v, inv, inv, neg_rm_v, 
+	test_i2rm_v, inv, not_rm_v, neg_rm_v, 
 	mul_rm_v, imul_rm2a_v, div_rm_v, idiv_rm_v)
 
 /* 0xfe */
@@ -103,8 +103,8 @@ helper_fun opcode_table [256] = {
 /* 0x14 */	inv, inv, inv, inv,
 /* 0x18 */	sbb_r2rm_b, sbb_r2rm_v, sbb_rm2r_b, sbb_rm2r_v,
 /* 0x1c */	sbb_i2a_b, sbb_i2a_v, inv, inv,
-/* 0x20 */	inv, inv, inv, inv,
-/* 0x24 */	inv, inv, inv, inv,
+/* 0x20 */	and_r2rm_b, and_r2rm_v, and_rm2r_b, and_rm2r_v,
+/* 0x24 */	and_i2a_b, and_i2a_v, inv, inv,
 /* 0x28 */	sub_r2rm_b, sub_r2rm_v, sub_rm2r_b, sub_rm2r_v,
 /* 0x2c */	sub_i2a_b, sub_i2a_v, inv, inv,
 /* 0x30 */	inv, inv, inv, inv,
