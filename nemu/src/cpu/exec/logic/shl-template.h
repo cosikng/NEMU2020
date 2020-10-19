@@ -8,10 +8,20 @@ static void do_execute () {
 
 	uint8_t count = src & 0x1f;
 	dest <<= count;
+	int l = (DATA_BYTE << 3) - 1;
+	cpu.eflags.CF = (((op_dest->val >> 1) << count) >> 31) & 1;
+	if(count == 1) cpu.eflags.OF = ((op_dest->val >> 31) & 1) != ((op_dest->val >> 30) & 1);
+	cpu.eflags.SF = dest >> l;
+	cpu.eflags.ZF = !dest;
 	OPERAND_W(op_dest, dest);
+	dest ^= dest >> 4;
+	dest ^= dest >> 2;
+	dest ^= dest >> 1;
+	cpu.eflags.PF = !(dest & 1);
 
 	/* TODO: Update EFLAGS. */
-	panic("please implement me");
+	//panic("please implement me");
+
 
 	print_asm_template2();
 }
