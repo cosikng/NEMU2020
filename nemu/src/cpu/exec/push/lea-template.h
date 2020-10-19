@@ -10,6 +10,6 @@ static void do_execute()
     return;
 }
 
-make_instr_helper(rm2r)
+make_instr_helper(m2r)
 
 #include "cpu/exec/template-end.h"

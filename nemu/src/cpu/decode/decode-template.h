@@ -4,6 +4,7 @@
 
 #define decode_r_internal concat3(decode_r_, SUFFIX, _internal)
 #define decode_rm_internal concat3(decode_rm_, SUFFIX, _internal)
+#define decode_m_internal concat3(decode_m_, SUFFIX, _internal)
 #define decode_i concat(decode_i_, SUFFIX)
 #define decode_a concat(decode_a_, SUFFIX)
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
@@ -91,6 +92,17 @@ static int concat3(decode_rm_, SUFFIX, _internal) (swaddr_t eip, Operand *rm, Op
 	return len;
 }
 
+static int concat3(decode_m_, SUFFIX, _internal) (swaddr_t eip, Operand *rm, Operand *reg) {
+	rm->size = DATA_BYTE;
+	int len = read_ModR_M_od(eip, rm, reg);
+	reg->val = REG(reg->reg);
+
+#ifdef DEBUG
+	snprintf(reg->str, OP_STR_SIZE, "%%%s", REG_NAME(reg->reg));
+#endif
+	return len;
+}
+
 /* Eb <- Gb
  * Ev <- Gv
  */
@@ -103,6 +115,10 @@ make_helper(concat(decode_r2rm_, SUFFIX)) {
  */
 make_helper(concat(decode_rm2r_, SUFFIX)) {
 	return decode_rm_internal(eip, op_src, op_dest);
+}
+
+make_helper(concat(decode_m2r_, SUFFIX)) {
+	return decode_m_internal(eip, op_src, op_dest);
 }
 
 

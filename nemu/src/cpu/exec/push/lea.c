@@ -10,7 +10,7 @@
 
 /* for instruction encoding overloading */
 
-make_helper_v(lea_rm2r)
+make_helper_v(lea_m2r)
 
 
 
