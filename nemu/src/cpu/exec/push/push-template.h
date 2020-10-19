@@ -4,13 +4,18 @@
 
 static void do_execute()
 {
-	cpu.esp -= DATA_BYTE;
-	swaddr_write(cpu.esp, DATA_BYTE, op_src->val);
+	int byte;
+	if (op_src->type == OP_TYPE_IMM)
+		byte = 4;
+	else
+		byte = DATA_BYTE;
+	cpu.esp -= byte;
+	swaddr_write(cpu.esp, byte, op_src->val);
 	print_asm_template1_n();
 	return;
 }
 
 make_instr_helper(rm)
-make_instr_helper(i)
+	make_instr_helper(i)
 
 #include "cpu/exec/template-end.h"
