@@ -1,8 +1,8 @@
 #include "trap.h"
 
 int main() {
-	unsigned short c=1;
-	int a=c;
+	short c=1;
+	unsigned int a=c;
 
 	nemu_assert(a == 1);
 
