@@ -16,6 +16,6 @@ make_helper(leave)
         cpu.ebp = swaddr_read(cpu.esp, 4);
         cpu.esp += 4;
     }
-    print_asm_template1_n();
+    print_asm_template_s();
     return 1;
 }
