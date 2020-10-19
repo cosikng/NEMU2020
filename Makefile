@@ -54,7 +54,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/matrix-mul-small
+USERPROG := obj/testcase/max
 ENTRY := $(USERPROG)
 
 entry: $(ENTRY)
