@@ -7,6 +7,7 @@ static void do_execute()
 
 	uint32_t dest = REG(0);
 	uint32_t src = swaddr_read(cpu.edi, DATA_BYTE);
+	printf("dest:0x%x,src:0x%x\n", dest, src);
 	if (cpu.eflags.DF == 0)
 	{
 		cpu.edi += DATA_BYTE;
