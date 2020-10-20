@@ -7,11 +7,7 @@ extern uint8_t *hw_mem;
 static void do_execute()
 {
 	
-	//swaddr_write(cpu.edi, 4, swaddr_read(cpu.esi, 4));
-	int i;
-	for(i=0;i<3;i++){
-		*(hw_mem+cpu.edi+i)=*(hw_mem+cpu.esi+i);
-	}
+	swaddr_write(cpu.edi, 4, swaddr_read(cpu.esi, 4));
 	if (cpu.eflags.DF == 0)
 	{
 		cpu.edi += DATA_BYTE;
