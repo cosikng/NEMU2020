@@ -1,11 +1,13 @@
 #include "trap.h"
-#include <stdio.h>
 #include <string.h>
 
 int main() {
 	char s[]="Hello";
 	char a[10];
-	sprintf(a,"%s",s);
+	int i;
+	for(i=0;i<6;i++){
+		a[i]=s[i];
+	}
 
 	nemu_assert(strcmp(a,"Hello")==0);
 	return 0;
