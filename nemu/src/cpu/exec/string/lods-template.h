@@ -5,15 +5,15 @@
 static void do_execute()
 {
 
-	uint32_t data = swaddr_read(cpu.edi, DATA_BYTE);
+	uint32_t data = swaddr_read(cpu.esi, DATA_BYTE);
 	REG(0) = data;
 	if (cpu.eflags.DF == 0)
 	{
-		cpu.edi += DATA_BYTE;
+		cpu.esi += DATA_BYTE;
 	}
 	else
 	{
-		cpu.edi -= DATA_BYTE;
+		cpu.esi -= DATA_BYTE;
 	}
 	print_asm_template_s();
 }
