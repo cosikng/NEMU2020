@@ -1,9 +1,11 @@
 #include "trap.h"
+#include <string.h>
 
 int main() {
-	short c=-1;
-	int a=c;
+	char s[]="Hello";
+	char a[10];
+	strcpy(a,s);
 
-	nemu_assert(a == -1);
+	nemu_assert(strcmp(a,"Hello")==0);
 	return 0;
 }
