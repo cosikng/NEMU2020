@@ -6,7 +6,6 @@ extern uint8_t *hw_mem;
 
 static void do_execute()
 {
-	printf("\n0x%x\n",swaddr_read(cpu.esi, 4));
 	swaddr_write(cpu.edi, 4, swaddr_read(cpu.esi, 4));
 	if (cpu.eflags.DF == 0)
 	{

@@ -4,7 +4,7 @@
 
 int main() {
 	//char s[]="Hello";
-	char a[100];
+	char a[10];
 	sprintf(a,"%d",10);
 	nemu_assert(strcmp(a,"10")==0);
 	return 0;
