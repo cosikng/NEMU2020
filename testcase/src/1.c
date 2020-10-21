@@ -1,5 +1,6 @@
 #include "trap.h"
 #include <string.h>
+#include <stdio.h>
 
 void f(char *a,char *b){
 	int i;	
@@ -13,7 +14,7 @@ void f(char *a,char *b){
 int main() {
 	char s[]="Hello";
 	char a[10];
-	strcpy(a,s);
+	sprintf(a,"%s",s);
 	nemu_assert(strcmp(a,"Hello")==0);
 	return 0;
 }

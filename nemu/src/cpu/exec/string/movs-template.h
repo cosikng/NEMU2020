@@ -2,8 +2,6 @@
 
 #define instr movs
 
-extern uint8_t *hw_mem;
-
 static void do_execute()
 {
 	swaddr_write(cpu.edi, 4, swaddr_read(cpu.esi, 4));
