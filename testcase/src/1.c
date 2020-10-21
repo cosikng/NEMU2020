@@ -14,8 +14,8 @@ void f(char *a,char *b){
 int main() {
 	char s[]="abcde";
 	char a[10];
-	//memcpy(a,s,6);
-	snprintf(a,6,"%s",s);
+	memcpy(a,s,6);
+	//snprintf(a,6,"%s",s);
 	nemu_assert(strcmp(a,s)==0);
 	return 0;
 }
