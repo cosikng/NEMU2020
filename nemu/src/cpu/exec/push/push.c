@@ -13,17 +13,7 @@
 #undef DATA_BYTE
 
 /* for instruction encoding overloading */
-make_helper(push_r)
-{
-    int byte;
-    if(ops_decoded.is_operand_size_16) byte = 2;
-    else byte = 4;
-    int index = swaddr_read(cpu.eip, 1) - 0x50;
-	cpu.esp -= byte;
-	swaddr_write(cpu.esp, byte, cpu.gpr[index]._32);
-	print_asm_template_s();
-	return 1;
-}
+make_helper_v(push_r)
 
 make_helper_v(push_rm)
 make_helper_v(push_i)
