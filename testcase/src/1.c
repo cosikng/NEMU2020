@@ -13,7 +13,7 @@ void f(char *a,char *b){
 int main() {
 	char s[]="Hello";
 	char a[10];
-	f(a,s);
+	strcpy(a,s);
 	nemu_assert(strcmp(a,"Hello")==0);
 	return 0;
 }
