@@ -250,6 +250,7 @@ make_helper(exec) {
 		}
 		printf("\n");
 	}
+	printf("-----------\n");
 	return opcode_table[ ops_decoded.opcode ](eip);
 }
 
@@ -274,5 +275,6 @@ static make_helper(_2byte_esc) {
 		}
 		printf("\n");
 	}
+	printf("-----------\n");
 	return _2byte_opcode_table[opcode](eip) + 1; 
 }
