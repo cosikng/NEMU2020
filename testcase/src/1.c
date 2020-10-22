@@ -1,6 +1,6 @@
 #include "trap.h"
-/*#include <string.h>
-#include <stdio.h>
+#include <string.h>
+/*#include <stdio.h>
 
 void f(char *a,char *b){
 	int i;	
@@ -12,14 +12,10 @@ void f(char *a,char *b){
 }*/
 
 int main() {
-	/*char s[]="ab";
+	char s[]="ab";
 	char a[10];
-	memcpy(a,s,3);
+	strcpy(a,s);
 	//snprintf(a,3,"%s",s);
-	nemu_assert(strcmp(a,s)==0);*/
-	int a=-2;
-	unsigned int b=-2;
-	nemu_assert((a>>1)==-1);
-	nemu_assert((b>>1)==2147483647);
+	nemu_assert(strcmp(a,s)==0);
 	return 0;
 }
