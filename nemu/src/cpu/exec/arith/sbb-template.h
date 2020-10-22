@@ -10,6 +10,7 @@ static void do_execute()
         op_src->val = (int8_t)op_src->val;
     }
     src += cpu.eflags.CF;
+    printf("%d %d\n",src,op_src->val);
     DATA_TYPE result = op_dest->val - src;
     int l = (DATA_BYTE << 3) - 1;
     cpu.eflags.CF = op_dest->val < src;
