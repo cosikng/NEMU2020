@@ -234,7 +234,7 @@ helper_fun _2byte_opcode_table [256] = {
 make_helper(exec) {
 	ops_decoded.opcode = instr_fetch(eip, 1);
 	tab[ops_decoded.opcode]=1;
-	int i;
+	/*int i;
 	for(i=0;i<16;i++){
 		int j;
 		for(j=0;j<16;j++){
@@ -250,7 +250,7 @@ make_helper(exec) {
 		}
 		printf("\n");
 	}
-	printf("-----------\n");
+	printf("-----------\n");*/
 	return opcode_table[ ops_decoded.opcode ](eip);
 }
 
@@ -259,7 +259,7 @@ static make_helper(_2byte_esc) {
 	uint32_t opcode = instr_fetch(eip, 1);
 	ops_decoded.opcode = opcode | 0x100;
 	tab2[opcode]=1;
-	int i;
+	/*int i;
 	for(i=0;i<16;i++){
 		int j;
 		for(j=0;j<16;j++){
@@ -275,6 +275,6 @@ static make_helper(_2byte_esc) {
 		}
 		printf("\n");
 	}
-	printf("-----------\n");
+	printf("-----------\n");*/
 	return _2byte_opcode_table[opcode](eip) + 1; 
 }
