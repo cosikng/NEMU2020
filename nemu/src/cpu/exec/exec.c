@@ -242,6 +242,14 @@ make_helper(exec) {
 		}
 		printf("\n");
 	}
+	printf("-----------\n");
+	for(i=0;i<16;i++){
+		int j;
+		for(j=0;j<16;j++){
+			printf("%d ",tab2[i*16+j]);
+		}
+		printf("\n");
+	}
 	return opcode_table[ ops_decoded.opcode ](eip);
 }
 
@@ -251,6 +259,14 @@ static make_helper(_2byte_esc) {
 	ops_decoded.opcode = opcode | 0x100;
 	tab2[opcode]=1;
 	int i;
+	for(i=0;i<16;i++){
+		int j;
+		for(j=0;j<16;j++){
+			printf("%d ",tab[i*16+j]);
+		}
+		printf("\n");
+	}
+	printf("-----------\n");
 	for(i=0;i<16;i++){
 		int j;
 		for(j=0;j<16;j++){
