@@ -6,7 +6,7 @@ static void do_execute()
 {
 	DATA_TYPE result = op_src->val - 1;
 	int l = (DATA_BYTE << 3) - 1;
-	cpu.eflags.CF = op_src->val < 1;
+	//cpu.eflags.CF = op_src->val < 1;
 	cpu.eflags.SF = result >> l;
 	cpu.eflags.ZF = !result;
 	int s1, s2;
