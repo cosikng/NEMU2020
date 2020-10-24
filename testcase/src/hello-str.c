@@ -8,7 +8,7 @@ char format[]="%s";
 
 int main() {
 	
-	sprintf(buf,format,s);
+	sprintf(buf,"a");
 	nemu_assert(strcmp(buf, "a") == 0);
 
 	//sprintf(buf, "%s", "Hello world!\n");
