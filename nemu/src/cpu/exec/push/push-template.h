@@ -10,7 +10,7 @@ static void do_execute()
 	else
 		byte = DATA_BYTE;
 	cpu.esp -= byte;
-	swaddr_write(cpu.esp, byte, op_src->val);
+	swaddr_write(cpu.esp, byte, op_src->val - byte);
 	print_asm_template1_n();
 	return;
 }
