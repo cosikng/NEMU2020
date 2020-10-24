@@ -5,7 +5,7 @@
 char buf[128];
 
 int main() {
-	sprintf(buf, "Hello world!\n");
+	sprintf(buf, "%s", "Hello world!\n");
 	//strcpy(buf,"Hello world!\n");
 	nemu_assert(strcmp(buf, "Hello world!\n") == 0);
 
