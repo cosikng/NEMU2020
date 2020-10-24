@@ -6,7 +6,7 @@ char buf[128];
 
 int main() {
 	int a;
-	a=sprintf(buf, "%d", 10);
+	a=sprintf(buf, "%d", 1000);
 	nemu_assert(a!=4608);
 	//nemu_assert(strcmp(buf, " ") == 0);
 
