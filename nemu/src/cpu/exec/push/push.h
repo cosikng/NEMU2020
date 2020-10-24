@@ -15,5 +15,9 @@ make_helper(push_i_w);
 make_helper(push_i_l);
 make_helper(push_i_v);
 
+make_helper(push_si_w);
+make_helper(push_si_l);
+make_helper(push_si_v);
+
 
 #endif
