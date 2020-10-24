@@ -11,8 +11,10 @@ make_helper(rep) {
 		len = 0;
 	}
 	else {
+		if(instr_fetch(eip + 1, 1) == 0x66) len = 2;
+		else len = 1;
 		while(cpu.ecx) {
-			len = exec(eip + 1);
+			exec(eip + 1);
 			count ++;
 			cpu.ecx --;
 			/*assert(ops_decoded.opcode == 0xa4	// movsb
@@ -47,8 +49,10 @@ make_helper(rep) {
 make_helper(repnz) {
 	int count = 0;
 	int len = 0;
+	if(instr_fetch(eip + 1, 1) == 0x66) len = 2;
+	else len = 1;
 	while(cpu.ecx) {
-		len = exec(eip + 1);
+		exec(eip + 1);
 		count ++;
 		cpu.ecx --;
 		if((ops_decoded.opcode == 0xa6
