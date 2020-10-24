@@ -4,7 +4,7 @@
 
 static void do_execute()
 {
-	swaddr_write(cpu.edi, 4, swaddr_read(cpu.esi, 4));
+	swaddr_write(cpu.edi, DATA_BYTE, swaddr_read(cpu.esi, DATA_BYTE));
 	if (cpu.eflags.DF == 0)
 	{
 		cpu.edi += DATA_BYTE;

@@ -5,7 +5,7 @@
 static void do_execute()
 {
 
-	swaddr_write(cpu.edi, 4, cpu.eax);
+	swaddr_write(cpu.edi, DATA_BYTE, REG(0));
 	if (cpu.eflags.DF == 0)
 	{
 		cpu.edi += DATA_BYTE;
