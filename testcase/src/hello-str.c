@@ -5,8 +5,8 @@
 char buf[128];
 
 int main() {
-	char s[]=" ";
-	sprintf(buf, s);
+	char s[]="%c";
+	sprintf(buf, s,' ');
 	nemu_assert(strcmp(buf, " ") == 0);
 
 	//sprintf(buf, "%s", "Hello world!\n");
