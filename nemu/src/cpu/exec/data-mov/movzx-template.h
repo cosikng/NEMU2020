@@ -8,7 +8,7 @@ static void do_execute()
 		cpu.gpr[op_dest->reg]._16 = op_src->val;
 	else
 		cpu.gpr[op_dest->reg]._32 = op_src->val;
-	OPERAND_W(op_dest, op_src->val);
+	//OPERAND_W(op_dest, op_src->val);
 	print_asm_template2_n();
 }
 
