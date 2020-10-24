@@ -6,7 +6,7 @@ char buf[128];
 
 int main() {
 
-	sprintf(buf, "%c", 'a');
+	sprintf(buf, "a");
 	nemu_assert(strcmp(buf, "a") == 0);
 
 	//sprintf(buf, "%s", "Hello world!\n");
