@@ -15,6 +15,7 @@ static void do_execute()
 		cpu.edi -= DATA_BYTE;
 	}
 	print_asm_template_s();
+	sprintf(assembly,"stos");
 }
 
 make_instr_helper(v)

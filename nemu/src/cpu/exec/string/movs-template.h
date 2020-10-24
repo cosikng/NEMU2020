@@ -16,6 +16,7 @@ static void do_execute()
 		cpu.esi -= DATA_BYTE;
 	}
 	print_asm_template_s();
+	sprintf(assembly,"movs");
 }
 
 make_instr_helper(v)

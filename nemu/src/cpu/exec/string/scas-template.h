@@ -30,6 +30,7 @@ static void do_execute()
 	result ^= result >> 1;
 	cpu.eflags.PF = !(result & 1);
 	print_asm_template_s();
+	sprintf(assembly,"scas");
 }
 
 make_instr_helper(v)
