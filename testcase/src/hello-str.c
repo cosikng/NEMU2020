@@ -3,9 +3,10 @@
 #include "trap.h"
 
 char buf[128];
+char s[]="a";
 
 int main() {
-	char s[]="a";
+	
 	sprintf(buf,s);
 	nemu_assert(strcmp(buf, "a") == 0);
 
