@@ -38,7 +38,8 @@ make_helper(rep) {
 
 #ifdef DEBUG
 	char temp[80];
-	sprintf(temp, "rep %s", assembly);
+	if(count != 0) sprintf(temp, "rep %s", assembly);
+	else sprintf(temp, "rep");
 	sprintf(assembly, "%s[cnt = %d]", temp, count);
 #endif
 	
@@ -66,7 +67,8 @@ make_helper(repnz) {
 
 #ifdef DEBUG
 	char temp[80];
-	sprintf(temp, "repnz %s", assembly);
+	if(count != 0) sprintf(temp, "rep %s", assembly);
+	else sprintf(temp, "rep");
 	sprintf(assembly, "%s[cnt = %d]", temp, count);
 #endif
 
