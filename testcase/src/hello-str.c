@@ -5,9 +5,9 @@
 char buf[128];
 
 int main() {
-	char s[]="%c";
-	sprintf(buf, s, ' ');
-	nemu_assert(strcmp(buf, " ") == 0);
+	char s[]="123";
+	sprintf(buf, s);
+	nemu_assert(strcmp(buf, "123") == 0);
 
 	//sprintf(buf, "%s", "Hello world!\n");
 	//nemu_assert(strcmp(buf, "Hello world!\n") == 0);
