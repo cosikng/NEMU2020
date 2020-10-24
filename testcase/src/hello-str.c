@@ -4,10 +4,11 @@
 
 char buf[128];
 char s[]="a";
+char format[]="%s";
 
 int main() {
 	
-	sprintf(buf,"%s",s);
+	sprintf(buf,format,s);
 	nemu_assert(strcmp(buf, "a") == 0);
 
 	//sprintf(buf, "%s", "Hello world!\n");
