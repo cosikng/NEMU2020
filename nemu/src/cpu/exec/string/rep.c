@@ -37,11 +37,11 @@ make_helper(rep) {
 	}
 	print_asm_template_s();
 
-#ifdef DEBUG
+/*#ifdef DEBUG
 	char temp[80];
 	sprintf(temp, "rep %s", assembly);
 	sprintf(assembly, "%s[cnt = %d]", temp, count);
-#endif
+#endif*/
 	
 	return len + 1;
 }
