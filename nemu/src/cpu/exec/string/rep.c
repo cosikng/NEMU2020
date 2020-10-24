@@ -3,7 +3,7 @@
 make_helper(exec);
 
 make_helper(rep) {
-	int len;
+	int len = 0;
 	int count = 0;
 	if(instr_fetch(eip + 1, 1) == 0xc3) {
 		/* repz ret */
@@ -12,7 +12,7 @@ make_helper(rep) {
 	}
 	else {
 		while(cpu.ecx) {
-			exec(eip + 1);
+			len = exec(eip + 1);
 			count ++;
 			cpu.ecx --;
 			/*assert(ops_decoded.opcode == 0xa4	// movsb
@@ -32,7 +32,6 @@ make_helper(rep) {
 			/* TODO: Jump out of the while loop if necessary. */
 
 		}
-		len = 1;
 	}
 	print_asm_template_s();
 
@@ -47,8 +46,9 @@ make_helper(rep) {
 
 make_helper(repnz) {
 	int count = 0;
+	int len = 0;
 	while(cpu.ecx) {
-		exec(eip + 1);
+		len = exec(eip + 1);
 		count ++;
 		cpu.ecx --;
 		if((ops_decoded.opcode == 0xa6
@@ -67,5 +67,5 @@ make_helper(repnz) {
 	sprintf(assembly, "%s[cnt = %d]", temp, count);
 #endif
 
-	return 1 + 1;
+	return len + 1;
 }
