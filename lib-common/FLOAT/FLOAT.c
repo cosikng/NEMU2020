@@ -83,11 +83,7 @@ FLOAT f2F(float a)
 	{
 		nemu_assert(0);
 	}
-	if (s == -1)
-	{
-		data *= s;
-	}
-	return data;
+	return s == 0 ? data : -data;
 }
 
 FLOAT Fabs(FLOAT a)
