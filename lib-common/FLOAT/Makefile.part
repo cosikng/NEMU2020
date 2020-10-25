@@ -16,8 +16,8 @@ FLOAT_CFLAGS := -c -m32 -O2 -fno-builtin -fno-stack-protector -D_FORTIFY_SOURCE=
 
 $(FLOAT_O): $(LIB_COMMON_DIR)/FLOAT/FLOAT.c
 	@mkdir -p obj/$(LIB_COMMON_DIR)
-	$(CC) $(FLOAT_CFLAGS) -o $@ $^
-	#$(call make_command,$(CC),$(FLOAT_CFLAGS),cc $<, $^)
+	#$(CC) $(FLOAT_CFLAGS) -o $@ $^
+	$(call make_command,$(CC),$(FLOAT_CFLAGS),cc $<, $^)
 
 	
 $(FLOAT_VFPRINTF_O): % : $(LIB_COMMON_DIR)/FLOAT/FLOAT_vfprintf.c
