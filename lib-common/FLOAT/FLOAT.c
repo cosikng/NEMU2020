@@ -68,7 +68,7 @@ FLOAT f2F(float a)
 	int data = *d;
 	int s;
 	char offest = ((data >> 23) & 0xff) - 127;
-	s = (data >> 31) & 1;
+	s = data >> 31;
 	data &= 0x7fffff;
 	data |= 0x800000;
 	if (offest < 7)
@@ -83,9 +83,9 @@ FLOAT f2F(float a)
 	{
 		nemu_assert(0);
 	}
-	if (s == 1)
+	if (s == -1)
 	{
-		data = ~data + 1;
+		data *= s;
 	}
 	return data;
 }
