@@ -82,7 +82,7 @@ make_group(group4,
 
 /* 0xff */
 make_group(group5,
-	inc_rm_v, dec_rm_v, inv, inv, 
+	inc_rm_v, dec_rm_v, call_rm_v, inv, 
 	jmp_rm_v, inv, push_rm_v, inv)
 
 /* 0x8f */
@@ -156,7 +156,7 @@ helper_fun opcode_table [256] = {
 /* 0xdc */	inv, inv, inv, inv,
 /* 0xe0 */	inv, inv, inv, jcxz_si_v,
 /* 0xe4 */	inv, inv, inv, inv,
-/* 0xe8 */	call_i_l, jmp_si_v, inv, jmp_si_b,
+/* 0xe8 */	call_i_v, jmp_si_v, inv, jmp_si_b,
 /* 0xec */	inv, inv, inv, inv,
 /* 0xf0 */	inv, inv, repnz, rep,
 /* 0xf4 */	inv, inv, group3_b, group3_v,

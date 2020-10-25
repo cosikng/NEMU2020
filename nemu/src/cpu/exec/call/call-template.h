@@ -4,10 +4,12 @@
 
 static void do_execute()
 {
-	cpu.esp -= 4;
-	swaddr_write(cpu.esp, 4, cpu.eip + 5);
+	cpu.esp -= op_src->size;
+	swaddr_write(cpu.esp, op_src->size, cpu.eip + 1 + op_src->size);
 	int off = op_src->val;
 	cpu.eip += off;
+	if (ops_decoded.is_operand_size_16)
+		cpu.eip &= 0xffff;
 	print_asm_template1_n();
 	return;
 }
