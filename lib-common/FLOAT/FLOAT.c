@@ -66,6 +66,7 @@ FLOAT f2F(float a)
 	 */
 	int *d = (int *)&a;
 	int data = *d;
+	d = 0;
 	int s;
 	char offest = ((data >> 23) & 0xff) - 127;
 	s = data >> 31;
