@@ -7,6 +7,7 @@ typedef int FLOAT;
 
 static inline int F2int(FLOAT a)
 {
+	a &= 0xffff0000;
 	a >>= 16;
 	//nemu_assert(0);
 	return a;
@@ -14,7 +15,7 @@ static inline int F2int(FLOAT a)
 
 static inline FLOAT int2F(int a)
 {
-	if (a > 32767 || a < -32768)	//溢出
+	if (a > 32767 || a < -32768) //溢出
 	{
 		nemu_assert(0);
 	}
