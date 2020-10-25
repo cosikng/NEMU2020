@@ -66,12 +66,12 @@ FLOAT f2F(float a)
 	 */
 	int *d = (int *)&a;
 	int data = *d;
-	d = 0;
 	int s;
 	char offest = ((data >> 23) & 0xff) - 127;
 	s = data >> 31;
 	data &= 0x7fffff;
-	data |= 0x800000;
+	if (offest != -127)
+		data |= 0x800000;
 	if (offest < 7)
 	{
 		data >>= 7 - offest;
@@ -84,7 +84,7 @@ FLOAT f2F(float a)
 	{
 		nemu_assert(0);
 	}
-	return s == 0 ? data : -data;
+	return -data;
 }
 
 FLOAT Fabs(FLOAT a)
