@@ -14,8 +14,13 @@ static inline int F2int(FLOAT a)
 
 static inline FLOAT int2F(int a)
 {
-	a <<= 16;
-	//nemu_assert(0);
+	if (a > 32767 || a < -32768)	//溢出
+	{
+		nemu_assert(0);
+	}
+	else
+
+		a <<= 16;
 	return a;
 }
 

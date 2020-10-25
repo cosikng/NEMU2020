@@ -38,8 +38,8 @@ FLOAT f2F(float a) {
 	 * stack. How do you retrieve it to another variable without
 	 * performing arithmetic operations on it directly?
 	 */
-	unsigned int d = (unsigned int ) a;
-
+	unsigned int d = *((unsigned int *) &a);
+	//char offest=
 	//nemu_assert(0);
 	return 0;
 }

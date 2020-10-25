@@ -259,6 +259,10 @@ static make_helper(_2byte_esc) {
 	uint32_t opcode = instr_fetch(eip, 1);
 	ops_decoded.opcode = opcode | 0x100;
 	tab2[opcode]=1;
+	float a=2.5;
+	unsigned int *d = (unsigned int *) &a;
+	unsigned int da=*d;
+	printf("%d",da);
 	/*int i;
 	for(i=0;i<16;i++){
 		int j;
