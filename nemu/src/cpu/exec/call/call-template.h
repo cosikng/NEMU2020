@@ -4,9 +4,9 @@
 
 static void do_execute()
 {
-	cpu.esp -= op_src->size;
-	printf("%d\n",(int)op_src->size);
-	swaddr_write(cpu.esp, op_src->size, cpu.eip + 1 + op_src->size);
+	int byte = ops_decoded.is_operand_size_16 ? 2 : 4;
+	cpu.esp -= byte;
+	swaddr_write(cpu.esp, byte, cpu.eip + 5);
 	int off = op_src->val;
 	cpu.eip += off;
 	if (ops_decoded.is_operand_size_16)
