@@ -5,6 +5,7 @@
 static void do_execute()
 {
 	cpu.esp -= op_src->size;
+	printf("%d\n",(int)op_src->size);
 	swaddr_write(cpu.esp, op_src->size, cpu.eip + 1 + op_src->size);
 	int off = op_src->val;
 	cpu.eip += off;
