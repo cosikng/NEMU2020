@@ -83,10 +83,10 @@ FLOAT f2F(float a)
 	{
 		nemu_assert(0);
 	}
-	/*if (s == 1)
+	if (s == 1)
 	{
-		data = -data;
-	}*/
+		data = ~data + 1;
+	}
 	return data;
 }
 
