@@ -158,7 +158,7 @@ static int cmd_bt(char *args)
 	uint32_t now = cpu.eip;
 	char funcName[50];
 	int i = 0;
-	while (head)
+	while (head != (stackFrame *)hw_mem)
 	{
 		find_func_name(funcName, now);
 		printf("#%d 0x%x in %s(args1= 0x%x, args2= 0x%x, args3= 0x%x, args4= 0x%x)\n", i++, now, funcName, head->args[0], head->args[1], head->args[2], head->args[3]);
