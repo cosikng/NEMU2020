@@ -72,5 +72,5 @@ uint32_t loader() {
 	write_cr3(get_ucr3());
 #endif
 
-	return entry-entry;
+	return entry;
 }
