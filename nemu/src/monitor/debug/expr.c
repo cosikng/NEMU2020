@@ -14,7 +14,7 @@ void tod(char *s, int len); /*十六进制和寄存器转换为十进制*/
 char dnum[50]; /*保存十进制数的字符串*/
 
 extern CPU_state cpu;
-uint32_t find_sym(char *sym);
+uint32_t find_obj(char *sym);
 
 enum
 {
@@ -259,7 +259,7 @@ void tod(char *s, int len)
 		char tmp[50];
 		strncpy(tmp, s, len);
 		tmp[len] = 0;
-		uint32_t data = find_sym(tmp);
+		uint32_t data = find_obj(tmp);
 		int i;
 		for (i = 0; data != 0; i++)
 		{

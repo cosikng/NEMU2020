@@ -9,6 +9,8 @@
 
 void cpu_exec(uint32_t);
 
+void find_func_name(char *sym, uint32_t ip);
+
 extern CPU_state cpu;
 
 extern uint8_t *hw_mem;
@@ -34,6 +36,13 @@ typedef struct token
 } Token;
 
 extern Token tokens[32];
+
+typedef struct
+{
+	swaddr_t prev_ebp;
+	swaddr_t ret_addr;
+	uint32_t args[4];
+} stackFrame;
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char *rl_gets()
@@ -143,6 +152,22 @@ static int cmd_d(char *args)
 	return 0;
 }
 
+static int cmd_bt(char *args)
+{
+	stackFrame *head = (stackFrame *)(cpu.ebp + hw_mem);
+	uint32_t now = cpu.eip;
+	char funcName[50];
+	int i = 0;
+	while (head)
+	{
+		find_func_name(funcName, now);
+		printf("#%d 0x%x in %s(args1= 0x%x, args2= 0x%x, args3= 0x%x, args4= 0x%x)\n", i++, now, funcName, head->args[0], head->args[1], head->args[2], head->args[3]);
+		now = head->ret_addr;
+		head = (stackFrame *)(head->prev_ebp + hw_mem);
+	}
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct
@@ -159,7 +184,8 @@ static struct
 	{"x", "Scan RAM", cmd_x},
 	{"p", "Expression evaluation", cmd_p},
 	{"w", "Points", cmd_w},
-	{"d", "Delete points", cmd_d}
+	{"d", "Delete points", cmd_d},
+	{"bt", "Print stack frame", cmd_bt}
 
 	/* TODO: Add more commands */
 
