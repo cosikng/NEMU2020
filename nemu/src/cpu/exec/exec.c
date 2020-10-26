@@ -232,6 +232,7 @@ helper_fun _2byte_opcode_table [256] = {
 };
 
 make_helper(exec) {
+	assert(0);
 	ops_decoded.opcode = instr_fetch(eip, 1);
 	tab[ops_decoded.opcode]=1;
 	/*int i;
