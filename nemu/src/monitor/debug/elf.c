@@ -17,7 +17,6 @@ uint32_t find_sym(char *sym)
 		if (((symtab[i].st_info & 0xf) == STT_OBJECT) && (strcmp(sym, strtab + symtab[i].st_name) == 0))
 		{
 			ret = symtab[i].st_value;
-			printf("%x\n", symtab[i].st_info);
 			break;
 		}
 	}

@@ -64,8 +64,7 @@ FLOAT f2F(float a)
 	 * stack. How do you retrieve it to another variable without
 	 * performing arithmetic operations on it directly?
 	 */
-	int *d = (int *)&a;
-	int data = *d;
+	int data = *(int *)&a;
 	int s;
 	char offest = ((data >> 23) & 0xff) - 127;
 	s = data >> 31;
