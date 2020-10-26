@@ -14,10 +14,10 @@ uint32_t find_sym(char *sym)
 	int ret = 0;
 	for (i = 0; i < nr_symtab_entry; i++)
 	{
-		if (strcmp(sym, strtab + symtab[i].st_name) == 0)
+		if (((symtab->st_info & 0xf) == STT_OBJECT) && (strcmp(sym, strtab + symtab[i].st_name) == 0))
 		{
 			ret = symtab[i].st_value;
-			printf("%x\n",symtab[i].st_info);
+			printf("%x\n", symtab[i].st_info);
 			break;
 		}
 	}
