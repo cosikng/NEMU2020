@@ -14,6 +14,7 @@ void tod(char *s, int len); /*十六进制和寄存器转换为十进制*/
 char dnum[50]; /*保存十进制数的字符串*/
 
 extern CPU_state cpu;
+uint32_t find_sym(char *sym);
 
 enum
 {
@@ -48,7 +49,8 @@ static struct rule
 	{"!", OPT},
 	{"0x[0123456789abcdef]+", NUM},
 	{"\\$[a-z]{3}", NUM},
-	{"[0-9]+", NUM}};
+	{"[0-9]+", NUM},
+	{"[a-zA-Z_0-9]+", NUM}};
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]))
 
@@ -249,6 +251,25 @@ void tod(char *s, int len)
 			}
 			dnum[0] = n % 10 + '0';
 			n /= 10;
+		}
+		dnum[i] = 0;
+	}
+	else if ((s[0] >= 'a' && s[0] <= 'z') || (s[0] >= 'A' && s[0] <= 'Z') || s[0] == '_')
+	{
+		char tmp[50];
+		strncpy(tmp, s, len);
+		tmp[len] = 0;
+		uint32_t data = find_sym(tmp);
+		int i;
+		for (i = 0; data != 0; i++)
+		{
+			int j;
+			for (j = i; j > 0; j--)
+			{
+				dnum[j] = dnum[j - 1];
+			}
+			dnum[0] = data % 10 + '0';
+			data /= 10;
 		}
 		dnum[i] = 0;
 	}
