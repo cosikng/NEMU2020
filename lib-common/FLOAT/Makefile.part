@@ -12,7 +12,7 @@ $(FLOAT): $(FLOAT_A_OBJ)
 
 
 
-FLOAT_CFLAGS := -c -m32 -O2 -fno-builtin -fno-stack-protector -D_FORTIFY_SOURCE=0 -I /home/abc/NEMU2020/lib-common
+FLOAT_CFLAGS := -c -m32 -O2 -fno-builtin -fno-stack-protector -D_FORTIFY_SOURCE=0 -I ~/NEMU2020/lib-common
 
 $(FLOAT_O): $(LIB_COMMON_DIR)/FLOAT/FLOAT.c
 	@mkdir -p obj/$(LIB_COMMON_DIR)
