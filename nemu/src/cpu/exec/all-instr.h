@@ -1,5 +1,7 @@
 #include "prefix/prefix.h"
 
+#include "CMOVcc/cmove.h"
+
 #include "data-mov/mov.h"
 #include "data-mov/xchg.h"
 #include "data-mov/movsx.h"
