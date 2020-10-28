@@ -5,6 +5,7 @@
 
 extern char _vfprintf_internal;
 extern char _fpmaxtostr;
+extern char _ppfs_setargs;
 
 extern int __stdio_fwrite(char *buf, int len, FILE *stream);
 
@@ -201,6 +202,11 @@ static void modify_ppfs_setargs() {
 		++p;
 	}
 #endif
+	char *p = (char *) &_ppfs_setargs;
+	p += 0x71;
+	p[0] = 0xeb;
+	p[1] = 0x30;
+	
 
 }
 
