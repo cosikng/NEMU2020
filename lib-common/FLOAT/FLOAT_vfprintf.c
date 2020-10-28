@@ -5,6 +5,7 @@
 
 extern char _vfprintf_internal;
 extern char _fpmaxtostr;
+
 extern int __stdio_fwrite(char *buf, int len, FILE *stream);
 
 __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
@@ -17,7 +18,26 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	 */
 
 	char buf[80];
-	int len = sprintf(buf, "0x%08x", f);
+	int len;
+	if(f < 0)
+	{
+		f = -f;	
+		len = sprintf(buf, "-%d.", f >> 16);
+	}
+	else
+	{
+		len = sprintf(buf, "%d.", f >> 16);
+	}
+	f &= 0xffff;
+	int i;
+	for(i = len;i < len + 6;i++)
+	{
+		f *= 10;
+		buf[i] = f / 65536 + '0';
+		f %= 65536;
+	}
+	buf[i] = 0;
+	len = i;
 	return __stdio_fwrite(buf, len, stream);
 }
 
@@ -65,12 +85,22 @@ static void modify_vfprintf() {
 	} else if (ppfs->conv_num <= CONV_S) {  /* wide char or string */
 #endif
 
-	if(mprotect((void *)((0x8048dae) & 0xfffff000), 4096*2, PROT_READ | PROT_WRITE | PROT_EXEC)==-1) perror(" ");
-	char *q = (char *) ((char *)_vfprintf_internal + 0x307);
+	/*if(mprotect((void *)((unsigned int)(&_vfprintf_internal) & 0xfffff000), 4096*2, PROT_READ | PROT_WRITE | PROT_EXEC)==-1) perror(" ");*/
+	char *q = &_vfprintf_internal + 0x307;
 	int *p = (int *) q;
-	printf("0x%x - 0x%x\n",format_FLOAT , _fpmaxtostr);
-	*p += format_FLOAT - _fpmaxtostr;
-
+	*p += (char*)format_FLOAT - &_fpmaxtostr;
+	q -= 12;	//sub $0xc,%esp
+	*q = 8;
+	q += 1;		//fstpt (%esp)
+	*q = 0xff;
+	q[1] = 0x32;
+	q[2] = 0x90;
+	q -= 20;	//clear fldl
+	q[0] = 0x90;
+	q[1] = 0x90;
+	q -= 4;		//clear fldt
+	q[0] = 0x90;
+	q[1] = 0x90;
 }
 
 static void modify_ppfs_setargs() {
