@@ -9,8 +9,6 @@ static void do_execute()
 	swaddr_write(cpu.esp, byte, cpu.eip + 5);
 	int off = op_src->val;
 	cpu.eip += off;
-	if (ops_decoded.is_operand_size_16)
-		cpu.eip &= 0xffff;
 	print_asm_template1_n();
 	return;
 }
