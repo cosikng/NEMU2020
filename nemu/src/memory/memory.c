@@ -22,7 +22,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len)
 		d1 = read_cache(addr, up - addr, &flag);
 		d2 = read_cache(up, addr + len - up, &flag);
 		if (d1 + (d2 << 16) != (dram_read(addr, len) & (~0u >> ((4 - len) << 3))))
-			panic("2read 0x%x,expected 0x%x\naddr:0x%x,up:0x%x,len:%d\n", d1 + (d2 << 16), (dram_read(addr, len) & (~0u >> ((4 - len) << 3))),addr,up,(int)len);
+			panic("2read 0x%x,expected 0x%x\naddr:0x%x,up:0x%x,len:%d\nd1:0x%x,d2:0x%x\n", d1 + (d2 << 16), (dram_read(addr, len) & (~0u >> ((4 - len) << 3))),addr,up,(int)len,d1,d2);
 		return d1 + (d2 << 16);
 	}
 	if (read_cache(addr, len, &flag) != (dram_read(addr, len) & (~0u >> ((4 - len) << 3))))
