@@ -19,11 +19,8 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len)
 	//printf("addr:0x%x,up:0x%x\n",addr,up);
 	if (addr + len > up)
 	{
-		//printf("Hi\n");
 		d1 = read_cache(addr, up - addr, &flag);
-		//printf("Hi\n");
 		d2 = read_cache(up, addr + len - up, &flag);
-		//printf("Hi\n");
 		return d1 + (d2 << 16);
 	}
 	return read_cache(addr, len, &flag);
