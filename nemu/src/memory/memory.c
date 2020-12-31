@@ -17,6 +17,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len)
 	uint32_t up = (addr & ~((1 << cpu.cache1.b) - 1)) + (1 << cpu.cache1.b);
 	//printf("Read\n");
 	//printf("addr:0x%x,up:0x%x\n",addr,up);
+	panic(" ");
 	if (addr + len > up)
 	{
 		d1 = read_cache(addr, up - addr, &flag);
