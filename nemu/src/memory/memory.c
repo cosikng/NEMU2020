@@ -34,7 +34,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data)
 {
 	bool f;
 	uint32_t up = (addr & ~((1 << cpu.cache1.b) - 1)) + (1 << cpu.cache1.b);
-	printf("Write\n");
+	//printf("Write\n");
 	if (addr + len > up)
 	{
 		f = write_cahce(addr, up - addr, data);
