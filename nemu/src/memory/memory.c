@@ -14,7 +14,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len)
 {
 	bool flag;
 	uint32_t d1, d2;
-	uint32_t up = (addr & ((1 << cpu.cache1.b) - 1)) + (1 << cpu.cache1.b);
+	uint32_t up = (addr & ~((1 << cpu.cache1.b) - 1)) + (1 << cpu.cache1.b);
 	printf("Read\n");
 	printf("addr:0x%x,up:0x%x\n",addr,up);
 	if (addr + len > up)
