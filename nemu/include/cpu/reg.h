@@ -37,6 +37,25 @@ enum
 	R_BH
 };
 
+struct block
+{
+	bool valid;
+	uint32_t tag;
+	uint8_t *buf;
+};
+
+struct set
+{
+	struct block *blocks;
+};
+
+typedef struct
+{
+	int s, E, b;
+	struct set *sets;
+
+} Cache;
+
 /* TODO: Re-organize the `CPU_state' structure to match the register
  * encoding scheme in i386 instruction format. For example, if we
  * access cpu.gpr[3]._16, we will get the `bx' register; if we access
@@ -72,22 +91,24 @@ typedef struct
 			uint32_t _32;
 			struct
 			{
-				uint32_t CF : 	1;
-				uint32_t : 		1;
-				uint32_t PF : 	1;
-				uint32_t : 		1;
-				uint32_t AF : 	1;
-				uint32_t : 		1;
-				uint32_t ZF : 	1;
-				uint32_t SF : 	1;
-				uint32_t TF : 	1;
-				uint32_t IF : 	1;
-				uint32_t DF : 	1;
-				uint32_t OF : 	1;
-				uint32_t : 		20;
+				uint32_t CF : 1;
+				uint32_t : 1;
+				uint32_t PF : 1;
+				uint32_t : 1;
+				uint32_t AF : 1;
+				uint32_t : 1;
+				uint32_t ZF : 1;
+				uint32_t SF : 1;
+				uint32_t TF : 1;
+				uint32_t IF : 1;
+				uint32_t DF : 1;
+				uint32_t OF : 1;
+				uint32_t : 20;
 			};
 		};
 	} eflags;
+
+	Cache cache1;
 
 } CPU_state;
 
