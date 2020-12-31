@@ -16,6 +16,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len)
 	uint32_t d1, d2;
 	uint32_t up = (addr & ((1 << cpu.cache1.b) - 1)) + (1 << cpu.cache1.b);
 	printf("Read\n");
+	printf("addr:0x%x,up:0x%x\n",addr,up);
 	if (addr + len > up)
 	{
 		printf("Hi\n");
@@ -112,7 +113,7 @@ uint32_t read_cache(hwaddr_t addr, size_t len, bool *flag)
 		set->blocks[i].tag = tag;
 		for (j = 0; j < (1 << cpu.cache1.b); j++)
 		{
-			printf("%d\n",j);
+			//printf("%d\n",j);
 			set->blocks[i].buf[j] = dram_read(addr - off + j, 1) & 255;
 		}
 	}
