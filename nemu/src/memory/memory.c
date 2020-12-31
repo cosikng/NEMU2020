@@ -37,6 +37,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data)
 	//printf("Write\n");
 	if (addr + len > up)
 	{
+		printf("Hi\n");
 		f = write_cahce(addr, up - addr, data);
 		if (!f)
 		{
