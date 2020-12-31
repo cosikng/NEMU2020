@@ -23,11 +23,11 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len)
 		d1 = read_cache(addr, up - addr, &flag);
 		d2 = read_cache(up, addr + len - up, &flag);
 		if (d1 + (d2 << 16) != (dram_read(addr, len) & (~0u >> ((4 - len) << 3))))
-			panic("read\n");
+			panic("2read0x%x,expected0x%x\n",d1 + (d2 << 16),(dram_read(addr, len) & (~0u >> ((4 - len) << 3))));
 		return d1 + (d2 << 16);
 	}
 	if (read_cache(addr, len, &flag) != (dram_read(addr, len) & (~0u >> ((4 - len) << 3))))
-		panic("read\n");
+		panic("1read0x%x,expected0x%x\n",d1 + (d2 << 16),(dram_read(addr, len) & (~0u >> ((4 - len) << 3))));
 	return read_cache(addr, len, &flag);
 	//return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
