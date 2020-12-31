@@ -1,4 +1,5 @@
 #include "nemu.h"
+#include <stdlib.h>
 
 #define ENTRY_START 0x100000
 
@@ -81,6 +82,7 @@ static void load_entry()
 
 void restart()
 {
+	int i, j;
 	/* Perform some initialization to restart a program */
 #ifdef USE_RAMDISK
 	/* Read the file with name `argv[1]' into ramdisk. */
@@ -94,6 +96,20 @@ void restart()
 	cpu.eip = ENTRY_START;
 
 	cpu.eflags._32 = 0x2;
+
+	cpu.cache1.b = 6;
+	cpu.cache1.E = 8;
+	cpu.cache1.s = 7;
+	cpu.cache1.sets = (struct set *)malloc(sizeof(struct set) * (1 << (cpu.cache1.s)));
+	for (i = 0; i < (1 << (cpu.cache1.s)); i++)
+	{
+		cpu.cache1.sets[i].blocks = (struct block *)malloc(sizeof(struct block) * cpu.cache1.E);
+		for (j = 0; j < cpu.cache1.E; j++)
+		{
+			cpu.cache1.sets[i].blocks[j].buf = (uint8_t *)malloc(sizeof(uint8_t) * (1 << (cpu.cache1.b)));
+			cpu.cache1.sets[i].blocks[j].valid = false;
+		}
+	}
 
 	/* Initialize DRAM. */
 	init_ddr3();
