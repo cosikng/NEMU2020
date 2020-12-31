@@ -112,6 +112,7 @@ uint32_t read_cache(hwaddr_t addr, size_t len, bool *flag)
 		set->blocks[i].tag = tag;
 		for (j = 0; j < (1 << cpu.cache1.b); j++)
 		{
+			printf("%d\n",j);
 			set->blocks[i].buf[j] = dram_read(addr - off + j, 1) & 255;
 		}
 	}
