@@ -13,8 +13,6 @@ void find_func_name(char *sym, uint32_t ip);
 
 extern CPU_state cpu;
 
-extern uint8_t *hw_mem;
-
 extern bool make_token(char *e);
 
 extern int nr_token;
@@ -104,10 +102,10 @@ static int cmd_info(char *args)
 			printf("%c%c%c\t0x%x\n", s[i * 3], s[i * 3 + 1], s[i * 3 + 2], cpu.gpr[i]._32);
 		}
 		printf("eip\t0x%x\n", cpu.eip);
-		printf("Cache L1:\nmissess:%d\n",cpu.cache1.miss);
-		printf("hits:%d\n",cpu.cache1.hit);
-		printf("Cache L2:\nmissess:%d\n",cpu.cache2.miss);
-		printf("hits:%d\n",cpu.cache2.hit);
+		printf("Cache L1:\nmissess:%d\n", cpu.cache1.miss);
+		printf("hits:%d\n", cpu.cache1.hit);
+		printf("Cache L2:\nmissess:%d\n", cpu.cache2.miss);
+		printf("hits:%d\n", cpu.cache2.hit);
 	}
 	else if (*args == 'w')
 	{
@@ -130,7 +128,7 @@ static int cmd_x(char *args)
 	printf("Addr\t\tData\n");
 	for (i = 0; i < n; i++)
 	{
-		printf("0x%X\t0x%08x\n", addr + i * 4, *((unsigned int *)(addr + i * 4 + hw_mem)));
+		printf("0x%X\t0x%08x\n", addr + i * 4, swaddr_read(addr + i * 4, 4));
 	}
 	return 0;
 }
