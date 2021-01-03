@@ -11,5 +11,7 @@ make_helper(jmp_rm_w);
 make_helper(jmp_rm_l);
 make_helper(jmp_rm_v);
 
+make_helper(ljmp);
+
 
 #endif

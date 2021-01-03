@@ -15,5 +15,11 @@
 /* for instruction encoding overloading */
 
 make_helper_v(jmp_si)
-make_helper_v(jmp_rm)
+    make_helper_v(jmp_rm)
 
+        make_helper(ljmp)
+{
+    cpu.CS = swaddr_read(eip + 5, 2) >> 3;
+    cpu.eip = swaddr_read(eip + 1, 4) - 7;
+    return 7;
+}
