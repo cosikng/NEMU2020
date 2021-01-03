@@ -164,8 +164,8 @@ bool write_cahce(hwaddr_t addr, size_t len, uint32_t data)
 		}
 	}
 	cpu.cache1.miss++;
-	//dram_write(addr, len, data);
-	write_cahce2(addr, len, data);
+	dram_write(addr, len, data);
+	//write_cahce2(addr, len, data);
 	return false;
 }
 
