@@ -117,6 +117,17 @@ typedef struct
 
 	uint16_t CS, DS, ES, SS;
 
+	union
+	{
+
+		struct
+		{
+			uint32_t base;
+			uint32_t limit;
+		} Sregcache[4];
+		uint32_t CSbase, CSlimit, DSbase, DSlimit, ESbase, ESlimit, SSbase, SSlimit;
+	};
+
 	struct EFLAGS
 	{
 		union

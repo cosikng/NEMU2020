@@ -131,7 +131,10 @@ void restart()
 	}
 
 	cpu.CR0.val = 0;
-	
+
+	cpu.CSbase = 0;
+	cpu.CSlimit = 0xffffffff;
+
 	/* Initialize DRAM. */
 	init_ddr3();
 }
