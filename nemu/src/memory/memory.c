@@ -216,7 +216,6 @@ uint32_t read_cache2(hwaddr_t addr, size_t len, bool *flag)
 		set->blocks[i].tag = tag;
 		for (j = 0; j < (1 << cpu.cache2.b); j++)
 		{
-			//printf("%d\n",j);
 			set->blocks[i].buf[j] = dram_read(addr - off + j, 1) & 255;
 		}
 	}
@@ -225,7 +224,7 @@ uint32_t read_cache2(hwaddr_t addr, size_t len, bool *flag)
 		i = rand() % E;
 		if (set->blocks[i].dirty)
 		{
-			for (j = 0; j < 1 << cpu.cache2.b; j++)
+			for (j = 0; j < (1 << cpu.cache2.b); j++)
 			{
 				dram_write((tag << (cpu.cache2.s + cpu.cache2.b)) + (index << cpu.cache2.b) + j, 1, set->blocks[i].buf[j]);
 			}
@@ -299,7 +298,7 @@ bool write_cahce2(hwaddr_t addr, size_t len, uint32_t data)
 		i = rand() % E;
 		if (set->blocks[i].dirty)
 		{
-			for (j = 0; j < 1 << cpu.cache2.b; j++)
+			for (j = 0; j < (1 << cpu.cache2.b); j++)
 			{
 				dram_write((tag << (cpu.cache2.s + cpu.cache2.b)) + (index << cpu.cache2.b) + j, 1, set->blocks[i].buf[j]);
 			}
