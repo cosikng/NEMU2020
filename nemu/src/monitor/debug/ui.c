@@ -308,7 +308,7 @@ int cac(int n1, int n2, char opt)
 	}
 	else if (opt == 'p')
 	{
-		return *((unsigned int *)(hw_mem + n2));
+		return swaddr_read(n2, 4);
 	}
 	else
 	{
