@@ -164,6 +164,7 @@ helper_fun opcode_table [256] = {
 /* 0xfc */	inv, inv, group4, group5
 };
 
+
 helper_fun _2byte_opcode_table [256] = {
 /* 0x00 */	group6, group7, inv, inv, 
 /* 0x04 */	inv, inv, inv, inv, 
@@ -173,7 +174,7 @@ helper_fun _2byte_opcode_table [256] = {
 /* 0x14 */	inv, inv, inv, inv, 
 /* 0x18 */	inv, inv, inv, inv, 
 /* 0x1c */	inv, inv, inv, inv, 
-/* 0x20 */	inv, inv, inv, inv, 
+/* 0x20 */	movs2r, inv, movr2s, inv, 
 /* 0x24 */	inv, inv, inv, inv,
 /* 0x28 */	inv, inv, inv, inv, 
 /* 0x2c */	inv, inv, inv, inv, 
