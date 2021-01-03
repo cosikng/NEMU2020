@@ -100,6 +100,8 @@ void restart()
 	cpu.cache1.b = 6;
 	cpu.cache1.E = 8;
 	cpu.cache1.s = 7;
+	cpu.cache1.hit = 0;
+	cpu.cache1.miss = 0;
 	cpu.cache1.sets = (struct set *)malloc(sizeof(struct set) * (1 << (cpu.cache1.s)));
 	for (i = 0; i < (1 << (cpu.cache1.s)); i++)
 	{
