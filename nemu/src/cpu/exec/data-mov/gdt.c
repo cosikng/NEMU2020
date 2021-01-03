@@ -2,11 +2,9 @@
 
 make_helper(lgdt)
 {
-    uint16_t *data;
-    data = (uint16_t *)(op_src->val + data - data);
-    cpu.GDTR.limit = data[0];
-    cpu.GDTR.base_l = data[1];
-    cpu.GDTR.base_h = data[2];
+    cpu.GDTR.limit = swaddr_read(op_src->val, 2);
+    cpu.GDTR.base_l = swaddr_read(op_src->val + 2, 2);
+    cpu.GDTR.base_h = swaddr_read(op_src->val + 4, 2);
 
     return 5;
 }
