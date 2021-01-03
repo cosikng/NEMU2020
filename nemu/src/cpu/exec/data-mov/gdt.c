@@ -1,6 +1,6 @@
 #include "cpu/exec/helper.h"
 
-make_helper(lgdt)
+make_helper(lgdt_rm_l)
 {
     uint32_t addr = op_src->val;
     printf("type:%s\n", op_src->str);
