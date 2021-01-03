@@ -229,6 +229,7 @@ uint32_t read_cache2(hwaddr_t addr, size_t len, bool *flag)
 			{
 				dram_write((tag << (cpu.cache2.s + cpu.cache2.b)) + (index << cpu.cache2.b) + j, 1, set->blocks[i].buf[j]);
 			}
+			set->blocks[i].dirty = false;
 		}
 		set->blocks[i].tag = tag;
 		for (j = 0; j < (1 << cpu.cache2.b); j++)
@@ -299,6 +300,7 @@ bool write_cahce2(hwaddr_t addr, size_t len, uint32_t data)
 			{
 				dram_write((tag << (cpu.cache2.s + cpu.cache2.b)) + (index << cpu.cache2.b) + j, 1, set->blocks[i].buf[j]);
 			}
+			set->blocks[i].dirty = false;
 		}
 		set->blocks[i].tag = tag;
 		for (j = 0; j < (1 << cpu.cache2.b); j++)
