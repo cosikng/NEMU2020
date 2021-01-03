@@ -191,6 +191,7 @@ uint32_t read_cache2(hwaddr_t addr, size_t len, bool *flag)
 	off = addr & ((1 << cpu.cache2.b) - 1);
 	E = cpu.cache2.E;
 	set = &cpu.cache2.sets[index];
+	printf("Read\n");
 
 	for (i = 0; i < E && set->blocks[i].valid == true; i++)
 	{
@@ -260,6 +261,7 @@ bool write_cahce2(hwaddr_t addr, size_t len, uint32_t data)
 	off = addr & ((1 << cpu.cache2.b) - 1);
 	E = cpu.cache2.E;
 	set = &cpu.cache2.sets[index];
+	printf("Write\n");
 
 	for (i = 0; i < E && set->blocks[i].valid == true; i++)
 	{
