@@ -158,7 +158,8 @@ bool write_cahce(hwaddr_t addr, size_t len, uint32_t data)
 				*((uint16_t *)(set->blocks[i].buf + off)) = data;
 			if (len == 1)
 				*((uint8_t *)(set->blocks[i].buf + off)) = data;
-			dram_write(addr, len, data);
+			//dram_write(addr, len, data);
+			write_cahce2(addr, len, data);
 			cpu.cache1.hit++;
 			return true;
 		}
