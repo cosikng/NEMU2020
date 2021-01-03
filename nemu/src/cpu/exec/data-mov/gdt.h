@@ -3,6 +3,6 @@
 
 #include "cpu/exec/helper.h"
 
-make_helper(lgdt_rm_l);
+make_helper(lgdt);
 
 #endif

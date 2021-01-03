@@ -1,7 +1,8 @@
 #include "cpu/exec/helper.h"
 
-make_helper(lgdt_rm_l)
+make_helper(lgdt)
 {
+    decode_rm_l(eip + 1);
     uint32_t addr = op_src->val;
     printf("type:%s\n", op_src->str);
     cpu.GDTR.limit = swaddr_read(addr, 2);
