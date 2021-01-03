@@ -130,6 +130,8 @@ void restart()
 		}
 	}
 
+	cpu.CR0.val = 0;
+	
 	/* Initialize DRAM. */
 	init_ddr3();
 }
