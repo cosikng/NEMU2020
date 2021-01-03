@@ -40,6 +40,7 @@ enum
 struct block
 {
 	bool valid;
+	bool dirty;
 	uint32_t tag;
 	uint8_t *buf;
 };
