@@ -235,11 +235,6 @@ uint32_t read_cache2(hwaddr_t addr, size_t len, bool *flag)
 		{
 			set->blocks[i].buf[j] = dram_read(addr - off + j, 1) & 255;
 		}
-		set->blocks[i].tag = tag;
-		for (j = 0; j < (1 << cpu.cache2.b); j++)
-		{
-			set->blocks[i].buf[j] = dram_read(addr - off + j, 1) & 255;
-		}
 	}
 	if (len == 4)
 		return *((uint32_t *)(set->blocks[i].buf + off));
