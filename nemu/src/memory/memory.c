@@ -89,7 +89,7 @@ uint32_t read_cache(hwaddr_t addr, size_t len, bool *flag)
 	uint32_t index, tag, off, E;
 	struct set *set;
 	int i, j;
-	bool flag2;
+	//bool flag2;
 	index = (addr >> cpu.cache1.b) & ((1 << cpu.cache1.s) - 1);
 	tag = addr >> (cpu.cache1.s + cpu.cache1.b);
 	off = addr & ((1 << cpu.cache1.b) - 1);
@@ -120,8 +120,8 @@ uint32_t read_cache(hwaddr_t addr, size_t len, bool *flag)
 		set->blocks[i].tag = tag;
 		for (j = 0; j < (1 << cpu.cache1.b); j++)
 		{
-			//set->blocks[i].buf[j] = dram_read(addr - off + j, 1) & 255;
-			set->blocks[i].buf[j] = read_cache2(addr - off + j, 1, &flag2) & 255;
+			set->blocks[i].buf[j] = dram_read(addr - off + j, 1) & 255;
+			//set->blocks[i].buf[j] = read_cache2(addr - off + j, 1, &flag2) & 255;
 		}
 	}
 	else
@@ -130,8 +130,8 @@ uint32_t read_cache(hwaddr_t addr, size_t len, bool *flag)
 		set->blocks[i].tag = tag;
 		for (j = 0; j < (1 << cpu.cache1.b); j++)
 		{
-			//set->blocks[i].buf[j] = dram_read(addr - off + j, 1) & 255;
-			set->blocks[i].buf[j] = read_cache2(addr - off + j, 1, &flag2) & 255;
+			set->blocks[i].buf[j] = dram_read(addr - off + j, 1) & 255;
+			//set->blocks[i].buf[j] = read_cache2(addr - off + j, 1, &flag2) & 255;
 		}
 	}
 	if (len == 4)
