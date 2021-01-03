@@ -104,8 +104,10 @@ static int cmd_info(char *args)
 			printf("%c%c%c\t0x%x\n", s[i * 3], s[i * 3 + 1], s[i * 3 + 2], cpu.gpr[i]._32);
 		}
 		printf("eip\t0x%x\n", cpu.eip);
-		printf("missess:%d\n",cpu.cache1.miss);
+		printf("Cache L1:\nmissess:%d\n",cpu.cache1.miss);
 		printf("hits:%d\n",cpu.cache1.hit);
+		printf("Cache L2:\nmissess:%d\n",cpu.cache2.miss);
+		printf("hits:%d\n",cpu.cache2.hit);
 	}
 	else if (*args == 'w')
 	{
