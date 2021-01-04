@@ -56,7 +56,6 @@ uint32_t loader()
 			 */
 
 			ramdisk_read((void *)ph->p_vaddr, ph->p_offset, ph->p_filesz);
-			panic("Addr:0x%x\n",ph->p_vaddr);
 			memset((void *)(ph->p_vaddr + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
 #ifdef IA32_PAGE
