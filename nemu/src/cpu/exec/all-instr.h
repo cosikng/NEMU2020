@@ -11,6 +11,7 @@
 #include "data-mov/cwd.h"
 #include "data-mov/gdt.h"
 #include "data-mov/movr.h"
+#include "data-mov/std.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
