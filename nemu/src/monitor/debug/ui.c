@@ -156,16 +156,23 @@ static int cmd_d(char *args)
 
 static int cmd_bt(char *args)
 {
-	stackFrame *head = (stackFrame *)(cpu.ebp + hw_mem);
+	uint32_t head = cpu.ebp;
 	uint32_t now = cpu.eip;
+	stackFrame sf;
 	char funcName[50];
 	int i = 0;
-	while (head != (stackFrame *)hw_mem)
+	while (head != 0)
 	{
 		find_func_name(funcName, now);
-		printf("#%d 0x%x in %s(args1= 0x%x, args2= 0x%x, args3= 0x%x, args4= 0x%x)\n", i++, now, funcName, head->args[0], head->args[1], head->args[2], head->args[3]);
-		now = head->ret_addr;
-		head = (stackFrame *)(head->prev_ebp + hw_mem);
+		sf.prev_ebp = swaddr_read(head, 4, 2); //SS
+		sf.ret_addr = swaddr_read(head + 8, 4, 2);
+		sf.args[0] = swaddr_read(head + 12, 4, 2);
+		sf.args[1] = swaddr_read(head + 16, 4, 2);
+		sf.args[2] = swaddr_read(head + 20, 4, 2);
+		sf.args[3] = swaddr_read(head + 24, 4, 2);
+		printf("#%d 0x%x in %s(args1= 0x%x, args2= 0x%x, args3= 0x%x, args4= 0x%x)\n", i++, now, funcName, sf.args[0], sf.args[1], sf.args[2], sf.args[3]);
+		now = sf.ret_addr;
+		head = sf.prev_ebp;
 	}
 	return 0;
 }
@@ -308,7 +315,7 @@ int cac(int n1, int n2, char opt)
 	}
 	else if (opt == 'p')
 	{
-		return swaddr_read(n2, 4, 3);//DS
+		return swaddr_read(n2, 4, 3); //DS
 	}
 	else
 	{
