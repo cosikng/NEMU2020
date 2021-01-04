@@ -119,6 +119,10 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 			assert((pageitem & 1) == 1);
 			paddr = (pageitem & 0xfffff000);
 			hwaddr_write(paddr, len - sublen, data >> sublen * 8);
+			if(hwaddr_read(paddr-sublen,len)!=data){
+				printf("Read:0x%x\nData:0x%x\n",hwaddr_read(paddr-sublen,len),data);
+				assert(0);
+			}
 			return;
 		}
 	}
