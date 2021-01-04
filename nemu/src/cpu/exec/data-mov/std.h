@@ -4,5 +4,6 @@
 #include "cpu/exec/helper.h"
 
 make_helper(std);
+make_helper(cld);
 
 #endif
