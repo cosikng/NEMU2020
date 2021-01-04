@@ -86,9 +86,6 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 	if (cpu.CR0.paging == 1)
 	{
 
-		//printf("Write0x%x\n",addr);
-		assert(addr + len < (addr & 0xfffff000) + 0x1000);
-
 		diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
 		assert((diritem & 1) == 1);
 		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
