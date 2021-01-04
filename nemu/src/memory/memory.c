@@ -120,7 +120,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 			paddr = (pageitem & 0xfffff000);
 			hwaddr_write(paddr, len - sublen, data >> sublen * 8);
 			if(hwaddr_read(paddr-sublen,len)!=data){
-				printf("Read:0x%x\nData:0x%x\n",hwaddr_read(paddr-sublen,len),data);
+				printf("Read:0x%x\nData:0x%x\npaddr:0x%x\n",hwaddr_read(paddr-sublen,len),data,paddr-sublen);
 				assert(0);
 			}
 			return;
