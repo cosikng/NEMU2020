@@ -102,7 +102,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 		if (addr + len >= (addr & 0xfffff000) + 0x1000)
 		{
 			sublen = (addr & 0xfffff000) + 0x1000 - addr;
-			hwaddr_write(paddr, sublen, data & ((1 << sublen) - 1));
+			hwaddr_write(paddr, sublen, data & ((1 << sublen * 8) - 1));
 			pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4 + 4, 4); //读取下一页
 			assert((pageitem & 1) == 1);
 			paddr = (pageitem & 0xfffff000);
