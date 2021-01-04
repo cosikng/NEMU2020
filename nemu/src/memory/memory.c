@@ -55,14 +55,14 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 	if (cpu.CR0.paging == 1)
 	{
 
-		printf("Read0x%x\n",addr);
+		//printf("Read0x%x\n",addr);
 
 		diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
 		assert((diritem & 1) == 1);
 		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
 		assert((pageitem & 1) == 1);
 		paddr = (pageitem & 0xfffff000) + off;
-		printf("Read:0x%x\n",paddr);
+		//printf("Read:0x%x\n",paddr);
 		goto next;
 		if (addr + len >= (addr & 0xfffff000) + 0x1000)
 		{
