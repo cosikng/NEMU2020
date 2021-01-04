@@ -115,7 +115,15 @@ typedef struct
 		uint16_t base_h;
 	} GDTR;
 
-	uint16_t CS, DS, ES, SS;
+	union
+	{
+		struct
+		{
+
+			uint16_t ES, CS, SS, DS;
+		};
+		uint16_t Sreg[4];
+	};
 
 	union
 	{
@@ -125,7 +133,10 @@ typedef struct
 			uint32_t base;
 			uint32_t limit;
 		} Sregcache[4];
-		uint32_t ESbase, ESlimit, CSbase, CSlimit, SSbase, SSlimit, DSbase, DSlimit;
+		struct
+		{
+			uint32_t ESbase, ESlimit, CSbase, CSlimit, SSbase, SSlimit, DSbase, DSlimit;
+		};
 	};
 
 	struct EFLAGS

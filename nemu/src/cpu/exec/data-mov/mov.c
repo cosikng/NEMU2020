@@ -20,3 +20,9 @@ make_helper_v(mov_r2rm)
 make_helper_v(mov_rm2r)
 make_helper_v(mov_a2moffs)
 make_helper_v(mov_moffs2a)
+make_helper(mov_r2s)
+{
+    int data = swaddr_read(eip + 1, 1, 1); //CS
+    cpu.Sreg[(data >> 3) & 7] = cpu.gpr[data & 7]._16;
+    return 2;
+}
