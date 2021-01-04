@@ -47,11 +47,41 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data)
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 {
+	uint32_t dir, page, diritem, pageitem, off;
+	dir = (addr >> 22) & 0x3ff;
+	page = (addr >> 12) & 0x3ff;
+	off = addr & 0xfff;
+	if (cpu.CR0.paging == 1)
+	{
+
+		assert(addr + len < (addr & 0xfffff000) + 0x1000);
+
+		diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
+		assert((diritem & 1) == 1);
+		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
+		assert((pageitem & 1) == 1);
+		addr = (pageitem & 0xfffff000) + off;
+	}
 	return hwaddr_read(addr, len);
 }
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 {
+	uint32_t dir, page, diritem, pageitem, off;
+	dir = (addr >> 22) & 0x3ff;
+	page = (addr >> 12) & 0x3ff;
+	off = addr & 0xfff;
+	if (cpu.CR0.paging == 1)
+	{
+
+		assert(addr + len < (addr & 0xfffff000) + 0x1000);
+
+		diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
+		assert((diritem & 1) == 1);
+		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
+		assert((pageitem & 1) == 1);
+		addr = (pageitem & 0xfffff000) + off;
+	}
 	hwaddr_write(addr, len, data);
 }
 
