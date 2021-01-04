@@ -62,6 +62,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
 		assert((pageitem & 1) == 1);
 		paddr = (pageitem & 0xfffff000) + off;
+		goto next;
 		if (addr + len >= (addr & 0xfffff000) + 0x1000)
 		{
 			sublen = (addr & 0xfffff000) + 0x1000 - addr;
@@ -73,6 +74,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 			return (data2 << sublen * 8) + data1;
 		}
 	}
+	next:
 	return hwaddr_read(paddr, len);
 }
 
@@ -91,6 +93,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
 		assert((pageitem & 1) == 1);
 		paddr = (pageitem & 0xfffff000) + off;
+		goto next;
 		if (addr + len >= (addr & 0xfffff000) + 0x1000)
 		{
 			sublen = (addr & 0xfffff000) + 0x1000 - addr;
@@ -102,6 +105,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 			return;
 		}
 	}
+	next:
 	hwaddr_write(paddr, len, data);
 }
 
