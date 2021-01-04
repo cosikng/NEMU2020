@@ -75,7 +75,8 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 			data2 = hwaddr_read(paddr, len - sublen);
 			if ((data2 << sublen * 8) + data1 != cor)
 			{
-				panic("cor:0x%x\ndata1:0x%x\ndata2:0x%x\n", cor, data1, data2);
+				printf("cor:0x%x\ndata1:0x%x\ndata2:0x%x\n", cor, data1, data2);
+				assert(0);
 			}
 			return (data2 << sublen * 8) + data1;
 		}
