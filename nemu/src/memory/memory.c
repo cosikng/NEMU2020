@@ -104,14 +104,19 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 		{
 			sublen = (addr & 0xfffff000) + 0x1000 - addr;
 			hwaddr_write(paddr, sublen, data & ((1 << sublen * 8) - 1));
-			pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4 + 4, 4); //读取下一页
+			dir = (addr >> 22) & 0x3ff;//读取下一页
+			page = (addr >> 12) & 0x3ff;
+			addr = (addr & 0xfffff000) + 0x1000; 
+			diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
+			assert((diritem & 1) == 1);
+			pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
 			assert((pageitem & 1) == 1);
 			paddr = (pageitem & 0xfffff000);
 			hwaddr_write(paddr, len - sublen, data >> sublen * 8);
 			return;
 		}
 	}
-	n:
+n:
 	hwaddr_write(paddr, len, data);
 }
 
