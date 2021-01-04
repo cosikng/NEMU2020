@@ -79,11 +79,6 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 			assert((pageitem & 1) == 1);
 			paddr = (pageitem & 0xfffff000);
 			data2 = hwaddr_read(paddr, len - sublen);
-			if ((data2 << sublen * 8) + data1 != cor)
-			{
-				printf("cor:0x%x\ndata1:0x%x\ndata2:0x%x\n", cor, data1, data2);
-				assert(0);
-			}
 			return (data2 << sublen * 8) + data1;
 		}
 	}
@@ -119,10 +114,6 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 			assert((pageitem & 1) == 1);
 			paddr = (pageitem & 0xfffff000);
 			hwaddr_write(paddr, len - sublen, data >> sublen * 8);
-			if(hwaddr_read(paddr-sublen,len)!=data){
-				printf("Read:0x%x\nData:0x%x\npaddr:0x%x\nlen:%d\n",hwaddr_read(paddr-sublen,len),data,paddr-sublen,(int)len);
-				assert(0);
-			}
 			return;
 		}
 	}
