@@ -20,14 +20,14 @@ make_helper_v(call_i)
     int len = ops_decoded.is_operand_size_16 ? decode_rm_w(eip + 1) : decode_rm_l(eip + 1);
     if (ops_decoded.is_operand_size_16)
     {
-        swaddr_write(cpu.esp - 2, 2, cpu.eip + 1 + len);
+        swaddr_write(cpu.esp - 2, 2, cpu.eip + 1 + len, 2); //SS
         cpu.esp -= 2;
         cpu.eip = op_src->val & 0xffff;
         cpu.eip -= 1 + len;
     }
     else
     {
-        swaddr_write(cpu.esp - 4, 4, cpu.eip + 1 + len);
+        swaddr_write(cpu.esp - 4, 4, cpu.eip + 1 + len, 2);
         cpu.esp -= 4;
         cpu.eip = op_src->val;
         cpu.eip -= 1 + len;

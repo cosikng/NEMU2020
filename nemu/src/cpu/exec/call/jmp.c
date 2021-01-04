@@ -19,7 +19,7 @@ make_helper_v(jmp_si)
 
         make_helper(ljmp)
 {
-    cpu.CS = swaddr_read(eip + 5, 2) >> 3;
-    cpu.eip = swaddr_read(eip + 1, 4) - 7;
+    cpu.CS = swaddr_read(eip + 5, 2, 1) >> 3;
+    cpu.eip = swaddr_read(eip + 1, 4, 1) - 7;
     return 7;
 }

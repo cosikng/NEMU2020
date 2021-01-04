@@ -6,7 +6,7 @@ static void do_execute()
 {
 
 	uint32_t dest = REG(0);
-	uint32_t src = swaddr_read(cpu.edi, DATA_BYTE);
+	uint32_t src = swaddr_read(cpu.edi, DATA_BYTE, 0); //ES
 	//printf("dest:0x%x,src:0x%x\n", dest, src);
 	if (cpu.eflags.DF == 0)
 	{
@@ -30,7 +30,7 @@ static void do_execute()
 	result ^= result >> 1;
 	cpu.eflags.PF = !(result & 1);
 	print_asm_template_s();
-	sprintf(assembly,"scas");
+	sprintf(assembly, "scas");
 }
 
 make_instr_helper(v)

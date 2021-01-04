@@ -5,7 +5,7 @@
 static void do_execute()
 {
 
-	swaddr_write(cpu.edi, DATA_BYTE, REG(0));
+	swaddr_write(cpu.edi, DATA_BYTE, REG(0), 0); //ES
 	if (cpu.eflags.DF == 0)
 	{
 		cpu.edi += DATA_BYTE;
@@ -15,7 +15,7 @@ static void do_execute()
 		cpu.edi -= DATA_BYTE;
 	}
 	print_asm_template_s();
-	sprintf(assembly,"stos");
+	sprintf(assembly, "stos");
 }
 
 make_instr_helper(v)

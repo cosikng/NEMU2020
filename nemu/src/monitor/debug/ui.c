@@ -128,7 +128,7 @@ static int cmd_x(char *args)
 	printf("Addr\t\tData\n");
 	for (i = 0; i < n; i++)
 	{
-		printf("0x%X\t0x%08x\n", addr + i * 4, swaddr_read(addr + i * 4, 4));
+		printf("0x%X\t0x%08x\n", addr + i * 4, swaddr_read(addr + i * 4, 4, 3)); //DS
 	}
 	return 0;
 }
@@ -308,7 +308,7 @@ int cac(int n1, int n2, char opt)
 	}
 	else if (opt == 'p')
 	{
-		return swaddr_read(n2, 4);
+		return swaddr_read(n2, 4, 3);//DS
 	}
 	else
 	{

@@ -11,7 +11,7 @@ static void do_execute()
 		byte = DATA_BYTE;
 	cpu.esp -= byte;
 	data = op_src->val;
-	swaddr_write(cpu.esp, byte, data);
+	swaddr_write(cpu.esp, byte, data,2);//SS
 	print_asm_template1_n();
 	return;
 }

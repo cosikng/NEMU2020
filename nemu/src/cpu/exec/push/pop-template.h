@@ -4,7 +4,7 @@
 
 static void do_execute()
 {
-    OPERAND_W(op_src, swaddr_read(cpu.esp, DATA_BYTE));
+    OPERAND_W(op_src, swaddr_read(cpu.esp, DATA_BYTE, 2));//SS
     cpu.esp += DATA_BYTE;
     print_asm_template1_n();
     return;
@@ -12,7 +12,7 @@ static void do_execute()
 
 make_instr_helper(rm)
 #if DATA_BYTE == 2 || DATA_BYTE == 4
-make_instr_helper(r)
+    make_instr_helper(r)
 #endif
 
 #include "cpu/exec/template-end.h"

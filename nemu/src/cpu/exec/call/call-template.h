@@ -6,7 +6,7 @@ static void do_execute()
 {
 	int byte = ops_decoded.is_operand_size_16 ? 2 : 4;
 	cpu.esp -= byte;
-	swaddr_write(cpu.esp, byte, cpu.eip + 5);
+	swaddr_write(cpu.esp, byte, cpu.eip + 5, 2); //SS
 	int off = op_src->val;
 	cpu.eip += off;
 	print_asm_template1_n();

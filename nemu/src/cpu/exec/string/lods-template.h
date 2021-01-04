@@ -5,7 +5,7 @@
 static void do_execute()
 {
 
-	uint32_t data = swaddr_read(cpu.esi, DATA_BYTE);
+	uint32_t data = swaddr_read(cpu.esi, DATA_BYTE, 3); //DS
 	REG(0) = data;
 	if (cpu.eflags.DF == 0)
 	{
@@ -16,7 +16,7 @@ static void do_execute()
 		cpu.esi -= DATA_BYTE;
 	}
 	print_asm_template_s();
-	sprintf(assembly,"lods");
+	sprintf(assembly, "lods");
 }
 
 make_instr_helper(v)
