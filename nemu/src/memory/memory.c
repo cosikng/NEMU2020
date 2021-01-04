@@ -47,32 +47,42 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data)
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 {
-	uint32_t dir, page, diritem, pageitem, off;
+	uint32_t dir, page, diritem, pageitem, off, paddr, data1, data2, sublen;
 	dir = (addr >> 22) & 0x3ff;
 	page = (addr >> 12) & 0x3ff;
 	off = addr & 0xfff;
+	paddr = addr;
 	if (cpu.CR0.paging == 1)
 	{
 
 		//printf("Read0x%x\n",addr);
 
-		assert(addr + len < (addr & 0xfffff000) + 0x1000);
-
 		diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
 		assert((diritem & 1) == 1);
 		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
 		assert((pageitem & 1) == 1);
-		addr = (pageitem & 0xfffff000) + off;
+		paddr = (pageitem & 0xfffff000) + off;
+		if (addr + len >= (addr & 0xfffff000) + 0x1000)
+		{
+			sublen = (addr & 0xfffff000) + 0x1000 - addr;
+			data1 = hwaddr_read(paddr, sublen);
+			pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4 + 4, 4); //读取下一页
+			assert((pageitem & 1) == 1);
+			paddr = (pageitem & 0xfffff000);
+			data2 = hwaddr_read(paddr, len - sublen);
+			return (data2 << sublen * 8) + data1;
+		}
 	}
-	return hwaddr_read(addr, len);
+	return hwaddr_read(paddr, len);
 }
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 {
-	uint32_t dir, page, diritem, pageitem, off;
+	uint32_t dir, page, diritem, pageitem, off, paddr, sublen;
 	dir = (addr >> 22) & 0x3ff;
 	page = (addr >> 12) & 0x3ff;
 	off = addr & 0xfff;
+	paddr = addr;
 	if (cpu.CR0.paging == 1)
 	{
 
@@ -83,9 +93,19 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 		assert((diritem & 1) == 1);
 		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
 		assert((pageitem & 1) == 1);
-		addr = (pageitem & 0xfffff000) + off;
+		paddr = (pageitem & 0xfffff000) + off;
+		if (addr + len >= (addr & 0xfffff000) + 0x1000)
+		{
+			sublen = (addr & 0xfffff000) + 0x1000 - addr;
+			hwaddr_write(paddr, sublen, data & ((1 << sublen) - 1));
+			pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4 + 4, 4); //读取下一页
+			assert((pageitem & 1) == 1);
+			paddr = (pageitem & 0xfffff000);
+			hwaddr_write(paddr, len - sublen, data >> sublen * 8);
+			return;
+		}
 	}
-	hwaddr_write(addr, len, data);
+	hwaddr_write(paddr, len, data);
 }
 
 uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg)
