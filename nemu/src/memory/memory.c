@@ -52,6 +52,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 	page = (addr >> 12) & 0x3ff;
 	off = addr & 0xfff;
 	paddr = addr;
+	uint32_t cor = 0;
 	if (cpu.CR0.paging == 1)
 	{
 
@@ -65,12 +66,17 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 		//printf("Read:0x%x\n",paddr);
 		if (addr + len >= (addr & 0xfffff000) + 0x1000)
 		{
+			cor = hwaddr_read(paddr, len);
 			sublen = (addr & 0xfffff000) + 0x1000 - addr;
 			data1 = hwaddr_read(paddr, sublen);
 			pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4 + 4, 4); //读取下一页
 			assert((pageitem & 1) == 1);
 			paddr = (pageitem & 0xfffff000);
 			data2 = hwaddr_read(paddr, len - sublen);
+			if ((data2 << sublen * 8) + data1 != cor)
+			{
+				panic("cor:0x%x\ndata1:0x%x\ndata2:0x%x\n", cor, data1, data2);
+			}
 			return (data2 << sublen * 8) + data1;
 		}
 	}
