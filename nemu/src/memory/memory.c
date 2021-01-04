@@ -69,7 +69,13 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 			cor = hwaddr_read(paddr, len);
 			sublen = (addr & 0xfffff000) + 0x1000 - addr;
 			data1 = hwaddr_read(paddr, sublen);
-			pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4 + 4, 4); //读取下一页
+			addr = (addr & 0xfffff000) + 0x1000; //读取下一页
+			dir = (addr >> 22) & 0x3ff;
+			page = (addr >> 12) & 0x3ff;
+
+			diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
+			assert((diritem & 1) == 1);
+			pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
 			assert((pageitem & 1) == 1);
 			paddr = (pageitem & 0xfffff000);
 			data2 = hwaddr_read(paddr, len - sublen);
@@ -99,14 +105,14 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
 		assert((pageitem & 1) == 1);
 		paddr = (pageitem & 0xfffff000) + off;
-		goto n;
 		if (addr + len >= (addr & 0xfffff000) + 0x1000)
 		{
 			sublen = (addr & 0xfffff000) + 0x1000 - addr;
 			hwaddr_write(paddr, sublen, data & ((1 << sublen * 8) - 1));
-			dir = (addr >> 22) & 0x3ff;//读取下一页
+			addr = (addr & 0xfffff000) + 0x1000; //读取下一页
+			dir = (addr >> 22) & 0x3ff;
 			page = (addr >> 12) & 0x3ff;
-			addr = (addr & 0xfffff000) + 0x1000; 
+
 			diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
 			assert((diritem & 1) == 1);
 			pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
@@ -116,7 +122,6 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 			return;
 		}
 	}
-n:
 	hwaddr_write(paddr, len, data);
 }
 
