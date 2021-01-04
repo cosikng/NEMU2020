@@ -62,6 +62,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
 		assert((pageitem & 1) == 1);
 		paddr = (pageitem & 0xfffff000) + off;
+		printf("Read:0x%x\n",paddr);
 		goto next;
 		if (addr + len >= (addr & 0xfffff000) + 0x1000)
 		{
