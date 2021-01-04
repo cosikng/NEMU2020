@@ -15,6 +15,7 @@ void ramdisk_read(uint8_t *, uint32_t, uint32_t);
 
 void create_video_mapping();
 uint32_t get_ucr3();
+uint32_t mm_malloc(uint32_t va, int len);
 
 uint32_t loader()
 {
@@ -55,8 +56,8 @@ uint32_t loader()
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
 
-			ramdisk_read((void *)ph->p_vaddr, ph->p_offset, ph->p_filesz);
-			memset((void *)(ph->p_vaddr + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
+			ramdisk_read((void *)mm_malloc(ph->p_vaddr & 0xfffff000, ((ph->p_memsz + (ph->p_vaddr & 0xfff)) & 0xfffff000) + 0x1000), ph->p_offset, ph->p_filesz);
+			//memset((void *)(ph->p_vaddr + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use. */
