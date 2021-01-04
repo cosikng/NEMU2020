@@ -91,6 +91,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 	page = (addr >> 12) & 0x3ff;
 	off = addr & 0xfff;
 	paddr = addr;
+	assert(0);
 	if (cpu.CR0.paging == 1)
 	{
 
