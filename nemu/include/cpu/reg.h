@@ -108,6 +108,11 @@ typedef struct
 		uint32_t val;
 	} CR0;
 
+	union CR3{
+		uint32_t val;
+
+	}CR3;
+
 	struct gdtr
 	{
 		uint16_t limit;
