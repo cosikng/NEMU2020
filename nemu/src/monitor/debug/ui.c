@@ -183,7 +183,7 @@ static int cmd_page(char *args)
 	uint32_t addr = pp(args);
 	if ((cpu.CR0.val >> 31) == 0)
 	{
-		printf("Pagging is not enabled\n");
+		printf("Pagging is not enabled now.\n");
 		return 0;
 	}
 	printf("Vitrual addr:0x%x\n", addr);
