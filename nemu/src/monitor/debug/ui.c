@@ -195,13 +195,13 @@ static int cmd_page(char *args)
 	if ((diritem & 1) == 0)
 	{
 		printf("Pagedir fault\n");
-		//return 0;
+		return 0;
 	}
 	pageitem = hwaddr_read((diritem & 0xfffff000) + ((addr >> 12) & 0x3ff) * 4, 4);
 	if ((pageitem & 1) == 0)
 	{
 		printf("Page fault\n");
-		//return 0;
+		return 0;
 	}
 	printf("Physical addr:0x%x\n", (pageitem & 0xfffff000) + (addr & 0xfff));
 	return 0;
