@@ -22,12 +22,12 @@ void create_video_mapping()
 	PDE *updir = get_updir();
 	for (i = 0; i < (SCR_SIZE & ~(PT_SIZE - 1)) / PT_SIZE + 1; i++)
 	{
-		updir[i + (VMEM_ADDR >> 22)].val = (uint32_t)(videotable + i * PAGE_SIZE) << 12;
+		updir[i + (VMEM_ADDR >> 22)].val = (uint32_t)(videotable + i * PAGE_SIZE);
 		updir[i + (VMEM_ADDR >> 22)].present = 1;
 		for (j = 0; j < (SCR_SIZE & ~PAGE_MASK) / PAGE_SIZE + 1; j++)
 		{
 			videotable[j].val = VMEM_ADDR + j * PAGE_SIZE;
-			videotable[j].present = 0;
+			videotable[j].present = 1;
 		}
 	}
 }
