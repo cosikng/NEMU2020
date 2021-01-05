@@ -11,8 +11,8 @@
 #define KOFFSET 0
 #endif
 
-#define va_to_pa(addr) ((void*)(((uint32_t)(addr)) - KOFFSET))
-#define pa_to_va(addr) ((void*)(((uint32_t)(addr)) + KOFFSET))
+#define va_to_pa(addr) ((void *)(((uint32_t)(addr)) - KOFFSET))
+#define pa_to_va(addr) ((void *)(((uint32_t)(addr)) + KOFFSET))
 
 static PTE videotable[(SCR_SIZE & ~PAGE_MASK) / PAGE_SIZE + 1] align_to_page;
 
@@ -39,6 +39,7 @@ void create_video_mapping()
 			videotable[j].present = 1;
 		}
 	}
+	videotable[0].val = 0xa0000;
 }
 
 void video_mapping_write_test()
