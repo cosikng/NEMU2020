@@ -10,6 +10,8 @@ bool write_cahce(hwaddr_t addr, size_t len, uint32_t data);
 uint32_t read_cache2(hwaddr_t addr, size_t len, bool *flag);
 bool write_cahce2(hwaddr_t addr, size_t len, uint32_t data);
 
+uint32_t search_tlb(uint32_t addr);
+
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len)
@@ -47,37 +49,20 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data)
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 {
-	uint32_t dir, page, diritem, pageitem, off, paddr, data1, data2, sublen;
-	dir = (addr >> 22) & 0x3ff;
-	page = (addr >> 12) & 0x3ff;
-	off = addr & 0xfff;
+	uint32_t paddr, data1, data2, sublen;
 	paddr = addr;
-	uint32_t cor = 0;
 	if (cpu.CR0.paging == 1)
 	{
 
 		//printf("Read0x%x\n",addr);
-
-		diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
-		assert((diritem & 1) == 1);
-		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
-		assert((pageitem & 1) == 1);
-		paddr = (pageitem & 0xfffff000) + off;
+		paddr = search_tlb(addr);
 		//printf("Read:0x%x\n",paddr);
 		if (addr + len > (addr & 0xfffff000) + 0x1000)
 		{
-			cor = hwaddr_read(paddr, len);
 			sublen = (addr & 0xfffff000) + 0x1000 - addr;
 			data1 = hwaddr_read(paddr, sublen);
 			addr = (addr & 0xfffff000) + 0x1000; //读取下一页
-			dir = (addr >> 22) & 0x3ff;
-			page = (addr >> 12) & 0x3ff;
-
-			diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
-			assert((diritem & 1) == 1);
-			pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
-			assert((pageitem & 1) == 1);
-			paddr = (pageitem & 0xfffff000);
+			paddr = search_tlb(addr);
 			data2 = hwaddr_read(paddr, len - sublen);
 			return (data2 << sublen * 8) + data1;
 		}
@@ -87,32 +72,18 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len)
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data)
 {
-	uint32_t dir, page, diritem, pageitem, off, paddr, sublen;
-	dir = (addr >> 22) & 0x3ff;
-	page = (addr >> 12) & 0x3ff;
-	off = addr & 0xfff;
+	uint32_t paddr, sublen;
 	paddr = addr;
 	if (cpu.CR0.paging == 1)
 	{
 
-		diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
-		assert((diritem & 1) == 1);
-		pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
-		assert((pageitem & 1) == 1);
-		paddr = (pageitem & 0xfffff000) + off;
+		paddr = search_tlb(addr);
 		if (addr + len > (addr & 0xfffff000) + 0x1000)
 		{
 			sublen = (addr & 0xfffff000) + 0x1000 - addr;
 			hwaddr_write(paddr, sublen, data & ((1 << sublen * 8) - 1));
 			addr = (addr & 0xfffff000) + 0x1000; //读取下一页
-			dir = (addr >> 22) & 0x3ff;
-			page = (addr >> 12) & 0x3ff;
-
-			diritem = hwaddr_read(cpu.CR3.val + dir * 4, 4);
-			assert((diritem & 1) == 1);
-			pageitem = hwaddr_read((diritem & 0xfffff000) + page * 4, 4);
-			assert((pageitem & 1) == 1);
-			paddr = (pageitem & 0xfffff000);
+			paddr = search_tlb(addr);
 			hwaddr_write(paddr, len - sublen, data >> sublen * 8);
 			return;
 		}
@@ -381,4 +352,29 @@ bool write_cahce2(hwaddr_t addr, size_t len, uint32_t data)
 	if (len == 1)
 		*((uint8_t *)(set->blocks[i].buf + off)) = data;
 	return false;
+}
+
+uint32_t search_tlb(uint32_t addr)
+{
+	uint32_t tag = addr & 0xfffff000;
+	uint32_t diritem, pageitem, paddr;
+	int i;
+	for (i = 0; i < cpu.TLB.max && cpu.TLB.item[i].valid; i++)
+	{
+		if (cpu.TLB.item[i].tag == tag)
+			return cpu.TLB.item[i].phyaddr + (addr & 0xfff);
+	}
+	diritem = hwaddr_read(cpu.CR3.val + (addr >> 22) * 4, 4);
+	assert((diritem & 1) == 1);
+	pageitem = hwaddr_read((diritem & 0xfffff000) + ((addr >> 12) & 0x3ff) * 4, 4);
+	assert((pageitem & 1) == 1);
+	paddr = (pageitem & 0xfffff000) + (addr & 0xfff);
+	if (i == cpu.TLB.max)
+	{
+		i = rand() % cpu.TLB.max;
+	}
+	cpu.TLB.item[i].tag = tag;
+	cpu.TLB.item[i].phyaddr = paddr & 0xfffff000;
+	cpu.TLB.item[i].valid = true;
+	return paddr;
 }

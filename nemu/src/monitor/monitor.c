@@ -97,6 +97,7 @@ void restart()
 
 	cpu.eflags._32 = 0x2;
 
+	//初始化一级缓存
 	cpu.cache1.b = 6;
 	cpu.cache1.E = 8;
 	cpu.cache1.s = 7;
@@ -113,6 +114,7 @@ void restart()
 		}
 	}
 
+	//初始化二级缓存
 	cpu.cache2.b = 6;
 	cpu.cache2.E = 16;
 	cpu.cache2.s = 12;
@@ -134,6 +136,14 @@ void restart()
 
 	cpu.CSbase = 0;
 	cpu.CSlimit = 0xffffffff;
+
+	//初始化快表
+	cpu.TLB.max = 64;
+	cpu.TLB.item = (TLBitem *)malloc(sizeof(TLBitem) * cpu.TLB.max);
+	for (i = 0; i < cpu.TLB.max; i++)
+	{
+		cpu.TLB.item[i].valid = false;
+	}
 
 	/* Initialize DRAM. */
 	init_ddr3();

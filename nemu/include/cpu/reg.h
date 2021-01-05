@@ -58,6 +58,13 @@ typedef struct
 
 } Cache;
 
+typedef struct
+{
+	uint32_t tag;
+	uint32_t phyaddr;
+	bool valid;
+} TLBitem;
+
 /* TODO: Re-organize the `CPU_state' structure to match the register
  * encoding scheme in i386 instruction format. For example, if we
  * access cpu.gpr[3]._16, we will get the `bx' register; if we access
@@ -175,6 +182,12 @@ typedef struct
 			};
 		};
 	} eflags;
+
+	struct TLB
+	{
+		uint32_t max;
+		TLBitem *item;
+	} TLB;
 
 	Cache cache1;
 	Cache cache2;

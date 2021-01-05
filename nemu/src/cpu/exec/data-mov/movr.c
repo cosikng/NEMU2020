@@ -15,9 +15,14 @@ make_helper(movr2s)
 {
     uint8_t reg = swaddr_read(eip + 1, 1, 1) & 7;
     uint8_t s = (swaddr_read(eip + 1, 1, 1) >> 3) & 7;
+    int i;
     if (s == 0)
         cpu.CR0.val = cpu.gpr[reg]._32;
     else if (s == 3)
+    {
         cpu.CR3.val = cpu.gpr[reg]._32;
+        for (i = 0; i < cpu.TLB.max; i++)
+            cpu.TLB.item[i].valid = false;
+    }
     return 2;
 }
