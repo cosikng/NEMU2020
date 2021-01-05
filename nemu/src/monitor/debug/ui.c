@@ -184,6 +184,8 @@ static int cmd_page(char *args)
 	printf("Vitrual addr:0x%x\n", addr);
 	addr = cpu.DSbase + addr;
 	printf("Linear addr:0x%x\n", addr);
+	printf("Dir:0x%x\n", addr >> 22);
+	printf("Page:0x%x\n", (addr >> 12) & 0x3ff);
 	diritem = hwaddr_read(cpu.CR3.val + (addr >> 22) * 4, 4);
 	if ((diritem & 1) == 0)
 	{
