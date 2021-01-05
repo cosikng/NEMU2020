@@ -14,7 +14,7 @@
 #define va_to_pa(addr) ((void *)(((uint32_t)(addr)) - KOFFSET))
 #define pa_to_va(addr) ((void *)(((uint32_t)(addr)) + KOFFSET))
 
-static PTE videotable[(SCR_SIZE & ~PAGE_MASK) / PAGE_SIZE + 1] align_to_page;
+static PTE videotable[NR_PTE] align_to_page;
 
 /* Use the function to get the start address of user page directory. */
 PDE *get_updir();
@@ -35,11 +35,10 @@ void create_video_mapping()
 		updir[i + (VMEM_ADDR >> 22)].present = 1;
 		for (j = 0; j < (SCR_SIZE & ~PAGE_MASK) / PAGE_SIZE + 1; j++)
 		{
-			videotable[j].val = VMEM_ADDR + j * PAGE_SIZE;
-			videotable[j].present = 1;
+			videotable[((VMEM_ADDR >> 12) & 0x3ff) + j].val = VMEM_ADDR + j * PAGE_SIZE;
+			videotable[((VMEM_ADDR >> 12) & 0x3ff) + j].present = 1;
 		}
 	}
-	videotable[0].val = 0xa0000;
 }
 
 void video_mapping_write_test()
