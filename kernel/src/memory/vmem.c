@@ -20,14 +20,14 @@ void create_video_mapping()
 	//panic("please implement me");
 	uint32_t i, j;
 	PDE *updir = get_updir();
-	for (i = VMEM_ADDR >> 22; i < (SCR_SIZE & ~(PT_SIZE - 1)) / PT_SIZE + 1; i++)
+	for (i = 0; i < (SCR_SIZE & ~(PT_SIZE - 1)) / PT_SIZE + 1; i++)
 	{
-		updir[i].val = (uint32_t)(videotable + i * PAGE_SIZE) << 12;
-		updir[i].present = 1;
+		updir[i + (VMEM_ADDR >> 22)].val = (uint32_t)(videotable + i * PAGE_SIZE) << 12;
+		updir[i + (VMEM_ADDR >> 22)].present = 1;
 		for (j = 0; j < (SCR_SIZE & ~PAGE_MASK) / PAGE_SIZE + 1; j++)
 		{
 			videotable[j].val = VMEM_ADDR + j * PAGE_SIZE;
-			videotable[j].present = 1;
+			videotable[j].present = 0;
 		}
 	}
 }
