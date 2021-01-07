@@ -20,7 +20,9 @@ void init_cond();
 /* Initialization phase 1
  * The assembly code in start.S will finally jump here.
  */
-void init() {
+void init()
+{
+	a = 3;
 #ifdef IA32_PAGE
 	/* We must set up kernel virtual memory first because our kernel thinks it 
 	 * is located at 0xc0100000, which is set by the linking options in Makefile.
@@ -28,17 +30,22 @@ void init() {
 	init_page();
 
 	/* After paging is enabled, transform %esp to virtual address. */
-	asm volatile("addl %0, %%esp" : : "i"(KOFFSET));
+	asm volatile("addl %0, %%esp"
+				 :
+				 : "i"(KOFFSET));
 #endif
 
 	/* Jump to init_cond() to continue initialization. */
-	asm volatile("jmp *%0" : : "r"(init_cond));
+	asm volatile("jmp *%0"
+				 :
+				 : "r"(init_cond));
 
 	panic("should not reach here");
 }
 
 /* Initialization phase 2 */
-void init_cond() {
+void init_cond()
+{
 #ifdef IA32_INTR
 	/* Reset the GDT, since the old GDT in start.S cannot be used in the future. */
 	init_segment();
@@ -73,7 +80,6 @@ void init_cond() {
 	 * the serial port is available in NEMU.
 	 */
 	Log("Hello, NEMU world!");
-	a=3;
 
 #if defined(IA32_PAGE) && defined(HAS_DEVICE)
 	/* Write some test data to the video memory. */
@@ -85,7 +91,7 @@ void init_cond() {
 	uint32_t eip = loader();
 	video_mapping_read_test();
 	video_mapping_clear();
-	
+
 #if defined(IA32_PAGE) && defined(HAS_DEVICE)
 	/* Read data in the video memory to check whether 
 	 * the test data is written sucessfully.
@@ -99,7 +105,9 @@ void init_cond() {
 #ifdef IA32_PAGE
 	/* Set the %esp for user program, which is one of the
 	 * convention of the "advanced" runtime environment. */
-	asm volatile("movl %0, %%esp" : : "i"(KOFFSET));
+	asm volatile("movl %0, %%esp"
+				 :
+				 : "i"(KOFFSET));
 #endif
 
 	/* Keep the `bt' command happy. */
@@ -107,10 +115,9 @@ void init_cond() {
 	asm volatile("subl $16, %esp");
 
 	/* Here we go! */
-	((void(*)(void))eip)();
+	((void (*)(void))eip)();
 
 	HIT_GOOD_TRAP;
 
 	panic("should not reach here");
 }
-
