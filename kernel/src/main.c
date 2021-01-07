@@ -34,10 +34,9 @@ void init()
 #endif
 
 	/* Jump to init_cond() to continue initialization. */
-	/*asm volatile("jmp *%0"
+	asm volatile("jmp *%0"
 				 :
-				 : "r"(init_cond));*/
-				 init_cond();
+				 : "r"(init_cond));
 
 	panic("should not reach here");
 }
