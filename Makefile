@@ -54,7 +54,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/matrix-mul
+USERPROG := obj/testcase/fib
 ENTRY := $(kernel_BIN)
 
 entry: $(ENTRY)
