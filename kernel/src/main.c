@@ -9,7 +9,6 @@ void init_segment();
 void init_idt();
 void init_mm();
 uint32_t loader();
-int a;
 
 void video_mapping_write_test();
 void video_mapping_read_test();
@@ -22,7 +21,6 @@ void init_cond();
  */
 void init()
 {
-	a = 3;
 #ifdef IA32_PAGE
 	/* We must set up kernel virtual memory first because our kernel thinks it 
 	 * is located at 0xc0100000, which is set by the linking options in Makefile.
