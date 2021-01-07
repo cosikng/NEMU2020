@@ -28,13 +28,16 @@ void init()
 	init_page();
 
 	/* After paging is enabled, transform %esp to virtual address. */
-	
+	asm volatile("addl %0, %%esp"
+				 :
+				 : "i"(KOFFSET));
 #endif
 
 	/* Jump to init_cond() to continue initialization. */
-	asm volatile("jmp *%0"
+	/*asm volatile("jmp *%0"
 				 :
-				 : "r"(init_cond));
+				 : "r"(init_cond));*/
+				 init_cond();
 
 	panic("should not reach here");
 }
@@ -84,9 +87,6 @@ void init_cond()
 	video_mapping_write_test();
 
 	/* Load the program. */
-	asm volatile("addl %0, %%esp"
-				 :
-				 : "i"(KOFFSET));
 	uint32_t eip = loader();
 	video_mapping_read_test();
 	video_mapping_clear();
