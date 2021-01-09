@@ -36,14 +36,13 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len)
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data)
 {
-	bool f;
 	uint32_t up = (addr & ~((1 << cpu.cache1.b) - 1)) + (1 << cpu.cache1.b);
 	if (addr + len > up)
 	{
-		f = write_cahce(addr, up - addr, data);
-		f = write_cahce(up, addr + len - up, data >> (up - addr) * 8);
+		write_cahce(addr, up - addr, data);
+		write_cahce(up, addr + len - up, data >> (up - addr) * 8);
 	}
-	f = write_cahce(addr, len, data);
+	write_cahce(addr, len, data);
 	//dram_write(addr, len, data);
 }
 
