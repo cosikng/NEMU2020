@@ -95,7 +95,7 @@ uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg)
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
-	uint32_t lnaddr = 0;
+	uint32_t lnaddr = addr;
 	if ((cpu.CR0.val & 1) == 1)
 	{
 		lnaddr += cpu.Sregcache[sreg].base;
@@ -113,7 +113,7 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data, uint8_t sreg)
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
-	uint32_t lnaddr = 0;
+	uint32_t lnaddr = addr;
 	if ((cpu.CR0.val & 1) == 1)
 	{
 		lnaddr += cpu.Sregcache[sreg].base;
