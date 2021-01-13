@@ -29,5 +29,7 @@ make_helper(mov_r2s)
     gdh = lnaddr_read((cpu.GDTR.base_h << 16) + cpu.GDTR.base_l + (cpu.gpr[data & 7]._16 >> 3) * 8 + 4, 4);
     cpu.Sregcache[(data >> 3) & 7].limit = ((gdh & 0xf0000) << 12) + ((gdl & 0xffff) << 12);
     cpu.Sregcache[(data >> 3) & 7].base = (gdl >> 16) + ((gdh & 0xff) << 16) + (gdh & 0xff000000);
+    if ((gdh >> 23) == 0)
+        cpu.Sregcache[(data >> 3) & 7].limit >>= 12;
     return 2;
 }
