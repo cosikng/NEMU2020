@@ -97,6 +97,11 @@ uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg)
 #endif
 	if ((cpu.CR0.val & 1) == 1)
 	{
+		addr += cpu.Sregcache[sreg].base;
+		if (addr + len > cpu.Sregcache[sreg].limit)
+		{
+			panic("segment out limit\n");
+		}
 		return lnaddr_read(addr + cpu.Sregcache[sreg].base, len);
 	}
 	return lnaddr_read(addr, len);
@@ -109,6 +114,11 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data, uint8_t sreg)
 #endif
 	if ((cpu.CR0.val & 1) == 1)
 	{
+		addr += cpu.Sregcache[sreg].base;
+		if (addr + len > cpu.Sregcache[sreg].limit)
+		{
+			panic("segment out limit\n");
+		}
 		lnaddr_write(addr + cpu.Sregcache[sreg].base, len, data);
 		return;
 	}
@@ -364,9 +374,11 @@ uint32_t search_tlb(uint32_t addr)
 			return cpu.TLB.item[i].phyaddr + (addr & 0xfff);
 	}
 	diritem = hwaddr_read(cpu.CR3.val + (addr >> 22) * 4, 4);
-	assert((diritem & 1) == 1);
+	if ((diritem & 1) == 0)
+		panic("page fault\n");
 	pageitem = hwaddr_read((diritem & 0xfffff000) + ((addr >> 12) & 0x3ff) * 4, 4);
-	assert((pageitem & 1) == 1);
+	if ((pageitem & 1) == 0)
+		panic("page fault\n");
 	paddr = (pageitem & 0xfffff000) + (addr & 0xfff);
 	if (i == cpu.TLB.max)
 	{
