@@ -20,7 +20,7 @@ make_helper_v(jmp_rm)
 make_helper(ljmp)
 {
     uint32_t gdl, gdh;
-    cpu.CS = swaddr_read(eip + 5, 2, 1) >> 3;
+    //cpu.CS = swaddr_read(eip + 5, 2, 1) >> 3;
     gdl = lnaddr_read((cpu.GDTR.base_h << 16) + cpu.GDTR.base_l + (cpu.CS >> 3) * 8, 4);
     gdh = lnaddr_read((cpu.GDTR.base_h << 16) + cpu.GDTR.base_l + (cpu.CS >> 3) * 8 + 4, 4);
     cpu.CSlimit = ((gdh & 0xf0000) << 12) + ((gdl & 0xffff) << 12);
