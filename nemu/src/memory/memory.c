@@ -101,7 +101,7 @@ uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg)
 		addr += cpu.Sregcache[sreg].base;
 		if (addr + len > cpu.Sregcache[sreg].limit)
 		{
-			panic("segment%d out limit:0x%x\n",sreg,cpu.Sregcache[sreg].limit);
+			panic("segment%d out limit:0x%x\n",sreg,cpu.CSlimit);
 		}
 		return lnaddr_read(addr, len);
 	}
