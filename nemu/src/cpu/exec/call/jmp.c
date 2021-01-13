@@ -25,7 +25,7 @@ make_helper(ljmp)
     gdh = lnaddr_read((cpu.GDTR.base_h << 16) + cpu.GDTR.base_l + (cpu.CS >> 3) * 8 + 4, 4);
     cpu.CSlimit = ((gdh & 0xf0000) << 12) + ((gdl & 0xffff) << 12);
     cpu.CSbase = (gdl >> 16) + ((gdh & 0xff) << 16) + (gdh & 0xff000000);
-    printf("CSlimit:0x%x",cpu.CSlimit);
+    printf("CS:%dCSlimit:0x%x",cpu.CS,cpu.CSlimit);
     cpu.eip = swaddr_read(eip + 1, 4, 1) - 7;
     printf("1");
     return 7;
