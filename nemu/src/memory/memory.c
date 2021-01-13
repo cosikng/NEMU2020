@@ -95,15 +95,15 @@ uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg)
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
-	uint32_t lnaddr = addr;
+
 	if ((cpu.CR0.val & 1) == 1)
 	{
-		lnaddr += cpu.Sregcache[sreg].base;
-		if (lnaddr + len > cpu.Sregcache[sreg].limit)
+		addr += cpu.Sregcache[sreg].base;
+		if (addr + len > cpu.Sregcache[sreg].limit)
 		{
 			panic("segment out limit\n");
 		}
-		return lnaddr_read(lnaddr, len);
+		return lnaddr_read(addr, len);
 	}
 	return lnaddr_read(addr, len);
 }
@@ -113,15 +113,14 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data, uint8_t sreg)
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
-	uint32_t lnaddr = addr;
 	if ((cpu.CR0.val & 1) == 1)
 	{
-		lnaddr += cpu.Sregcache[sreg].base;
-		if (lnaddr + len > cpu.Sregcache[sreg].limit)
+		addr += cpu.Sregcache[sreg].base;
+		if (addr + len > cpu.Sregcache[sreg].limit)
 		{
-			panic("segment out limit\n");
+			panic("segment out limit0x%x\n",cpu.Sregcache[sreg].limit);
 		}
-		lnaddr_write(lnaddr, len, data);
+		lnaddr_write(addr, len, data);
 		return;
 	}
 	lnaddr_write(addr, len, data);
