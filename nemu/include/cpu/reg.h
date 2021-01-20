@@ -205,6 +205,8 @@ typedef struct
 	Cache cache1;
 	Cache cache2;
 
+	bool INTR;
+
 } CPU_state;
 
 typedef struct GateDescriptor
