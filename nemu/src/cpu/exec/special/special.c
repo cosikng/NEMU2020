@@ -39,7 +39,6 @@ make_helper(nemu_trap)
 		{
 			printf("%c", swaddr_read(cpu.ecx + i, 1, R_DS));
 		}
-		cpu.eax = i;
 		break;
 
 	default:
