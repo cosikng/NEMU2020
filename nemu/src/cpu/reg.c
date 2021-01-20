@@ -43,3 +43,17 @@ void reg_test()
 
 	assert(eip_sample == cpu.eip);
 }
+
+void sreg_load(uint8_t sreg)
+{
+	Assert(cpu.CR0.protect_enable, "Not in protection mode");
+	uint16_t index = cpu.Sreg[sreg] >> 3;
+	uint32_t gdl, gdh;
+	Assert(index * 8 < cpu.GDTR.limit, "segment selector out of limit");
+	gdl = lnaddr_read((cpu.GDTR.base_h << 16) + cpu.GDTR.base_l + index * 8, 4);
+	gdh = lnaddr_read((cpu.GDTR.base_h << 16) + cpu.GDTR.base_l + index * 8 + 4, 4);
+	cpu.Sregcache[sreg].limit = ((gdh & 0xf0000) << 12) + ((gdl & 0xffff) << 12);
+	cpu.Sregcache[sreg].base = (gdl >> 16) + ((gdh & 0xff) << 16) + (gdh & 0xff000000);
+	if ((gdh >> 23) == 0)
+		cpu.Sregcache[sreg].limit >>= 12;
+}

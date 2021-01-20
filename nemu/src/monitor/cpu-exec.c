@@ -32,6 +32,30 @@ char asm_buf[128];
 /* Used with exception handling. */
 jmp_buf jbuf;
 
+static inline void push(uint32_t val)
+{
+	reg_l(R_ESP) -= 4;
+	swaddr_write(reg_l(R_ESP), 4, val, R_SS);
+	return;
+}
+
+void raise_intr(uint8_t NO)
+{
+	GATE_descriptor idt;
+	Assert(NO * 8 <= cpu.IDTR.limit, "Interrupt number exceeded.\n");
+	lnaddr_t addr = cpu.IDTR.base + NO * 8;
+	idt.first_part = lnaddr_read(addr, 4);
+	idt.second_part = lnaddr_read(addr + 4, 4);
+	push(cpu.eflags._32);
+	push(cpu.CS);
+	push(cpu.eip);
+	cpu.CS = idt.segment;
+	Assert(((cpu.CS >> 3) << 3) <= cpu.GDTR.limit, "segment out limit %d, %d", ((cpu.CS >> 3) << 3), cpu.GDTR.limit);
+	sreg_load(R_CS);
+	cpu.eip = idt.offset_15_0 + (idt.offset_31_16 << 16);
+	longjmp(jbuf, 1);
+}
+
 void print_bin_instr(swaddr_t eip, int len)
 {
 	int i;

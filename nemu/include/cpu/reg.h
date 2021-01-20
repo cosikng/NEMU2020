@@ -36,6 +36,13 @@ enum
 	R_DH,
 	R_BH
 };
+enum
+{
+	R_ES,
+	R_CS,
+	R_SS,
+	R_DS
+};
 
 struct block
 {
@@ -135,6 +142,12 @@ typedef struct
 		uint16_t base_h;
 	} GDTR;
 
+	struct idtr
+	{
+		uint16_t limit;
+		uint32_t base;
+	} IDTR;
+
 	union
 	{
 		struct
@@ -193,6 +206,31 @@ typedef struct
 	Cache cache2;
 
 } CPU_state;
+
+typedef struct GateDescriptor
+{
+	union
+	{
+		struct
+		{
+			uint32_t offset_15_0 : 16;
+			uint32_t segment : 16;
+			uint32_t pad0 : 8;
+			uint32_t type : 4;
+			uint32_t system : 1;
+			uint32_t privilege_level : 2;
+			uint32_t present : 1;
+			uint32_t offset_31_16 : 16;
+		};
+		struct
+		{
+			uint32_t first_part;
+			uint32_t second_part;
+		};
+	};
+} GATE_descriptor;
+
+void sreg_load(uint8_t sreg);
 
 extern CPU_state cpu;
 

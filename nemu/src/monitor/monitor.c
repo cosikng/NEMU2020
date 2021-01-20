@@ -96,6 +96,8 @@ void restart()
 	cpu.eip = ENTRY_START;
 
 	cpu.eflags._32 = 0x2;
+	cpu.IDTR.base = 0;
+	cpu.IDTR.limit = 0x3ff;
 
 	//初始化一级缓存
 	cpu.cache1.b = 6;

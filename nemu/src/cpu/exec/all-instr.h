@@ -26,6 +26,9 @@
 #include "arith/sub.h"
 #include "arith/sbb.h"
 
+#include "intr/int.h"
+#include "intr/iret.h"
+
 #include "logic/and.h"
 #include "logic/or.h"
 #include "logic/not.h"
