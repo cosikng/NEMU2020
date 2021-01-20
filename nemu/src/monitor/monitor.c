@@ -12,6 +12,9 @@ void init_regex();
 void init_wp_pool();
 void init_ddr3();
 
+void init_sdl(void);
+void init_device(void);
+
 FILE *log_fp = NULL;
 
 static void init_log()
