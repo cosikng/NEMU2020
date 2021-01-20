@@ -1,9 +1,6 @@
 #include "cpu/helper.h"
 #include "cpu/decode/modrm.h"
 
-int tab[256];
-int tab2[256];
-
 #include "all-instr.h"
 
 typedef int (*helper_fun)(swaddr_t);
@@ -234,24 +231,6 @@ helper_fun _2byte_opcode_table [256] = {
 
 make_helper(exec) {
 	ops_decoded.opcode = instr_fetch(eip, 1);
-	tab[ops_decoded.opcode]=1;
-	/*int i;
-	for(i=0;i<16;i++){
-		int j;
-		for(j=0;j<16;j++){
-			printf("%d ",tab[i*16+j]);
-		}
-		printf("\n");
-	}
-	printf("-----------\n");
-	for(i=0;i<16;i++){
-		int j;
-		for(j=0;j<16;j++){
-			printf("%d ",tab2[i*16+j]);
-		}
-		printf("\n");
-	}
-	printf("-----------\n");*/
 	return opcode_table[ ops_decoded.opcode ](eip);
 }
 
@@ -259,24 +238,5 @@ static make_helper(_2byte_esc) {
 	eip ++;
 	uint32_t opcode = instr_fetch(eip, 1);
 	ops_decoded.opcode = opcode | 0x100;
-	tab2[opcode]=1;
-	
-	/*int i;
-	for(i=0;i<16;i++){
-		int j;
-		for(j=0;j<16;j++){
-			printf("%d ",tab[i*16+j]);
-		}
-		printf("\n");
-	}
-	printf("-----------\n");
-	for(i=0;i<16;i++){
-		int j;
-		for(j=0;j<16;j++){
-			printf("%d ",tab2[i*16+j]);
-		}
-		printf("\n");
-	}
-	printf("-----------\n");*/
 	return _2byte_opcode_table[opcode](eip) + 1; 
 }
