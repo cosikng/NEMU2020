@@ -54,7 +54,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/fib
+USERPROG := obj/testcase/hello-inine-asm
 ENTRY := $(kernel_BIN)
 
 entry: $(ENTRY)

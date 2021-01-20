@@ -28,6 +28,7 @@
 
 #include "intr/int.h"
 #include "intr/iret.h"
+#include "intr/cli.h"
 
 #include "logic/and.h"
 #include "logic/or.h"

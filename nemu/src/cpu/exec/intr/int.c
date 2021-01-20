@@ -6,6 +6,7 @@ make_helper(intr)
 {
     uint8_t no = instr_fetch(cpu.eip + 1, 1);
     print_asm("int %x", no);
+    cpu.eip += 2;
     raise_intr(no);
-    return 2;
+    return 0;
 }
