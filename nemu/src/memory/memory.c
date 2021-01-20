@@ -10,6 +10,11 @@ bool write_cahce(hwaddr_t addr, size_t len, uint32_t data);
 uint32_t read_cache2(hwaddr_t addr, size_t len, bool *flag);
 bool write_cahce2(hwaddr_t addr, size_t len, uint32_t data);
 
+int is_mmio(hwaddr_t);
+
+uint32_t mmio_read(hwaddr_t, size_t, int);
+void mmio_write(hwaddr_t, size_t, uint32_t, int);
+
 uint32_t search_tlb(uint32_t addr);
 
 /* Memory accessing interfaces */
@@ -19,8 +24,12 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len)
 	bool flag;
 	uint32_t d1 = 0, d2 = 0, dat = 0;
 	uint32_t up = (addr & ~((1 << cpu.cache1.b) - 1)) + (1 << cpu.cache1.b);
-	//printf("Read\n");
-	//printf("addr:0x%x,up:0x%x\n",addr,up);
+	int no;
+	no = is_mmio(addr);
+	if (no != -1)
+	{
+		return mmio_read(addr, len, no);
+	}
 	if (addr + len > up)
 	{
 		d1 = read_cache(addr, up - addr, &flag);
@@ -37,6 +46,13 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len)
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data)
 {
 	uint32_t up = (addr & ~((1 << cpu.cache1.b) - 1)) + (1 << cpu.cache1.b);
+	int no;
+	no = is_mmio(addr);
+	if (no != -1)
+	{
+		mmio_write(addr, len, data, no);
+		return;
+	}
 	if (addr + len > up)
 	{
 		write_cahce(addr, up - addr, data);

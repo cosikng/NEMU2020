@@ -13,6 +13,9 @@ int nemu_state = STOP;
 
 int exec(swaddr_t);
 
+uint8_t i8259_query_intr(void);
+void i8259_ack_intr(void);
+
 typedef struct watchpoint
 {
 	int NO;
@@ -139,6 +142,12 @@ void cpu_exec(volatile uint32_t n)
 		if (nemu_state != RUNNING)
 		{
 			return;
+		}
+		if (cpu.INTR & cpu.eflags.IF)
+		{
+			uint32_t intr_no = i8259_query_intr();
+			i8259_ack_intr();
+			raise_intr(intr_no);
 		}
 	}
 
