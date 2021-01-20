@@ -7,7 +7,7 @@ make_helper(lgdt)
     cpu.GDTR.limit = lnaddr_read(addr, 2);
     cpu.GDTR.base_l = lnaddr_read(addr + 2, 2);
     cpu.GDTR.base_h = lnaddr_read(addr + 4, 2);
-
+    print_asm("lgdt");
     return 6;
 }
 
@@ -17,6 +17,6 @@ make_helper(lidt)
     uint32_t addr = op_src->addr;
     cpu.IDTR.limit = lnaddr_read(addr, 2);
     cpu.IDTR.base = lnaddr_read(addr + 2, 4);
-
+    print_asm("lidt");
     return 6;
 }
