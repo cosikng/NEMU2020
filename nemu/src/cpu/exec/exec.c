@@ -8,11 +8,22 @@ static make_helper(_2byte_esc);
 
 extern void device_update();
 
+uint8_t i8259_query_intr(void);
+void i8259_ack_intr(void);
+void raise_intr(uint8_t);
+
 make_helper(hlt)
 {
+	cpu.eip++;
 	while (!(cpu.INTR & cpu.eflags.IF))
 		device_update();
-	return 1;
+	if (cpu.INTR & cpu.eflags.IF)
+	{
+		uint32_t intr_no = i8259_query_intr();
+		i8259_ack_intr();
+		raise_intr(intr_no);
+	}
+	return 0;
 }
 
 #define make_group(name, item0, item1, item2, item3, item4, item5, item6, item7) \
