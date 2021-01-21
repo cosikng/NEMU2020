@@ -7,15 +7,18 @@
 void init_timer();
 void main_loop();
 
-void add_irq_handle(int irq, void *handler) {
+void add_irq_handle(int irq, void *handler)
+{
 	syscall(0, irq, handler);
 }
 
-int
-main(void) {
+int main(void)
+{
 	init_timer();
 
 	add_irq_handle(0, timer_event);
+
+	add_irq_handle(1, keyboard_event);
 
 	init_FLOAT_vfprintf();
 
