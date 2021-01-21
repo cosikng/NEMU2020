@@ -6,10 +6,12 @@
 typedef int (*helper_fun)(swaddr_t);
 static make_helper(_2byte_esc);
 
+extern void device_update();
+
 make_helper(hlt)
 {
 	while (!(cpu.INTR & cpu.eflags.IF))
-		;
+		device_update();
 	return 1;
 }
 
