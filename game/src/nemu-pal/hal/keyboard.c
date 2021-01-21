@@ -7,7 +7,8 @@ enum
 	KEY_STATE_EMPTY,
 	KEY_STATE_WAIT_RELEASE,
 	KEY_STATE_RELEASE,
-	KEY_STATE_PRESS
+	KEY_STATE_PRESS,
+	KEY_STATE_DELAY
 };
 
 /* Only the following keys are used in NEMU-PAL. */
@@ -49,7 +50,10 @@ void keyboard_event(void)
 			}
 		}
 
-		key_state[i] = KEY_STATE_RELEASE;
+		if (key_state[i] == KEY_STATE_WAIT_RELEASE)
+			key_state[i] = KEY_STATE_RELEASE;
+		else
+			key_state[i] = KEY_STATE_DELAY;
 	}
 }
 
@@ -81,8 +85,8 @@ clear_key(int index)
 	key_state[index] = KEY_STATE_EMPTY;
 }
 
-bool 
-process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int)) {
+bool process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
+{
 	cli();
 	/* TODO: Traverse the key states. Find a key just pressed or released.
 	 * If a pressed key is found, call `key_press_callback' with the keycode.
@@ -93,29 +97,39 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	 */
 
 	int i, state, keycode;
-	for(i = 0; i < NR_KEYS; i ++) {
+	for (i = 0; i < NR_KEYS; i++)
+	{
 		state = query_key(i);
-		switch(state) {
-			case KEY_STATE_EMPTY:
-			case KEY_STATE_WAIT_RELEASE: continue;
-			case KEY_STATE_PRESS:
-				keycode = get_keycode(i);
-				key_press_callback(keycode);
-				release_key(i);
-				sti();
-				return true;
-			case KEY_STATE_RELEASE:
-				keycode = get_keycode(i);
-				key_release_callback(keycode);
-				clear_key(i);
-				sti();
-				return true;
-			default: assert(0);
-
+		switch (state)
+		{
+		case KEY_STATE_EMPTY:
+		case KEY_STATE_WAIT_RELEASE:
+			continue;
+		case KEY_STATE_PRESS:
+			keycode = get_keycode(i);
+			key_press_callback(keycode);
+			release_key(i);
+			sti();
+			return true;
+		case KEY_STATE_RELEASE:
+			keycode = get_keycode(i);
+			key_release_callback(keycode);
+			clear_key(i);
+			sti();
+			return true;
+		case KEY_STATE_DELAY:
+			keycode = get_keycode(i);
+			key_press_callback(keycode);
+			key_release_callback(keycode);
+			clear_key(i);
+			sti();
+			return true;
+		default:
+			assert(0);
 		}
 	}
 
-//	assert(0);
+	//	assert(0);
 	sti();
 	return false;
 }
