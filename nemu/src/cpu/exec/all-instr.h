@@ -2,6 +2,7 @@
 
 #include "CMOVcc/cmove.h"
 #include "CMOVcc/cmovns.h"
+#include "CMOVcc/cmovle.h"
 
 #include "data-mov/mov.h"
 #include "data-mov/xchg.h"
