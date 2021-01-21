@@ -2,8 +2,11 @@
 
 #include "CMOVcc/cmove.h"
 #include "CMOVcc/cmovns.h"
+#include "CMOVcc/cmovs.h"
 #include "CMOVcc/cmovle.h"
 #include "CMOVcc/cmovbe.h"
+#include "CMOVcc/cmovb.h"
+#include "CMOVcc/cmovg.h"
 
 #include "data-mov/mov.h"
 #include "data-mov/xchg.h"
