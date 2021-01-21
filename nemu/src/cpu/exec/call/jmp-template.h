@@ -16,7 +16,8 @@ static void do_execute()
         {
             cpu.eip &= 0xffff;
         }
-        cpu.eip -= 2;
+
+        cpu.eip -= concat4(decode_, rm, _, SUFFIX)(cpu.eip + 1) + (ops_decoded.is_operand_size_16 ? 2 : 1);
     }
     print_asm_template1_n();
     return;
