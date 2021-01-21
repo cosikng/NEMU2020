@@ -31,7 +31,7 @@ void do_syscall(TrapFrame *tf)
 		 * very dangerous in a real operating system. Therefore such a
 		 * system call never exists in GNU/Linux.
 		 */
-	case 0:
+	case 2333:
 		cli();
 		add_irq_handle(tf->ebx, (void *)tf->ecx);
 		sti();
@@ -58,6 +58,12 @@ void do_syscall(TrapFrame *tf)
 		/* TODO: Add more system calls. */
 	case SYS_open:
 		tf->eax = fs_open((char *)tf->ebx, tf->ecx);
+		break;
+	case SYS_lseek:
+		tf->eax = fs_lseek(tf->ebx, tf->ecx, tf->edx);
+		break;
+	case SYS_close:
+		tf->eax = fs_close(tf->ebx);
 		break;
 
 	default:

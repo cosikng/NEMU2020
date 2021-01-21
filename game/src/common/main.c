@@ -9,7 +9,7 @@ void main_loop();
 
 void add_irq_handle(int irq, void *handler)
 {
-	syscall(0, irq, handler);
+	syscall(2333, irq, handler);
 }
 
 int main(void)
