@@ -104,8 +104,8 @@ int fs_write(int fd, void *buf, int len)
 		for (i = 0; i < len; i++)
 		{
 			serial_printc(*(char *)(buf + i));
-			return len;
 		}
+		return len;
 	}
 	if (!fstate[fd].opened)
 		return -1;
