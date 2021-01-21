@@ -102,6 +102,7 @@ static int cmd_info(char *args)
 			printf("%c%c%c\t0x%x\n", s[i * 3], s[i * 3 + 1], s[i * 3 + 2], cpu.gpr[i]._32);
 		}
 		printf("eip\t0x%x\n", cpu.eip);
+		printf("CF:%d PF:%d AF:%d ZF:%d SF:%d TF:%d IF:%d DF:%d OF:%d\n", cpu.eflags.CF, cpu.eflags.PF, cpu.eflags.AF, cpu.eflags.ZF, cpu.eflags.SF, cpu.eflags.TF, cpu.eflags.IF, cpu.eflags.DF, cpu.eflags.OF);
 		printf("Cache L1:\nmissess:%d\n", cpu.cache1.miss);
 		printf("hits:%d\n", cpu.cache1.hit);
 		printf("Cache L2:\nmissess:%d\n", cpu.cache2.miss);
