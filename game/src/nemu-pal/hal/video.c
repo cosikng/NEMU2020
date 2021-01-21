@@ -7,9 +7,12 @@
 
 int get_fps();
 
-void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, 
-		SDL_Surface *dst, SDL_Rect *dstrect) {
+void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
+					 SDL_Surface *dst, SDL_Rect *dstrect)
+{
 	assert(dst && src);
+
+	int x, y;
 
 	int sx = (srcrect == NULL ? 0 : srcrect->x);
 	int sy = (srcrect == NULL ? 0 : srcrect->y);
@@ -17,9 +20,16 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	int dy = (dstrect == NULL ? 0 : dstrect->y);
 	int w = (srcrect == NULL ? src->w : srcrect->w);
 	int h = (srcrect == NULL ? src->h : srcrect->h);
-	if(dst->w - dx < w) { w = dst->w - dx; }
-	if(dst->h - dy < h) { h = dst->h - dy; }
-	if(dstrect != NULL) {
+	if (dst->w - dx < w)
+	{
+		w = dst->w - dx;
+	}
+	if (dst->h - dy < h)
+	{
+		h = dst->h - dy;
+	}
+	if (dstrect != NULL)
+	{
 		dstrect->w = w;
 		dstrect->h = h;
 	}
@@ -29,30 +39,52 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	 * `dst' surface.
 	 */
 
-	assert(0);
+	for (y = 0; y < h; y++)
+	{
+		for (x = 0; x < w; x++)
+		{
+			dst->pixels[(dy + y) * dst->w + dx + x] = src->pixels[(sy + y) * src->w + sx + x];
+		}
+	}
 }
 
-void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
+void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color)
+{
 	assert(dst);
 	assert(color <= 0xff);
+
+	int dx = (dstrect == NULL ? 0 : dstrect->x);
+	int dy = (dstrect == NULL ? 0 : dstrect->y);
+	int w = (dstrect == NULL ? dst->w : dstrect->w);
+	int h = (dstrect == NULL ? dst->h : dstrect->h);
+	int x, y;
 
 	/* TODO: Fill the rectangle area described by `dstrect'
 	 * in surface `dst' with color `color'. If dstrect is
 	 * NULL, fill the whole surface.
 	 */
 
-	assert(0);
+	for (y = 0; y < h; y++)
+	{
+		for (x = 0; x < w; x++)
+		{
+			dst->pixels[(dy + y) * dst->w + dx + x] = color;
+		}
+	}
 }
 
-void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors, 
-		int firstcolor, int ncolors) {
+void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors,
+					int firstcolor, int ncolors)
+{
 	assert(s);
 	assert(s->format);
 	assert(s->format->palette);
 	assert(firstcolor == 0);
 
-	if(s->format->palette->colors == NULL || s->format->palette->ncolors != ncolors) {
-		if(s->format->palette->ncolors != ncolors && s->format->palette->colors != NULL) {
+	if (s->format->palette->colors == NULL || s->format->palette->ncolors != ncolors)
+	{
+		if (s->format->palette->ncolors != ncolors && s->format->palette->colors != NULL)
+		{
 			/* If the size of the new palette is different 
 			 * from the old one, free the old one.
 			 */
@@ -68,22 +100,25 @@ void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors,
 	s->format->palette->ncolors = ncolors;
 	memcpy(s->format->palette->colors, colors, sizeof(SDL_Color) * ncolors);
 
-	if(s->flags & SDL_HWSURFACE) {
+	if (s->flags & SDL_HWSURFACE)
+	{
 		/* TODO: Set the VGA palette by calling write_palette(). */
-		assert(0);
+		write_palette(s->format->palette->colors, ncolors);
 	}
 }
 
 /* ======== The following functions are already implemented. ======== */
 
-void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
+void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h)
+{
 	assert(screen);
 	assert(screen->pitch == 320);
 
 	// this should always be true in NEMU-PAL
 	assert(screen->flags & SDL_HWSURFACE);
 
-	if(x == 0 && y == 0) {
+	if (x == 0 && y == 0)
+	{
 		/* Draw FPS */
 		vmem = VMEM_ADDR;
 		char buf[80];
@@ -92,8 +127,9 @@ void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
 	}
 }
 
-void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect, 
-		SDL_Surface *dst, SDL_Rect *dstrect) {
+void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect,
+					 SDL_Surface *dst, SDL_Rect *dstrect)
+{
 	assert(src && dst);
 	int x = (srcrect == NULL ? 0 : srcrect->x);
 	int y = (srcrect == NULL ? 0 : srcrect->y);
@@ -101,7 +137,8 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect,
 	int h = (srcrect == NULL ? src->h : srcrect->h);
 
 	assert(dstrect);
-	if(w == dstrect->w && h == dstrect->h) {
+	if (w == dstrect->w && h == dstrect->h)
+	{
 		/* The source rectangle and the destination rectangle
 		 * are of the same size. If that is the case, there
 		 * is no need to stretch, just copy. */
@@ -112,14 +149,16 @@ void SDL_SoftStretch(SDL_Surface *src, SDL_Rect *srcrect,
 		rect.h = h;
 		SDL_BlitSurface(src, &rect, dst, dstrect);
 	}
-	else {
+	else
+	{
 		/* No other case occurs in NEMU-PAL. */
 		assert(0);
 	}
 }
 
-SDL_Surface* SDL_CreateRGBSurface(uint32_t flags, int width, int height, int depth,
-		uint32_t Rmask, uint32_t Gmask, uint32_t Bmask, uint32_t Amask) {
+SDL_Surface *SDL_CreateRGBSurface(uint32_t flags, int width, int height, int depth,
+								  uint32_t Rmask, uint32_t Gmask, uint32_t Bmask, uint32_t Amask)
+{
 	SDL_Surface *s = malloc(sizeof(SDL_Surface));
 	assert(s);
 	s->format = malloc(sizeof(SDL_PixelFormat));
@@ -140,16 +179,22 @@ SDL_Surface* SDL_CreateRGBSurface(uint32_t flags, int width, int height, int dep
 	return s;
 }
 
-SDL_Surface* SDL_SetVideoMode(int width, int height, int bpp, uint32_t flags) {
-	return SDL_CreateRGBSurface(flags,  width, height, bpp,
-			0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
+SDL_Surface *SDL_SetVideoMode(int width, int height, int bpp, uint32_t flags)
+{
+	return SDL_CreateRGBSurface(flags, width, height, bpp,
+								0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
 }
 
-void SDL_FreeSurface(SDL_Surface *s) {
-	if(s != NULL) {
-		if(s->format != NULL) {
-			if(s->format->palette != NULL) {
-				if(s->format->palette->colors != NULL) {
+void SDL_FreeSurface(SDL_Surface *s)
+{
+	if (s != NULL)
+	{
+		if (s->format != NULL)
+		{
+			if (s->format->palette != NULL)
+			{
+				if (s->format->palette->colors != NULL)
+				{
 					free(s->format->palette->colors);
 				}
 				free(s->format->palette);
@@ -157,12 +202,12 @@ void SDL_FreeSurface(SDL_Surface *s) {
 
 			free(s->format);
 		}
-		
-		if(s->pixels != NULL && s->pixels != VMEM_ADDR) {
+
+		if (s->pixels != NULL && s->pixels != VMEM_ADDR)
+		{
 			free(s->pixels);
 		}
 
 		free(s);
 	}
 }
-
