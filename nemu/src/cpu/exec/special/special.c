@@ -24,6 +24,7 @@ make_helper(inv)
 * Every line of untested code is always wrong!\33[0m\n\n",
 		   logo);
 
+	printf("Counts:%d\n", cpu.count);
 	assert(0);
 }
 
