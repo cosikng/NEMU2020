@@ -5,6 +5,7 @@
 void add_irq_handle(int, void (*)(void));
 uint32_t mm_brk(uint32_t);
 int fs_ioctl(int, uint32_t, void *);
+void serial_printc(char);
 
 static void sys_brk(TrapFrame *tf)
 {
@@ -18,6 +19,7 @@ static void sys_ioctl(TrapFrame *tf)
 
 void do_syscall(TrapFrame *tf)
 {
+	int i;
 	switch (tf->eax)
 	{
 	/* The `add_irq_handle' system call is artificial. We use it to
@@ -38,9 +40,13 @@ void do_syscall(TrapFrame *tf)
 		sys_ioctl(tf);
 		break;
 	case SYS_write:
-		asm volatile(".byte 0xd6"
+		for (i = 0; i < tf->edx; i++)
+		{
+			serial_printc(*((char *)(tf->ecx + i)));
+		}
+		/*asm volatile(".byte 0xd6"
 					 :
-					 : "a"(2), "c"(tf->ecx), "d"(tf->edx));
+					 : "a"(2), "c"(tf->ecx), "d"(tf->edx));*/
 		tf->eax = tf->edx;
 		break;
 
