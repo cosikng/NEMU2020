@@ -207,6 +207,8 @@ typedef struct
 
 	bool INTR;
 
+	uint32_t count;
+
 } CPU_state;
 
 typedef struct GateDescriptor

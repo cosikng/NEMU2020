@@ -145,6 +145,8 @@ void restart()
 	cpu.CSbase = 0;
 	cpu.CSlimit = 0xffffffff;
 
+	cpu.count=0;
+
 	//初始化快表
 	cpu.TLB.max = 64;
 	cpu.TLB.item = (TLBitem *)malloc(sizeof(TLBitem) * cpu.TLB.max);

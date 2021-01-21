@@ -107,6 +107,7 @@ static int cmd_info(char *args)
 		printf("hits:%d\n", cpu.cache1.hit);
 		printf("Cache L2:\nmissess:%d\n", cpu.cache2.miss);
 		printf("hits:%d\n", cpu.cache2.hit);
+		printf("Counts:%d\n",cpu.count);
 	}
 	else if (*args == 'w')
 	{
