@@ -11,13 +11,21 @@ static void do_execute()
     }
     else
     {
+        int off = 0;
         cpu.eip = op_src->val;
         if (DATA_BYTE == 2)
         {
             cpu.eip &= 0xffff;
         }
-
-        cpu.eip -= concat4(decode_, rm, _, SUFFIX)(cpu.eip + 1) + (ops_decoded.is_operand_size_16 ? 2 : 1);
+        if (ops_decoded.is_operand_size_16)
+        {
+            off = 2 + decode_rm_w(cpu.eip + 1);
+        }
+        else
+        {
+            off = 1 + decode_rm_l(cpu.eip + 1);
+        }
+        cpu.eip -= off;
     }
     print_asm_template1_n();
     return;
