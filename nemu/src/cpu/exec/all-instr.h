@@ -59,6 +59,7 @@
 #include "logic/seto.h"
 #include "logic/setp.h"
 #include "logic/sets.h"
+#include "logic/bt.h"
 
 #include "string/rep.h"
 #include "string/movs.h"
