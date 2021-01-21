@@ -30,7 +30,10 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len)
 	{
 		return mmio_read(addr, len, no);
 	}
-	assert(is_mmio(0xa0000) == -1);
+	if (addr >= 0xa0000 && addr < 0xa0000 + 320 * 200)
+	{
+		return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	}
 	if (addr + len > up)
 	{
 		d1 = read_cache(addr, up - addr, &flag);
@@ -54,7 +57,11 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data)
 		mmio_write(addr, len, data, no);
 		return;
 	}
-	assert(is_mmio(0xa0000) == -1);
+	if (addr >= 0xa0000 && addr < 0xa0000 + 320 * 200)
+	{
+		dram_write(addr, len, data);
+		return;
+	}
 	if (addr + len > up)
 	{
 		write_cahce(addr, up - addr, data);
